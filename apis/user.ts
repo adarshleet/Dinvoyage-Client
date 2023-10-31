@@ -20,8 +20,19 @@ export const signup = async (userData: Formvalues)=>{
 
 export const otpVerify = async (otp : string) =>{
     try {
-        console.log(otp)
         const res = await Api.post(userRoutes.otpVerify,{otp})
+        console.log(res)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+ 
+
+export const login = async (userData:Formvalues)=>{
+    try {
+        const res = await Api.post(userRoutes.login,userData)
+        console.log(res.data.data)
         return res
     } catch (error) {
         console.log(error)

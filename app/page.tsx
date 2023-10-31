@@ -4,7 +4,7 @@ import banner from '../public/dineVoyageBanner.png'
 import bannerMobile from '../public/bannerMobile.png'
 import OfferCard from "./components/user/offerCard"
 import HotelCard from "./components/user/hotelCard"
-import Otp from "./components/user/otp"
+
 
 export default function Home() {
     return (
@@ -14,10 +14,10 @@ export default function Home() {
             </header>
             <main>
                 <div className="md:hidden">
-                    <Image src={bannerMobile} alt="banner" />
+                    <Image priority={false} src={bannerMobile} alt="banner" />
                 </div>
                 <div className="hidden md:block">
-                    <Image src={banner} alt="banner" />
+                    <Image priority={false} src={banner} alt="banner" />
                 </div>
                 <div className="flex justify-center py-16 px-4 items-center container mx-auto">
                     <div style={{ width: '50rem' }}>

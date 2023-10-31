@@ -3,6 +3,7 @@ import Navbar from '../components/user/navbar'
 import RestaurantCard from '../components/user/restaurantCard'
 
 
+
 const page = () => {
     return (
         <>

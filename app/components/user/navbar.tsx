@@ -14,12 +14,11 @@ const Navbar = () => {
 
 
     return (
-        // <div className="bg-gray-100 font-sans w-full min-h-screen m-0 fixed">
         <div className="bg-white shadow fixed right-0 left-0 top-0 z-10">
             <div className="px-2 md:px-8">
                 <div className="flex items-center justify-between py-2 px-4">
                     <div>
-                        <Image src={logo} alt='' width={100} />
+                        <Image priority={false} src={logo} alt='' width={100} />
                     </div>
 
                     <div className="hidden md:flex md:items-center">
@@ -64,8 +63,6 @@ const Navbar = () => {
                 }
             </div>
         </div>
-        // </div>
-
     );
 };
 

@@ -19,7 +19,10 @@
 body {
   color: #000;
   background-color: rgb(243 244 246);
-  padding-top: 5rem;
+}
+
+.topBox{
+  padding-top: 5 !important;
 }
 
 

@@ -1,24 +1,44 @@
 'use client'
 import React, { useState } from 'react'
 import { otpVerify } from '@/apis/user';
+import { useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 type OtpProps = {
     otpPage: boolean;
     onCloseModel: () => void;
 };
+
 const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel}) => {
+    const router = useRouter()
 
     const [otp,setOtp] = useState('')
+    const [error,setError] = useState('')
+
 
     const handleOtpChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setOtp(e.target.value)
     }
 
+
     const handleVerifyOtp = async(e:React.FormEvent<HTMLFormElement>)=>{
         try {
             e.preventDefault()
-            const res = await otpVerify(otp)
-            console.log(res)
+            if(otp.length != 6 || otp.includes(" ")){
+                setError('Enter a valid otp')
+            }
+            else{
+                const res = await otpVerify(otp)
+                console.log(res)
+                if(res?.data.data){
+                    toast("Hello World")
+                    router.push('/');
+                }
+                else{
+                    setError(`The OTP you entered doesn't match. Please enter a valid OTP.`)
+                }
+            }
         } catch (error) {
             console.log(error)
         }
@@ -73,8 +93,11 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel}) => {
                                         id="otp"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:outline-none  block w-full p-2.5"
                                         placeholder=""
-                                    />
-                                    <p className='text-xs mt-1 text-gray-500'>Your Verification Code has been sent to your mobile, please enter it here to update.</p>
+                                    />{
+                                        error == '' ?
+                                        <p className='text-xs mt-1 text-gray-500'>Your Verification Code has been sent to your mobile, please enter it here to update.</p> :
+                                        <p className='text-xs text-red-700 mt-1'>{error}</p>
+                                    }
                                 </div>
 
 
