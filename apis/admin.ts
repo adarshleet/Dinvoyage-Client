@@ -13,9 +13,9 @@ export const login = async(admin:{email:string,password:string})=>{
 
 
 //get all users
-export const allUsers = async()=>{
+export const allUsers = async(currentPage:number)=>{
     try {
-        const res = Api.get(adminRoutes.allUsers)
+        const res = Api.get(`${adminRoutes.allUsers}?page=${currentPage}`)
         return res
     } catch (error) {
         console.log(error)

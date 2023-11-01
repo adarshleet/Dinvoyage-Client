@@ -5,9 +5,11 @@ import Image from 'next/image'
 import Password from '../components/user/password'
 import logo from '../../public/dineVoyageLogo.png'
 import { login } from '@/apis/admin'
+import { useRouter } from 'next/navigation';
 
 
 const page = () => {
+    const router = useRouter()
 
     const [error, setError] = useState('')
     const [formData, setFormData] = useState({
@@ -42,6 +44,8 @@ const page = () => {
                 console.log(res?.data.data)
                 if(!res?.data.data.success){
                     setError(res?.data.data.message)
+                }else{
+                    router.push('/admin/dashboard')
                 }
             }
         } catch (error) {

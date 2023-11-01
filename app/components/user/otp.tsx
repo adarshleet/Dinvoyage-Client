@@ -8,9 +8,10 @@ import toast, { Toaster } from 'react-hot-toast';
 type OtpProps = {
     otpPage: boolean;
     onCloseModel: () => void;
+    user:boolean
 };
 
-const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel}) => {
+const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
     const router = useRouter()
 
     const [otp,setOtp] = useState('')
@@ -32,8 +33,13 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel}) => {
                 const res = await otpVerify(otp)
                 console.log(res)
                 if(res?.data.data){
-                    toast("Hello World")
-                    router.push('/');
+                    if(user){
+                        toast("Hello World")
+                        router.push('/');
+                    }
+                    else if(!user){
+                        router.push('/vendor/dashboard')
+                    }
                 }
                 else{
                     setError(`The OTP you entered doesn't match. Please enter a valid OTP.`)

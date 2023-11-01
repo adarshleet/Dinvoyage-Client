@@ -5,6 +5,7 @@ import {BiSolidDashboard,BiSolidMessageAltError,BiSolidOffer} from 'react-icons/
 import {AiFillShop} from 'react-icons/ai'
 import {FaUsers} from 'react-icons/fa'
 import {MdStyle} from 'react-icons/md'
+import Link from 'next/link'
 
 const Sidebar = () => {
   return (
@@ -50,13 +51,13 @@ const Sidebar = () => {
                     </a>
                     <ul className="space-y-2 font-medium">
                         <li>
-                            <a
-                                href="#"
+                            <Link
+                                href="/admin/dashboard"
                                 className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
                                 <BiSolidDashboard className="text-2xl"/>
                                 <span className="ml-3">Dashboard</span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             <a
@@ -68,13 +69,13 @@ const Sidebar = () => {
                             </a>
                         </li>
                         <li>
-                            <a
-                                href="#"
+                            <Link
+                                href="/admin/users"
                                 className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
                                 <FaUsers className="text-2xl"/>
                                 <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             <a

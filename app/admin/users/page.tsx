@@ -16,15 +16,40 @@ const page = () => {
 
     let [users, setUsers] = useState<User[]>([])
     const [search, setSearch] = useState('')
+    const [pagination, setPagination] = useState({
+        totalPages: 0,
+        totalUsers: 0,
+        limit: 5
+    });
+
+    const [currentPage,setCurrentPage] = useState(1)
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            const res = await allUsers()
+        const fetchUsers = async (currentPage:number) => {
+            const res = await allUsers(currentPage)
             console.log(res?.data)
-            setUsers(res?.data)
+            const data = res?.data
+            setUsers(data.allUsers)
+            setPagination({...pagination , totalPages:data.totalPages,totalUsers:data.totalUsers,limit:data.limit})
         }
-        fetchUsers()
-    }, [])
+        fetchUsers(currentPage)
+    }, [currentPage])
+
+    const pageIncrement = ()=>{
+        try {
+            setCurrentPage(currentPage+1)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const  pageDecrement = () =>{
+        try {
+            setCurrentPage(currentPage-1)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
 
@@ -117,8 +142,8 @@ const page = () => {
                             {users.length ? (
                                 users.map((user, index) => (
                                     <tr className="bg-white border-b text-s" key={index}>
-                                        <td className="flex items-center px-6 py-4 whitespace-nowrap">
-                                            <div className="">
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="flex items-center">
                                                 <div className="font-semibold text-gray-500">
                                                     {user.name}
                                                 </div>
@@ -164,13 +189,13 @@ const page = () => {
                     {/* Help text */}
                     <span className="text-sm text-gray-700 self-start">
                         Showing{" "}
-                        <span className="font-semibold text-gray-900 ">10</span> out of{" "}
-                        <span className="font-semibold text-gray-900 ">100</span>{" "}
+                        <span className="font-semibold text-gray-900 ">{users.length}</span> out of{" "}
+                        <span className="font-semibold text-gray-900 ">{pagination.totalUsers}</span>{" "}
                         Entries
                     </span>
                     <div className="inline-flex mt-2 xs:mt-0 self-start">
                         {/* Buttons */}
-                        <button className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-900 bg-gray-300 rounded-l">
+                        <button onClick={pageDecrement} className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-900 bg-gray-300 rounded-l" disabled={currentPage===1}>
                             <svg
                                 className="w-3.5 h-3.5 mr-2"
                                 aria-hidden="true"
@@ -188,7 +213,10 @@ const page = () => {
                             </svg>
                             Prev
                         </button>
-                        <button className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-900 bg-gray-300 border-0 border-l border-gray-700 rounded-r">
+                        <div className='bg-gray-300 px-3 flex justify-center items-center border-x border-1'>
+                            {currentPage}
+                        </div>
+                        <button onClick={pageIncrement} className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-900 bg-gray-300  border-gray-700 rounded-r" disabled = {currentPage===pagination.totalPages}>
                             Next
                             <svg
                                 className="w-3.5 h-3.5 ml-2"
