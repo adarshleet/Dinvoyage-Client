@@ -2,6 +2,7 @@
 import React,{useState} from 'react'
 import Password from '../components/user/password'
 import { login } from '@/apis/user'
+import { vendorLogin } from '@/apis/vendor'
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -9,7 +10,7 @@ interface formLogin{
     user:boolean
 }
 
-function FormLogin({user}) {
+function FormLogin({user}:formLogin) {
 
     const router = useRouter()
 
@@ -47,6 +48,15 @@ function FormLogin({user}) {
                         console.log('login successfull')
                     }
                     else {
+                        setError(res?.data.data.message)
+                    }
+               }
+               else if(!user){
+                    const res = await vendorLogin(formData)
+                    if(res?.data.data.success){
+                        router.push('/vendor/dashboard')
+                    }
+                    else{
                         setError(res?.data.data.message)
                     }
                }

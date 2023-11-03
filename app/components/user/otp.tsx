@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { otpVerify } from '@/apis/user';
+import { otpVerifyVendor } from '@/apis/vendor';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -30,19 +31,27 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
                 setError('Enter a valid otp')
             }
             else{
-                const res = await otpVerify(otp)
-                console.log(res)
-                if(res?.data.data){
-                    if(user){
+                if(user){
+                    const res = await otpVerify(otp)
+                    console.log(res)
+                    if(res?.data.data){
                         toast("Hello World")
                         router.push('/');
                     }
-                    else if(!user){
-                        router.push('/vendor/dashboard')
+                    else{
+                        setError(`The OTP you entered doesn't match. Please enter a valid OTP.`)
                     }
                 }
-                else{
-                    setError(`The OTP you entered doesn't match. Please enter a valid OTP.`)
+                else if(!user){
+                    const res = await otpVerifyVendor(otp)
+                    console.log(res)
+                    if(res?.data.data){
+                        toast("Hello World")
+                        router.push('/vendor/dashboard');
+                    }
+                    else{
+                        setError(`The OTP you entered doesn't match. Please enter a valid OTP.`)
+                    }
                 }
             }
         } catch (error) {

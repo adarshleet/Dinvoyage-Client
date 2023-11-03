@@ -1,12 +1,12 @@
 import React from 'react'
 import logo from '../../../public/dineVoyageLogo.png'
 import Image from 'next/image'
-import {BiSolidDashboard,BiSolidMessageAltError,BiSolidOffer} from 'react-icons/bi'
-import {AiFillShop} from 'react-icons/ai'
-import {FaUsers} from 'react-icons/fa'
+import {BiFoodMenu,BiSolidOffer} from 'react-icons/bi'
 import {MdStyle} from 'react-icons/md'
 import {TbTableOptions} from 'react-icons/tb'
 import Link from 'next/link'
+import {BsGraphUpArrow, BsFillCalendarCheckFill} from 'react-icons/bs'
+import {MdRestaurant} from 'react-icons/md'
 
 const Sidebar = () => {
   return (
@@ -47,7 +47,7 @@ const Sidebar = () => {
                             width={150}
                         />
                         <span className="self-center text-xl whitespace-nowra font-bold">
-                            ADMIN
+                            VENDOR
                         </span>
                     </a>
                     <ul className="space-y-2 font-medium">
@@ -56,8 +56,8 @@ const Sidebar = () => {
                                 href="/admin/dashboard"
                                 className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
-                                <BiSolidDashboard className="text-2xl"/>
-                                <span className="ml-3">Dashboard</span>
+                                <BsGraphUpArrow className="text-2xl"/>
+                                <span className="ml-3 font-semibold">Dashboard</span>
                             </Link>
                         </li>
 
@@ -66,8 +66,8 @@ const Sidebar = () => {
                                 href="/admin/users"
                                 className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
-                                <FaUsers className="text-2xl"/>
-                                <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
+                                <MdRestaurant className="text-2xl"/>
+                                <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Restaurants</span>
                             </Link>
                         </li>
 
@@ -76,8 +76,8 @@ const Sidebar = () => {
                                 href="/admin/vendors"
                                 className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
-                                <AiFillShop className="text-2xl"/>
-                                <span className="ml-3">Vendors</span>
+                                <TbTableOptions className="text-2xl" />
+                                <span className="ml-3 font-semibold">Cuisines & Facilities</span>
                             </Link>
                         </li>
                         
@@ -86,8 +86,8 @@ const Sidebar = () => {
                                 href="#"
                                 className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
-                                <BiSolidMessageAltError className="text-2xl" />
-                                <span className="flex-1 ml-3 whitespace-nowrap">Requests</span>
+                                <BsFillCalendarCheckFill className="text-2xl" />
+                                <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Bookings</span>
                                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ">
                                     3
                                 </span>
@@ -99,28 +99,20 @@ const Sidebar = () => {
                                 href="/admin/cuisines"
                                 className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
-                                <TbTableOptions className="text-2xl" />
-                                <span className="flex-1 ml-3 whitespace-nowrap">Cuisines & Facilties</span>
+                                <BiFoodMenu className="text-2xl" />
+                                <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Categories</span>
                             
                             </Link>
                         </li>
                        
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
-                            >
-                                <MdStyle className="text-2xl" />
-                                <span className="flex-1 ml-3 whitespace-nowrap">Banners</span>
-                            </a>
-                        </li>
+                        
                         <li>
                             <a
                                 href="#"
                                 className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
                                 <BiSolidOffer className="text-2xl"/>
-                                <span className="flex-1 ml-3 whitespace-nowrap">Offers</span>
+                                <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Offers</span>
                             </a>
                         </li>
                         

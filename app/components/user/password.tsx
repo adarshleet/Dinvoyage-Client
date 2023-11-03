@@ -7,7 +7,7 @@ interface PasswordProps {
     onChange: (value: string) => void;
 }
 
-const Password = ({value,onChange}) => {
+const Password = ({value,onChange}:PasswordProps) => {
     const [toggle, setToggle] = useState(false)
     const passwordToggle = () => {
         setToggle(!toggle)

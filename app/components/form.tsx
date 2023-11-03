@@ -10,7 +10,7 @@ interface formProps {
     user: boolean
 }
 
-const Form = ({ user }) => {
+const Form = ({ user }:formProps) => {
     const [otpPage, setOtpPage] = useState(false)
     const [error, setError] = useState('')
     const [formData, setFormData] = useState({

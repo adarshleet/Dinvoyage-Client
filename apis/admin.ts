@@ -31,3 +31,45 @@ export const blockUser = async(id:string)=>{
         console.log(error)
     }
 }
+
+
+//getting all vendors
+export const allVendors = async(currentPage:number)=>{
+    try {
+        const res = Api.get(`${adminRoutes.allVendors}?page:${currentPage}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const blockVendor = async(id:string)=>{
+    try {
+        const res = Api.put(adminRoutes.blockVendor,{id})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+//getting all facilities for restaurant for listing
+export const allFacilities = async()=>{
+    try {
+        const res = Api.get(adminRoutes.allFacilities)
+        console.log(res)
+        return res
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+
+export const allCuisines = async()=>{
+    try {
+        const res = Api.get(adminRoutes.allCuisines)
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
