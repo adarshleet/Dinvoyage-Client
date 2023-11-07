@@ -4,6 +4,7 @@ import { allUsers, allVendors, blockVendor } from '@/apis/admin'
 import { blockUser } from '@/apis/admin'
 import { HiArrowNarrowRight, HiArrowNarrowLeft } from 'react-icons/hi'
 import { AiOutlineSearch } from 'react-icons/ai'
+import ConfirmPopUp from './confirmPopUp'
 
 
 interface Data {
@@ -26,29 +27,42 @@ const Table = ({ user }: tableProps) => {
         totalData: 0,
         limit: 5
     });
+    const [confirmPopUp,setConfirmPopUp] = useState(false)
 
     const [currentPage, setCurrentPage] = useState(1)
+    const [dataId,setDataId] = useState('')
 
     useEffect(() => {
         const fetchData = async (currentPage: number) => {
             try {
                 let res;
                 if (user) {
-                  res = await allUsers(currentPage);
+                    res = await allUsers(currentPage);
                 } else {
-                  res = await allVendors(currentPage);
+                    res = await allVendors(currentPage);
                 }
                 if (res && res.data) {
-                  const { allUsers, allVendors, totalPages, totalData, limit } = res.data;
-                  setData(user ? allUsers : allVendors);
-                  setPagination({ totalPages, totalData, limit });
+                    const { allUsers, allVendors, totalPages, totalData, limit } = res.data;
+                    setData(user ? allUsers : allVendors);
+                    setPagination({ totalPages, totalData, limit });
                 }
-              } catch (error) {
+            } catch (error) {
                 console.error("Error fetching data: ", error);
-              }
+            }
         }
         fetchData(currentPage)
     }, [currentPage])
+
+
+    const blockButton = (id:string)=>{
+        setConfirmPopUp(true)
+        setDataId(id)
+    }
+
+    const onCloseModel = ()=>{
+        setConfirmPopUp(false)
+    }
+
 
     const pageIncrement = () => {
         try {
@@ -68,7 +82,7 @@ const Table = ({ user }: tableProps) => {
 
 
 
-    const changeStatus = async (id: string) => {
+    const changeStatus = async (id: string):Promise<void> => {
         try {
             if (user) {
                 const res = await blockUser(id);
@@ -102,7 +116,8 @@ const Table = ({ user }: tableProps) => {
     );
 
     return (
-        <div className='px-6 md:pl-6 md:pr-10 '>
+        <>
+        <div className='px-6 md:pl-6 md:pr-10'>
             <div className='w-full bg-cyan-600 p-3 rounded-md mb-4'>
                 <h1 className='font-bold text-white'>{user ? 'ALL USERS' : 'ALL VENDORS'}</h1>
             </div>
@@ -158,7 +173,7 @@ const Table = ({ user }: tableProps) => {
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className='flex items-center font-semibold'>
-                                            {item.mobile}
+                                            {item.mobile ? item.mobile : '-not added-'}
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
@@ -173,7 +188,8 @@ const Table = ({ user }: tableProps) => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <button
-                                            onClick={() => changeStatus(item._id)}
+                                            // onClick={() => changeStatus(item._id)}
+                                            onClick={()=>blockButton(item._id)}
                                             className={`p-2 font-bold text-white rounded-sm ${item.isBlocked ? 'bg-red-500' : 'bg-red-700'}`}
                                         >
                                             {item.isBlocked ? 'UNBLOCK' : 'BLOCK'}
@@ -192,6 +208,7 @@ const Table = ({ user }: tableProps) => {
                     </tbody>
                 </table>
             </div>
+            
             <div className="flex flex-col items-center">
                 {/* Help text */}
                 <span className="text-sm text-gray-700 self-start">
@@ -215,8 +232,10 @@ const Table = ({ user }: tableProps) => {
                         <HiArrowNarrowRight className="text-xl ml-1" />
                     </button>
                 </div>
-            </div>
+            </div> 
         </div>
+        <ConfirmPopUp confirmPopUp={confirmPopUp} changeStatus={changeStatus} id={dataId} onCloseModel={onCloseModel}/>
+        </>
     )
 }
 

@@ -1,9 +1,12 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { signup } from '@/apis/user'
 import Password from '../components/user/password'
 import Otp from '../components/user/otp'
 import { register } from '@/apis/vendor'
+import { useDispatch,useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation'
+
 
 
 interface formProps {
@@ -19,6 +22,25 @@ const Form = ({ user }:formProps) => {
         password: '',
         confirmPassword: ''
     });
+
+
+    const router = useRouter()
+
+    useEffect(() => {
+        if(user){
+            const userInfo = typeof window !== 'undefined' ? localStorage.getItem('userInfo') : null;
+            if (userInfo) {
+                router.push('/')
+            }
+        }
+        else if(!user){
+            const vendorInfo = typeof window !== 'undefined' ? localStorage.getItem('vendorInfo') : null
+            if(vendorInfo){
+                router.push('/vendor/dashboard')
+            }
+        }
+    }, []);
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

@@ -1,6 +1,8 @@
 const adminRoutes = {
     login : '/api/admin/login',
 
+    adminLogout : '/api/admin/logout',
+
     allUsers:'/api/admin/allUsers',
 
     blockUser : '/api/admin/blockUser',
@@ -11,7 +13,14 @@ const adminRoutes = {
 
     allFacilities: '/api/admin/allFacilities',
 
-    allCuisines : '/api/admin/allCuisines'
+    allCuisines : '/api/admin/allCuisines',
+
+    allRequests : '/api/admin/allRequests',
+
+    singleRestaurantRequest : '/api/admin/restaurantRequest',
+
+    changeRestaurantStatus : '/api/admin/changeRestaurantStatus'
+
 }
 
 export default adminRoutes

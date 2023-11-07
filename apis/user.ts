@@ -38,3 +38,13 @@ export const login = async (userData:Formvalues)=>{
         console.log(error)
     }
 }
+
+
+export const logout = async()=>{
+    try {
+        const res = await Api.get(userRoutes.logout)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}

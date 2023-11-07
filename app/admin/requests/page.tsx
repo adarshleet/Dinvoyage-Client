@@ -1,16 +1,17 @@
-'use client'
-import React,{useState} from 'react'
-import Table from '@/app/components/admin/table'
+import React from 'react'
 import Sidebar from '@/app/components/admin/sidebar'
+import RequestTable from '@/app/components/admin/requestTable'
 
 const page = () => {
     return (
         <div>
             <div className='flex flex-col pt-16 md:ml-72'>
                 <div className=''>
-                    <Sidebar page={'vendors'}/>
+                    <Sidebar page={'request'}/>
                 </div>
-                <Table user={false}/>
+                <div className='px-6'>
+                    <RequestTable/>
+                </div>
             </div>
         </div>
     )

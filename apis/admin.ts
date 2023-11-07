@@ -73,3 +73,46 @@ export const allCuisines = async()=>{
         console.log(error);
     }
 }
+
+
+
+export const adminLogout = async()=>{
+    try {
+        const res = Api.get(adminRoutes.adminLogout)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+//all restaurant requests
+export const restaurantRequests = async () =>{
+    try {
+        const res = Api.get(adminRoutes.allRequests)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const singleRestaurantRequest = async (id:string) =>{
+    try {
+        const res = Api.get(`${adminRoutes.singleRestaurantRequest}/${id}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const changeRestaurantStatus = async (id:string,status:number) =>{
+    try {
+        console.log(id,status)
+        const res = Api.post(`${adminRoutes.changeRestaurantStatus}?id=${id}&status=${status}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}

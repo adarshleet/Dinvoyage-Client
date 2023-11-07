@@ -1,16 +1,47 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../../../public/dineVoyageLogo.png'
 import Image from 'next/image';
 import Link from 'next/link';
+import {BiUser} from 'react-icons/bi'
+import { logout } from '@/apis/user';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { setUserLogout } from '@/redux/slices/authSlice';
 
 const Navbar = () => {
 
     const [dropDown, setDropDown] = useState(false)
+    const [user,setUser] = useState<boolean | null>(false)
+
+    const dispatch = useDispatch()
+    const router = useRouter()
 
     const showMenu = () => {
         setDropDown(!dropDown)
     }
+
+    useEffect(()=>{
+        const userInfo = localStorage.getItem('userInfo');
+        console.log(userInfo)
+        if(userInfo){
+            setUser(true)
+        }
+    },[])
+
+    const userLogout = ()=>{
+        const fetchData = async() =>{
+            const res = await logout()
+            if(res?.data.success){
+                dispatch(setUserLogout())
+                router.replace('/login')
+            }
+        }
+        fetchData()
+    }
+
+
+
 
 
     return (
@@ -36,11 +67,19 @@ const Navbar = () => {
                     </div>
 
                     <div className="hidden md:flex md:items-center">
-                        <Link href="/signup" className="text-md text-white font-bold border px-4 py-2 rounded-lg" style={{ backgroundColor: '#247F9E' }} >SignUp</Link>
+                        {user ? 
+                            (<button onClick={userLogout} className='bg-red-600 px-4 py-2 text-white font-bold rounded-lg'>LogOut</button>)
+                        :
+                            (<Link href="/signup" className="text-md text-white font-bold border px-4 py-2 rounded-lg mr-2" style={{ backgroundColor: '#247F9E' }} >SignUp</Link>)
+                        }
                     </div>
 
                     <div className="md:hidden flex cursor-pointer items-center">
-                        <Link href="/signup" className="text-md text-white font-bold border px-4 py-2 rounded-lg mr-2" style={{ backgroundColor: '#247F9E' }} >SignUp</Link>
+                        {user ? 
+                            (<button className='bg-red-600 px-4 py-2 text-white font-bold rounded-lg'>LogOut</button>)
+                        :
+                            (<Link href="/signup" className="text-md text-white font-bold border px-4 py-2 rounded-lg mr-2" style={{ backgroundColor: '#247F9E' }} >SignUp</Link>)
+                        }
                         <div>
                             <img width="25" height="25" onClick={showMenu} src="https://img.icons8.com/ios-filled/50/menu--v1.png" alt="menu--v1" />
                         </div>

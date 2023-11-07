@@ -1,15 +1,27 @@
 'use client'
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Password from '../components/user/password'
 import logo from '../../public/dineVoyageLogo.png'
 import { login } from '@/apis/admin'
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux'
+import { setAdminLogin } from '@/redux/slices/authSlice'
 
 
 const page = () => {
     const router = useRouter()
+    const dispatch = useDispatch()
+
+
+    useEffect(()=>{
+        const adminInfo = typeof window !== 'undefined' ? localStorage.getItem('adminInfo') : null
+        console.log(adminInfo)
+        if(adminInfo){
+            router.push('/admin/dashboard')
+        }
+    },[])
 
     const [error, setError] = useState('')
     const [formData, setFormData] = useState({
@@ -45,7 +57,8 @@ const page = () => {
                 if(!res?.data.data.success){
                     setError(res?.data.data.message)
                 }else{
-                    router.push('/admin/dashboard')
+                    dispatch(setAdminLogin('adminLogin'))
+                    router.replace('/admin/dashboard')
                 }
             }
         } catch (error) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import Sidebar from '@/app/components/vendor/sidebar'
-import RestaurantCard from '@/app/components/vendor/restaurantCard'
+import RestaurantForm from '@/app/components/vendor/restaurantForm'
 
 const page = () => {
     return (
@@ -12,8 +12,8 @@ const page = () => {
                 <div className='w-full bg-cyan-600 p-3 rounded-md mb-4'>
                     <h1 className='font-bold text-white'>RESTAURANT DETAILS</h1>
                 </div>
-                <div className='p-5 bg-white shadow-sm flex justify-center'>
-                    <RestaurantCard />
+                <div className='p-5 bg-white shadow-sm'>
+                    <RestaurantForm />
                 </div>
             </div>
         </div>

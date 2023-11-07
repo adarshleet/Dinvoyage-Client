@@ -1,10 +1,13 @@
 'use client'
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Password from '../components/user/password'
 import { login } from '@/apis/user'
 import { vendorLogin } from '@/apis/vendor'
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch} from 'react-redux';
+import { setUserLogin, setVendorLogin } from '@/redux/slices/authSlice'
+
 
 interface formLogin{
     user:boolean
@@ -12,7 +15,28 @@ interface formLogin{
 
 function FormLogin({user}:formLogin) {
 
+
+
     const router = useRouter()
+
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        if(user){
+            const userInfo = typeof window !== 'undefined' ? localStorage.getItem('userInfo') : null;
+            if (userInfo) {
+                router.push('/')
+            }
+        }
+        else if(!user){
+            const vendorInfo = typeof window !== 'undefined' ? localStorage.getItem('vendorInfo') : null
+            if(vendorInfo){
+                router.push('/vendor/dashboard')
+            }
+        }
+    }, []);
+
 
     const [error, setError] = useState('')
     const [formData, setFormData] = useState({
@@ -42,9 +66,11 @@ function FormLogin({user}:formLogin) {
             else {
                if(user){
                     const res = await login(formData)
+                    console.log(res)
                     if (res?.data.data.success) {
-                        toast('login successfull')
-                        router.push('/')
+                        dispatch(setUserLogin('userLoggedIn'))
+                        toast.success('login successfull')
+                        router.replace('/');
                         console.log('login successfull')
                     }
                     else {
@@ -54,10 +80,11 @@ function FormLogin({user}:formLogin) {
                else if(!user){
                     const res = await vendorLogin(formData)
                     if(res?.data.data.success){
-                        router.push('/vendor/dashboard')
+                        dispatch(setVendorLogin('vendorLoggedIn'))
+                        router.replace('/vendor/dashboard')
                     }
                     else{
-                        setError(res?.data.data.message)
+                        setError(res?.data.data.message);
                     }
                }
             }

@@ -1,15 +1,19 @@
+'use client'
 import React,{useState} from 'react'
 import Navbar from '../components/user/navbar'
 import Link from 'next/link'
 import logo from '../../public/dineVoyageLogo.png'
 import Image from 'next/image'
 import FormLogin from '../components/formLogin'
+import GoogleAuthLogin from '../components/user/googleAuthLogin'
+import { Toaster } from 'react-hot-toast'
 
 
 const page = () => {
 
     return (
         <>
+            <div><Toaster/></div>
             <header>
                 <Navbar />
             </header>
@@ -33,6 +37,7 @@ const page = () => {
                                     </div>
                                 </div>
                                 <FormLogin user={true}/>
+                                <GoogleAuthLogin/>
                             </div>
                         </div>
                     </div>

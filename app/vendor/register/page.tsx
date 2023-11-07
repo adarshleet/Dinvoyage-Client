@@ -1,12 +1,16 @@
+'use client'
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import logo from '../../../public/dineVoyageLogo.png'
 import Form from '../../components/form'
+import GoogleAuthSignup from '@/app/components/vendor/googleAuthSignup'
+import { Toaster } from 'react-hot-toast'
 
 const page = () => {
     return (
         <main className=''>
+            <div><Toaster/></div>
             <div className='flex justify-center items-center'>
                 <div className="flex flex-col w-full items-center justify-center px-6 py-8 md:h-screen lg:py-0">
                     <div className="bg-white rounded-lg shadow flex flex-col md:flex-row items-center md:mt-0">
@@ -36,6 +40,7 @@ const page = () => {
                                 </div>
                             </div>
                             <Form user={false} />
+                            <GoogleAuthSignup />
                         </div>
                     </div>
                 </div>

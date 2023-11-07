@@ -3,7 +3,9 @@ const userRoutes={
 
     otpVerify : '/api/user/otpVerify',
 
-    login : '/api/user/login'
+    login : '/api/user/login',
+    
+    logout : '/api/user/logout'
 }
 
 export default userRoutes

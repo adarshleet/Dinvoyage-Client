@@ -56,8 +56,27 @@ export const vendorLogin = async (vendor : Formvalues)=>{
 
 export const addRestaurant = async (restaurantData:FormData)=>{
     try {
-        console.log(restaurantData)
         const res = await Api.post(vendorRoutes.addRestaurant,restaurantData)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const getRestaurant = async()=>{
+    try {
+        const res = await Api.get(vendorRoutes.getRestaurant)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const vendorLogout = async()=>{
+    try {
+        const res = await Api.get(vendorRoutes.vendorLogout)
         return res
     } catch (error) {
         console.log(error)

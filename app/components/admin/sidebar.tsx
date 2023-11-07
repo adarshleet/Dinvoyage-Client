@@ -8,7 +8,10 @@ import {MdStyle} from 'react-icons/md'
 import {TbTableOptions} from 'react-icons/tb'
 import Link from 'next/link'
 
-const Sidebar = () => {
+interface Page{
+    page : string
+}
+const Sidebar = ({page}:Page) => {
   return (
     <>
             <button
@@ -39,7 +42,7 @@ const Sidebar = () => {
                 aria-label="Sidebar"
             >
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50">
-                    <a href="https://flowbite.com/" className="flex flex-col items-center p-3 mb-5">
+                    <Link href="/admin/dashboard" className="flex flex-col items-center p-3 mb-5">
                         <Image
                             src={logo}
                             className=""
@@ -49,55 +52,55 @@ const Sidebar = () => {
                         <span className="self-center text-xl whitespace-nowra font-bold">
                             ADMIN
                         </span>
-                    </a>
+                    </Link>
                     <ul className="space-y-2 font-medium">
-                        <li>
+                        <li  className={page=='dashboard' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
                                 href="/admin/dashboard"
-                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                className="flex items-center p-3  rounded-lg    group"
                             >
                                 <BiSolidDashboard className="text-2xl"/>
                                 <span className="ml-3">Dashboard</span>
                             </Link>
                         </li>
 
-                        <li>
+                        <li  className={page=='users' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
                                 href="/admin/users"
-                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                className="flex items-center p-3  rounded-lg  group"
                             >
                                 <FaUsers className="text-2xl"/>
                                 <span className="flex-1 ml-3 whitespace-nowrap">Users</span>
                             </Link>
                         </li>
 
-                        <li>
+                        <li className={page=='vendors' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
                                 href="/admin/vendors"
-                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                className="flex items-center p-3 rounded-lg  group"
                             >
                                 <AiFillShop className="text-2xl"/>
                                 <span className="ml-3">Vendors</span>
                             </Link>
                         </li>
                         
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                        <li className={page=='request' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
+                            <Link
+                                href="/admin/requests"
+                                className="flex items-center p-3  rounded-lg  group"
                             >
                                 <BiSolidMessageAltError className="text-2xl" />
                                 <span className="flex-1 ml-3 whitespace-nowrap">Requests</span>
-                                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ">
+                                {/* <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ">
                                     3
-                                </span>
-                            </a>
+                                </span> */}
+                            </Link>
                         </li>
 
-                        <li>
+                        <li  className={page=='cuisines' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
                                 href="/admin/cuisines"
-                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                className="flex items-center p-3 rounded-lg  group"
                             >
                                 <TbTableOptions className="text-2xl" />
                                 <span className="flex-1 ml-3 whitespace-nowrap">Cuisines & Facilties</span>
@@ -106,22 +109,22 @@ const Sidebar = () => {
                         </li>
                        
                         <li>
-                            <a
+                            <Link
                                 href="#"
                                 className="flex items-center justify-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
                                 <MdStyle className="text-2xl" />
                                 <span className="flex-1 ml-3 whitespace-nowrap">Banners</span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
+                            <Link
                                 href="#"
                                 className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
                             >
                                 <BiSolidOffer className="text-2xl"/>
                                 <span className="flex-1 ml-3 whitespace-nowrap">Offers</span>
-                            </a>
+                            </Link>
                         </li>
                         
                     </ul>

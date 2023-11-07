@@ -4,11 +4,12 @@ import banner from '../public/dineVoyageBanner.png'
 import bannerMobile from '../public/bannerMobile.png'
 import OfferCard from "./components/user/offerCard"
 import HotelCard from "./components/user/hotelCard"
-
+import { Toaster } from "react-hot-toast"
 
 export default function Home() {
     return (
         <>
+            <div><Toaster/></div>
             <header>
                 <Navbar />
             </header>

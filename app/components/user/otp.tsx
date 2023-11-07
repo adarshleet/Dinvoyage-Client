@@ -35,8 +35,8 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
                     const res = await otpVerify(otp)
                     console.log(res)
                     if(res?.data.data){
-                        toast("Hello World")
-                        router.push('/');
+                        toast.success("Registration Succesfull. Please Login")
+                        router.push('/login');
                     }
                     else{
                         setError(`The OTP you entered doesn't match. Please enter a valid OTP.`)
@@ -46,8 +46,8 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
                     const res = await otpVerifyVendor(otp)
                     console.log(res)
                     if(res?.data.data){
-                        toast("Hello World")
-                        router.push('/vendor/dashboard');
+                        toast.success('Registration Successfull. Please Login')
+                        router.push('/vendor');
                     }
                     else{
                         setError(`The OTP you entered doesn't match. Please enter a valid OTP.`)
