@@ -3,6 +3,7 @@ import { addRestaurant } from '@/apis/vendor';
 import React, { ChangeEvent, useState } from 'react'
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import Spinner from '../loadingPages/spinner';
 
 const RestaurantForm = () => {
 
@@ -28,6 +29,8 @@ const RestaurantForm = () => {
     });
 
     const [images, setImages] = useState([])
+
+    const [loading,setLoading] = useState(false)
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
         const value = e.target.value;
@@ -83,6 +86,7 @@ const RestaurantForm = () => {
 
 
         else {
+            setLoading(true)
             // Append the image files
             images.forEach((banner, index) => {
                 if (banner) {
@@ -106,8 +110,11 @@ const RestaurantForm = () => {
             form.append('contactNumber', formData.contactNumber)
 
             const res = await addRestaurant(form)
-            console.log("res",res)
-            router.replace('/vendor/restaurants')
+            const data = res?.data
+            if(data.status){
+                setLoading(false)
+                router.replace('/vendor/restaurants')
+            }
         }
     }
 
@@ -115,7 +122,7 @@ const RestaurantForm = () => {
 
 
     return (
-
+        <>
         <form onSubmit={handleRequestApproval} encType='multipart/form-data'>
             <Toaster
                 position="top-right"
@@ -231,31 +238,6 @@ const RestaurantForm = () => {
             <div className='py-4 p-2'>
                 <label htmlFor="">Select Banners</label>
                 <div className='py-2 flex flex-wrap gap-3'>
-
-                    {/* <div className='p-2 border border-gray-400'>
-                        <label htmlFor="bannerFileInput1" className='flex items-center font-bold'>
-                            Banner 1
-                            <input type="file" id="bannerFileInput1" name='banner' className='hidden' />
-                        </label>
-                    </div>
-                    <div className='p-2 border border-gray-400'>
-                        <label htmlFor="bannerFileInput2" className='flex items-center font-bold'>
-                            Banner 2
-                            <input type="file" id="bannerFileInput2" name='banner' className='hidden' />
-                        </label>
-                    </div>
-                    <div className='p-2 border border-gray-400'>
-                        <label htmlFor="bannerFileInput3" className='flex items-center font-bold'>
-                            Banner 3
-                            <input type="file" id="bannerFileInput3" name='banner' className='hidden' />
-                        </label>
-                    </div>
-                    <div className='p-2 border border-gray-400'>
-                        <label htmlFor="bannerFileInput4" className='flex items-center font-bold'>
-                            Banner 4
-                            <input type="file" id="bannerFileInput4" name='banner' className='hidden' />
-                        </label>
-                    </div> */}
                     {formData.banners.map((banner, index) => (
                         <div key={index} className='p-2 border border-gray-400'>
                             <label htmlFor={`bannerFileInput${index}`} className='flex items-center font-bold'>
@@ -269,6 +251,10 @@ const RestaurantForm = () => {
                 <button className='w-full text-center mt-8 p-2 text-white font-bold bg-gray-600'>REQUEST ADMIN FOR APPROVAL</button>
             </div>
         </form>
+        {loading &&
+            <Spinner/>
+        }
+        </>
     )
 }
 

@@ -5,6 +5,7 @@ import { blockUser } from '@/apis/admin'
 import { HiArrowNarrowRight, HiArrowNarrowLeft } from 'react-icons/hi'
 import { AiOutlineSearch } from 'react-icons/ai'
 import ConfirmPopUp from './confirmPopUp'
+import TableSkeleton from '../loadingPages/tableLoading'
 
 
 interface Data {
@@ -31,6 +32,7 @@ const Table = ({ user }: tableProps) => {
 
     const [currentPage, setCurrentPage] = useState(1)
     const [dataId,setDataId] = useState('')
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const fetchData = async (currentPage: number) => {
@@ -45,6 +47,7 @@ const Table = ({ user }: tableProps) => {
                     const { allUsers, allVendors, totalPages, totalData, limit } = res.data;
                     setData(user ? allUsers : allVendors);
                     setPagination({ totalPages, totalData, limit });
+                    setIsLoading(false)
                 }
             } catch (error) {
                 console.error("Error fetching data: ", error);
@@ -161,7 +164,12 @@ const Table = ({ user }: tableProps) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.length ? (
+                        {isLoading ? (
+                            <TableSkeleton/>
+                        ):
+
+                        
+                        data.length ? (
                             data.map((item, index) => (
                                 <tr className="bg-white border-b text-s" key={index}>
                                     <td className="px-6 py-4 whitespace-nowrap">
@@ -198,11 +206,9 @@ const Table = ({ user }: tableProps) => {
                                 </tr>
                             ))
                         ) : (
-                            <tr>
-                                <td>
-                                    <p>Loading....</p>
-                                </td>
-                            </tr>
+                            <div className='py-5'>
+                                <p className='text-center text-lg font-bold'>No Users Found</p>
+                            </div>
                         )}
 
                     </tbody>

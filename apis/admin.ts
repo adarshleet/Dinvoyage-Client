@@ -56,7 +56,6 @@ export const blockVendor = async(id:string)=>{
 export const allFacilities = async()=>{
     try {
         const res = Api.get(adminRoutes.allFacilities)
-        console.log(res)
         return res
     } catch (error) {
         console.log(error);
@@ -65,6 +64,41 @@ export const allFacilities = async()=>{
 }
 
 
+
+//add new cuisine
+export const addCuisines =  async(cuisine:string)=>{
+    try {
+        const res = Api.post(adminRoutes.addCuisine,{cuisine})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//edit cuisine
+export const editCuisine = async(index:number,cuisine:string)=>{
+    try {
+        const res = Api.post(`${adminRoutes.editCuisine}?cuisine=${cuisine}&index=${index}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//delete cuisine
+export const deleteCuisine =  async(cuisine:string)=>{
+    try {
+        const res = Api.post(`${adminRoutes.deleteCuisine}?cuisine=${cuisine}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//getting all cuisines for showing
 export const allCuisines = async()=>{
     try {
         const res = Api.get(adminRoutes.allCuisines)

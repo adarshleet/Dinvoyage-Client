@@ -12,9 +12,7 @@ const page = () => {
                 <div className='w-full bg-cyan-600 p-3 rounded-md mb-4'>
                     <h1 className='font-bold text-white'>RESTAURANT DETAILS</h1>
                 </div>
-                <div className='p-5 bg-white shadow-sm flex justify-center'>
-                    <RestaurantCard />
-                </div>
+                <RestaurantCard />
             </div>
         </div>
     )

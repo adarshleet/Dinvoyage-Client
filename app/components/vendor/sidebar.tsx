@@ -77,7 +77,7 @@ const Sidebar = ({page}:Page) => {
                         <li  className={page=='cuisines' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
                                 href="/vendor/cuisines"
-                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                className="flex items-center p-3 group"
                             >
                                 <TbTableOptions className="text-2xl" />
                                 <span className="ml-3 font-semibold">Cuisines & Facilities</span>

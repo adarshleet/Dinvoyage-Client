@@ -3,15 +3,18 @@ import Sidebar from '@/app/components/admin/sidebar'
 import FacilitiesTable from '@/app/components/admin/facilitiesTable'
 import { allFacilities } from '@/apis/admin';
 import CuisineTable from '@/app/components/admin/cuisinetable';
+import { Toaster } from 'react-hot-toast';
 
 
 
 
 const page = () => {
     return (
+        <>
+        <div><Toaster position='top-right'/></div>
         <div className='flex flex-col pt-16 md:ml-72'>
             <div className=''>
-                <Sidebar />
+                <Sidebar page='cuisines'/>
             </div>
             
             <div className='px-4'>
@@ -25,6 +28,7 @@ const page = () => {
             </div>
 
         </div>
+        </>
     )
 }
 

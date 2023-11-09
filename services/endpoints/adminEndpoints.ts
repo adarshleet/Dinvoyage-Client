@@ -15,6 +15,12 @@ const adminRoutes = {
 
     allCuisines : '/api/admin/allCuisines',
 
+    addCuisine : '/api/admin/addCuisine',
+
+    editCuisine : '/api/admin/editCuisine',
+
+    deleteCuisine :'/api/admin/deleteCuisine',
+
     allRequests : '/api/admin/allRequests',
 
     singleRestaurantRequest : '/api/admin/restaurantRequest',

@@ -26,13 +26,13 @@ function FormLogin({user}:formLogin) {
         if(user){
             const userInfo = typeof window !== 'undefined' ? localStorage.getItem('userInfo') : null;
             if (userInfo) {
-                router.push('/')
+                router.replace('/')
             }
         }
         else if(!user){
             const vendorInfo = typeof window !== 'undefined' ? localStorage.getItem('vendorInfo') : null
             if(vendorInfo){
-                router.push('/vendor/dashboard')
+                router.replace('/vendor/dashboard')
             }
         }
     }, []);
