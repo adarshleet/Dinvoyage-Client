@@ -74,6 +74,27 @@ export const getRestaurant = async()=>{
 }
 
 
+
+export const selectedCuisinesAndFacilities = async()=>{
+    try {
+        const res = await Api.get(vendorRoutes.selectedCuisinesAndFacilities)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const SetSelectedCuisines = async(cuisines:Array<string>,restaurantId:string)=>{
+    try {
+        const res = await Api.post(`${vendorRoutes.selectCuisines}?restaurantId=${restaurantId}`,{cuisines})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 export const vendorLogout = async()=>{
     try {
         const res = await Api.get(vendorRoutes.vendorLogout)

@@ -9,7 +9,12 @@ const vendorRoutes = {
 
     getRestaurant : '/api/vendor/getRestaurant',
 
-    vendorLogout : '/api/vendor/vendorLogout'
+    vendorLogout : '/api/vendor/vendorLogout',
+
+    selectedCuisinesAndFacilities : '/api/vendor/selectedCuisinesAndFacilities',
+
+    selectCuisines : '/api/vendor/selectCuisines'
+
 }
 
 export default vendorRoutes
