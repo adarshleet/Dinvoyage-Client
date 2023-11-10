@@ -13,6 +13,12 @@ const adminRoutes = {
 
     allFacilities: '/api/admin/allFacilities',
 
+    addFacility: '/api/admin/addFacility',
+
+    editFacility : '/api/admin/editFacility',
+
+    deleteFacility : '/api/admin/deleteFacility',
+
     allCuisines : '/api/admin/allCuisines',
 
     addCuisine : '/api/admin/addCuisine',

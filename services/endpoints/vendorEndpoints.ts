@@ -13,7 +13,9 @@ const vendorRoutes = {
 
     selectedCuisinesAndFacilities : '/api/vendor/selectedCuisinesAndFacilities',
 
-    selectCuisines : '/api/vendor/selectCuisines'
+    selectCuisines : '/api/vendor/selectCuisines',
+
+    selectFacilities : '/api/vendor/selectFacilities'
 
 }
 

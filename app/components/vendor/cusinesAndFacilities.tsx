@@ -1,6 +1,6 @@
 'use client'
 import { allCuisines, allFacilities } from '@/apis/admin'
-import { SetSelectedCuisines, getRestaurant, selectedCuisinesAndFacilities } from '@/apis/vendor'
+import { SetSelectedCuisines, SetSelectedFacilities, getRestaurant, selectedCuisinesAndFacilities } from '@/apis/vendor'
 import React, { useEffect, useState } from 'react'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import CardRestaurant from '../loadingPages/cardRestaurant'
@@ -12,11 +12,11 @@ const CusinesAndFacilities = () => {
     const [allFacility, setAllFacility] = useState([]); // Updated to match the fetched facility data
     const [restaurant, setRestaurant] = useState<any>({})
     const [allRestaurant, setAllRestaurant] = useState<any>([])
-    const [cuisineArray,setCuisineArray] = useState()
     const [page, setPage] = useState(0)
     const [loading, setLoading] = useState(true)
 
     const [selectedCuisines,setSelectedCuisines] = useState([])
+    const [selectedFacilities,setSelectedFacilities] = useState([])
 
      useEffect(() => {
         const fetchData = async () => {
@@ -35,6 +35,7 @@ const CusinesAndFacilities = () => {
                     setAllRestaurant(restaurantData);
                     setRestaurant(restaurantData[page])
                     setSelectedCuisines(restaurantData[0].cuisines)
+                    setSelectedFacilities(restaurantData[0].facilities)
                     setLoading(false)
                 }
             } catch (error) {
@@ -56,12 +57,22 @@ const CusinesAndFacilities = () => {
         }
     };
 
+
+    const handleFacilityCheckboxChange = (clickedFacility:string)=>{
+        const isChecked = selectedFacilities.includes(clickedFacility)
+        if(!isChecked){
+            setSelectedFacilities(prevSelectedFacilities => [...prevSelectedFacilities,clickedFacility])
+        }
+        else{
+            setSelectedFacilities(prevSelectedFacilities => prevSelectedFacilities.filter(facility => facility !== clickedFacility))
+        }
+    }
+
     const handleButtonClick = async() => {
         if(!selectedCuisines.length){
             return toast.error('Select Atleast One Cuisine To Update')
         }
-        console.log(selectedCuisines)
-        console.log(restaurant._id)
+        
         const res = await SetSelectedCuisines(selectedCuisines,restaurant._id)
         if(res?.data){
             toast.success('Cuisine List Updated')
@@ -69,17 +80,32 @@ const CusinesAndFacilities = () => {
     };
 
 
+    const handleFacilityButtonClick = async()=>{
+        if(!selectedFacilities.length){
+            return toast.error('Select Atlest One Facility To Update')
+        }
+
+        const res = await SetSelectedFacilities(selectedFacilities,restaurant._id)
+        console.log(res)
+
+        if(res?.data){
+            toast.success('Facility List Updated')
+        }
+    }
+
+
     const pagePlus = ()=>{
         setPage(page+1)
         setRestaurant(allRestaurant[page+1])
         setSelectedCuisines(allRestaurant[page+1].cuisines)
+        setSelectedFacilities(allRestaurant[page+1].facilities)
     }
 
     const pageMinus = () =>{
         setPage(page-1)
         setRestaurant(allRestaurant[page-1])
         setSelectedCuisines(allRestaurant[page-1].cuisines)
-
+        setSelectedFacilities(allRestaurant[page-1].facilities)
     }
 
 
@@ -121,13 +147,13 @@ const CusinesAndFacilities = () => {
                         {
                             allFacility.map((facility: string, index: number) => (
                                 <div className='' key={index}>
-                                    <input type="checkbox" className='mx-2' />
+                                    <input checked={selectedFacilities.includes(facility)} type="checkbox" className='mx-2' onChange={()=>handleFacilityCheckboxChange(facility)}/>
                                     <label htmlFor="">{facility}</label>
                                 </div>
                             ))
                         }
                     </div>
-                    <button className='px-3 py-2 bg-cyan-600 text-white font-bold rounded-sm'>UPDATE FACILITIES LIST</button>
+                    <button className='px-3 py-2 bg-cyan-600 text-white font-bold rounded-sm' onClick={handleFacilityButtonClick}>UPDATE FACILITIES LIST</button>
                 </div>
             </div>
         </div>

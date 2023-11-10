@@ -64,6 +64,30 @@ export const allFacilities = async()=>{
 }
 
 
+//add new facility
+export const addFacilities =  async(facility:string)=>{
+    try {
+        const res = Api.post(adminRoutes.addFacility,{facility})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//edit facility
+export const editFacility = async(index:number,facility:string)=>{
+    const res = Api.post(`${adminRoutes.editFacility}?facility=${facility}&index=${index}`)
+    return res
+}
+
+
+//delete facility
+export const deleteFacility = async(facility:string)=>{
+    const res = Api.post(`${adminRoutes.deleteFacility}?facility=${facility}`)
+    return res
+}
+
+
 
 //add new cuisine
 export const addCuisines =  async(cuisine:string)=>{

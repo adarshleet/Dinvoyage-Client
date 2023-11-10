@@ -95,6 +95,16 @@ export const SetSelectedCuisines = async(cuisines:Array<string>,restaurantId:str
 }
 
 
+export const SetSelectedFacilities = async(facilities:Array<string>,restaurantId:string)=>{
+    try {
+        const res = await Api.post(`${vendorRoutes.selectFacilities}?restaurantId=${restaurantId}`,{facilities})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 export const vendorLogout = async()=>{
     try {
         const res = await Api.get(vendorRoutes.vendorLogout)
