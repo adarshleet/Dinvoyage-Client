@@ -7,6 +7,7 @@ import {TbTableOptions} from 'react-icons/tb'
 import Link from 'next/link'
 import {BsGraphUpArrow, BsFillCalendarCheckFill} from 'react-icons/bs'
 import {MdRestaurant} from 'react-icons/md'
+import {GrRestaurant} from 'react-icons/gr'
 
 interface Page{
     page:string
@@ -83,6 +84,28 @@ const Sidebar = ({page}:Page) => {
                                 <span className="ml-3 font-semibold">Cuisines & Facilities</span>
                             </Link>
                         </li>
+
+                        <li className={page=='categories' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
+                            <Link
+                                href="/vendor/categories"
+                                className="flex items-center p-3  rounded-lg    group"
+                            >
+                                <BiFoodMenu className="text-2xl" />
+                                <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Categories</span>
+                            
+                            </Link>
+                        </li>
+
+                        <li>
+                            <Link
+                                href="/vendor/kitchen"
+                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                            >
+                                <GrRestaurant className="text-2xl" />
+                                <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Kitchen</span>
+                            
+                            </Link>
+                        </li>
                         
                         <li>
                             <Link
@@ -97,16 +120,7 @@ const Sidebar = ({page}:Page) => {
                             </Link>
                         </li>
 
-                        <li>
-                            <Link
-                                href="/vendor/categories"
-                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
-                            >
-                                <BiFoodMenu className="text-2xl" />
-                                <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Categories</span>
-                            
-                            </Link>
-                        </li>
+                        
                        
                         
                         <li>

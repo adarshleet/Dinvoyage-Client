@@ -105,6 +105,38 @@ export const SetSelectedFacilities = async(facilities:Array<string>,restaurantId
 }
 
 
+
+export const allCategories = async(restaurantId:string)=>{
+    try {
+        const res = await Api.get(`${vendorRoutes.allCategories}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+
+export const addRestaurantCategory =  async(restaurantId:string,category:string)=>{
+    const res = await Api.post(`${vendorRoutes.addRestaurantCategory}?restaurantId=${restaurantId}`,{category})
+    return res
+}
+
+
+
+export const editRestaurantCategory = async(categoryId:string,category:string)=>{
+    const res = await Api.post(`${vendorRoutes.editRestaurantCategory}?categoryId=${categoryId}`,{category})
+    return res
+}
+
+
+
+export const changeCategoryStatus = async (categoryId:string)=>{
+    const res = await Api.post(`${vendorRoutes.changeCategoryStatus}?categoryId=${categoryId}`)
+    return res
+}
+
+
 export const vendorLogout = async()=>{
     try {
         const res = await Api.get(vendorRoutes.vendorLogout)

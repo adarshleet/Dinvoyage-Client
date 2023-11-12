@@ -15,7 +15,16 @@ const vendorRoutes = {
 
     selectCuisines : '/api/vendor/selectCuisines',
 
-    selectFacilities : '/api/vendor/selectFacilities'
+    selectFacilities : '/api/vendor/selectFacilities',
+
+
+    allCategories : '/api/vendor/categories',
+
+    addRestaurantCategory : '/api/vendor/addCategory',
+
+    editRestaurantCategory : '/api/vendor/editCategory',
+
+    changeCategoryStatus : '/api/vendor/changeCategoryStatus'
 
 }
 
