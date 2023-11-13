@@ -88,7 +88,7 @@ const Sidebar = ({page}:Page) => {
                         <li className={page=='categories' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
                                 href="/vendor/categories"
-                                className="flex items-center p-3  rounded-lg    group"
+                                className="flex items-center p-3 rounded-lg group"
                             >
                                 <BiFoodMenu className="text-2xl" />
                                 <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Categories</span>
@@ -96,10 +96,10 @@ const Sidebar = ({page}:Page) => {
                             </Link>
                         </li>
 
-                        <li>
+                        <li className={page=='kitchen' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
                                 href="/vendor/kitchen"
-                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                className="flex items-center p-3 rounded-lg group"
                             >
                                 <GrRestaurant className="text-2xl" />
                                 <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Kitchen</span>

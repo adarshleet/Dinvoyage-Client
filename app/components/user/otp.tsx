@@ -1,9 +1,10 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { otpVerify } from '@/apis/user';
 import { otpVerifyVendor } from '@/apis/vendor';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
+import OtpTimer from './otpTimes';
 
 
 type OtpProps = {
@@ -17,6 +18,7 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
 
     const [otp,setOtp] = useState('')
     const [error,setError] = useState('')
+    const timerRef = useRef();
 
 
     const handleOtpChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -61,6 +63,10 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
 
     const closeModel = ()=>{
         onCloseModel();
+    }
+
+    const handleResendOtp = ()=>{
+        console.log('worink')
     }
 
     return (
@@ -115,9 +121,9 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
                                     }
                                 </div>
 
-
+                                <OtpTimer onTimeout={handleResendOtp}/>
                                 <button
-                                    className="w-full text-white bg-cyan-700 focus:outline-none  font-medium rounded-sm text-sm px-5 py-2.5 text-center"
+                                    className="w-full text-white bg-cyan-700 focus:outline-none mt-2  font-medium rounded-sm text-sm px-5 py-2.5 text-center"
                                 >
                                     Verify OTP
                                 </button>

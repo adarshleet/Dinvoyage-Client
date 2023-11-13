@@ -23,6 +23,17 @@ interface Restaurant{
     banners?: Array<string> | undefined
 }
 
+
+interface itemData{
+    _id ?: string,
+    itemName ?: string,
+    category ?: string,
+    price ?: string,
+    veg ?:boolean,
+    description ?: string,
+    isListed ?: boolean
+}
+
 export const register = async(vendorData:Formvalues)=>{
     try {
         const res = Api.post(vendorRoutes.register,vendorData)
@@ -133,6 +144,18 @@ export const editRestaurantCategory = async(categoryId:string,category:string)=>
 
 export const changeCategoryStatus = async (categoryId:string)=>{
     const res = await Api.post(`${vendorRoutes.changeCategoryStatus}?categoryId=${categoryId}`)
+    return res
+}
+
+
+export const getAllKitchenItems = async(restaurantId:string)=>{
+    const res = await Api.get(`${vendorRoutes.getAllKitchenItems}?restaurantId=${restaurantId}`)
+    return res
+}
+
+
+export const addItemToKitchen = async(restauarntId:string,itemData:itemData)=>{
+    const res = await Api.post(`${vendorRoutes.addItemToKitchen}?restaurantId=${restauarntId}`,{itemData})
     return res
 }
 

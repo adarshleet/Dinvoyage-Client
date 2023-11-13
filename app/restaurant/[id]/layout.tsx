@@ -1,4 +1,4 @@
-import '../../app/globals.css'
+import '../../../app/globals.css'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 

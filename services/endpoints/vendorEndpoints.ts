@@ -24,7 +24,12 @@ const vendorRoutes = {
 
     editRestaurantCategory : '/api/vendor/editCategory',
 
-    changeCategoryStatus : '/api/vendor/changeCategoryStatus'
+    changeCategoryStatus : '/api/vendor/changeCategoryStatus',
+
+
+    getAllKitchenItems : '/api/vendor/viewItems',
+
+    addItemToKitchen : '/api/vendor/addItem'
 
 }
 

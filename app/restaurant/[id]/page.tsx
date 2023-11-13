@@ -1,18 +1,40 @@
-import React from 'react'
-import Navbar from '../components/user/navbar'
-import RestaurantCard from '../components/user/restaurantCard'
+'use client'
+import React, { useEffect, useState } from 'react'
+import Navbar from '../../components/user/navbar'
+import RestaurantCard from '../../components/user/restaurantCard'
+import { singleRestaurant } from '@/apis/user'
+
+interface restaurantProps {
+    params: string
+}
+
+const page = ({params}:restaurantProps) => {
+
+    const [restaurant,setRestaurant] = useState({})
+
+    const { id } = params
+    console.log(id)
+
+    useEffect(()=>{
+        const fetchData = async()=>{
+            const res = await singleRestaurant(id)
+            const restaurant = res?.data.data
+            console.log(restaurant)
+            setRestaurant(restaurant)
+        }
+        fetchData()
+    },[])
 
 
 
-const page = () => {
     return (
         <>
             <header>
                 <Navbar />
             </header>
-            <main className='flex justify-center py-16 px-4'>
+            <main className='flex justify-center py-24 px-4'>
                 <div>
-                    <RestaurantCard />
+                    <RestaurantCard restaurant={restaurant}/>
                     <div className='bg-white my-6 shadow flex'>
                         <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
                             <h3 className='font-bold'>Menu</h3>
@@ -36,25 +58,28 @@ const page = () => {
                     <div className='bg-white shadow p-3 mb-6'>
                         <h3 className='font-bold mb-4'>About</h3>
                         <div>
-                            <div className='flex items-start mb-3'>
+                            <div className='flex items-start mb-6'>
                                 <div className='bg-cyan-600 px-2 py-1.5 mr-2 rounded-full'>
                                     <i className="fa-solid fa-utensils text-lg text-white m-1"></i>
                                 </div>
                                 <div>
                                     <h4 className='text-cyan-600 font-bold'>CUISINES</h4>
-                                    <div>
-                                        <p>Kerala , Continental</p>
+                                    <div className='capitalize grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 pt-2'>
+                                        {restaurant && restaurant?.cuisines?.map((cuisine)=>(
+                                            <p>{cuisine}</p>
+                                        ))
+                                        }
                                     </div>
                                 </div>
                             </div>
-                            <div className='flex items-start mb-3'>
+                            <div className='flex items-start mb-6'>
                                 <div className='bg-cyan-600 px-2.5 py-1.5 mr-2 rounded-full'>
                                     <i className="fa-solid fa-indian-rupee-sign text-lg text-white m-1"></i>
                                 </div>
                                 <div>
                                     <h4 className='text-cyan-600 font-bold'>AVERAGE COST</h4>
                                     <div>
-                                        <p>₹500 for two people</p>
+                                        <p>₹{restaurant.minCost} for two people</p>
                                     </div>
                                 </div>
                             </div>
@@ -68,10 +93,9 @@ const page = () => {
                                     </div>
                                 </div>
                                 <div className='ps-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4'>
-                                    <p>Wheelchair friendly</p>
-                                    <p>Parking</p>
-                                    <p>Air Conditioned</p>
-                                    <p>Wifi</p>
+                                    {restaurant && restaurant?.facilities?.map((facility)=>(
+                                        <p>{facility}</p>
+                                    ))}
                                 </div>
                             </div>
                         </div>

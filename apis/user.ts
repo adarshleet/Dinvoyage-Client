@@ -48,3 +48,29 @@ export const logout = async()=>{
         console.log(error)
     }
 }
+
+
+
+
+//restaurant in display
+export const restaurantsToDisplay = async()=>{
+    try {
+        const res = await Api.get(userRoutes.restaurantsToShow)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+//single restaurant page
+export const singleRestaurant = async(restauarntId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.singleRestaurant}?restaurantId=${restauarntId}`)
+        return res
+    } catch (error) {
+        console.log(error);
+        
+    }
+}

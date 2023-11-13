@@ -169,16 +169,16 @@ const CategoryTable = () => {
     return (
         <>
         <div className='flex justify-between items-center p-3 border shadow-md bg-white mb-2'>
-                <div className=''>
-                    <h4 className='text-2xl text-gray-800 font-bold'>{restaurant.restaurantName}</h4>
-                    <h5 className='text-xl text-gray-700 font-bold'>{restaurant.landmark}</h5>
-                </div>
-                <div className='flex gap-4 text-xl text-gray-600 font-bold'>
-                    <button onClick={pageMinus} disabled={page==0}><BsFillArrowLeftSquareFill/></button>
-                    <h5>{page+1}/{allRestaurant.length}</h5>
-                    <button onClick={pagePlus} disabled={page == allRestaurant.length-1}><BsFillArrowRightSquareFill/></button>
-                </div>
+            <div className=''>
+                <h4 className='text-2xl text-gray-800 font-bold'>{restaurant.restaurantName}</h4>
+                <h5 className='text-xl text-gray-700 font-bold'>{restaurant.landmark}</h5>
             </div>
+            <div className='flex gap-4 text-xl text-gray-600 font-bold'>
+                <button onClick={pageMinus} disabled={page==0}><BsFillArrowLeftSquareFill/></button>
+                <h5>{page+1}/{allRestaurant.length}</h5>
+                <button onClick={pagePlus} disabled={page == allRestaurant.length-1}><BsFillArrowRightSquareFill/></button>
+            </div>
+        </div>
         <div className="block w-full overflow-x-auto shadow-lg border">
             <table className="items-center w-full bg-transparent border-collapse">
                 <thead className='text-base font-bold'>

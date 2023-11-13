@@ -9,7 +9,6 @@ interface requestProps {
 const page = ({ params }: requestProps) => {
 
     const { id } = params
-    // console.log(id)
 
     
 

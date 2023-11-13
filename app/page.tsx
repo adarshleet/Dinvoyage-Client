@@ -1,25 +1,44 @@
+'use client'
 import Navbar from "./components/user/navbar"
 import Image from "next/image"
 import banner from '../public/dineVoyageBanner.png'
-import bannerMobile from '../public/bannerMobile.png'
 import OfferCard from "./components/user/offerCard"
 import HotelCard from "./components/user/hotelCard"
 import { Toaster } from "react-hot-toast"
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function Home() {
+
+    const settings = {
+        dots: true,
+        infinite: true, // Enables infinite looping
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true, // Enables automatic sliding
+        autoplaySpeed: 4000, // Adjust the speed as needed
+    };
+
     return (
         <>
             <div><Toaster/></div>
             <header>
                 <Navbar />
             </header>
-            <main>
-                <div className="md:hidden">
-                    <Image priority={false} src={bannerMobile} alt="banner" />
+            <main className="pt-16">
+                <div className="overflow-hidden">
+                    <Slider {...settings}>
+                        <div className="">
+                            <Image priority={false} src={banner} alt="banner" />
+                        </div>
+                        <div className="">
+                            <Image priority={false} src={banner} alt="banner" />
+                        </div>
+                    </Slider>
                 </div>
-                <div className="hidden md:block">
-                    <Image priority={false} src={banner} alt="banner" />
-                </div>
+                
                 <div className="flex justify-center py-16 px-4 items-center container mx-auto">
                     <div style={{ width: '50rem' }}>
                         <div>
@@ -44,9 +63,9 @@ export default function Home() {
                     <div className="flex flex-col" style={{ width: '65rem' }}>
                         <h1 className="text-xl font-bold py-2">Restaurants Near You</h1>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+                            {/* <HotelCard />
                             <HotelCard />
-                            <HotelCard />
-                            <HotelCard />
+                            <HotelCard /> */}
                         </div>
                     </div>
                 </div>

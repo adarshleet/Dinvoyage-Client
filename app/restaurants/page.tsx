@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../components/user/navbar'
 import HotelCard from '../components/user/hotelCard'
+import RestaurantsToShow from '../components/user/restaurantsToShow'
 
 function page() {
     return (
@@ -8,7 +9,7 @@ function page() {
             <header>
                 <Navbar />
             </header>
-            <main>
+            <main className='pt-14'>
                 <div className='flex justify-center py-10 px-6'>
                     <div className='flex justify-center gap-4'>
                         <div className='w-60 hidden md:block'>
@@ -66,10 +67,7 @@ function page() {
                         <div>
                             <h1 className='font-bold text-lg'>Best Restaurants Near In Kozhikode</h1>
                             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3'>
-                                <HotelCard />
-                                <HotelCard />
-                                <HotelCard />
-                                <HotelCard />
+                                <RestaurantsToShow/>
                             </div>
                         </div>
                     </div>
