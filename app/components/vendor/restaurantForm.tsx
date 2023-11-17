@@ -1,9 +1,10 @@
 'use client'
 import { addRestaurant } from '@/apis/vendor';
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import Spinner from '../loadingPages/spinner';
+import { allLocalities } from '@/apis/admin';
 
 const RestaurantForm = () => {
 
@@ -30,7 +31,18 @@ const RestaurantForm = () => {
 
     const [images, setImages] = useState([])
 
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const [locations,setLocations] = useState([])
+
+
+    useEffect(()=>{
+        const fetchData = async()=>{
+            const res = await allLocalities()
+            console.log(res?.data.data)
+        }
+        fetchData()
+    },[])
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
         const value = e.target.value;
@@ -65,22 +77,22 @@ const RestaurantForm = () => {
         else if (formData.locality.length < 3) {
             toast.error('Please enter locality')
         }
-        else if(formData.district.length < 4){
+        else if (formData.district.length < 4) {
             toast.error('Please enter district')
         }
         else if (!formData.openingTime || !formData.closingTime) {
             toast.error('Please enter the time of opening and closing')
         }
-        else if(formData.minCost < 200){
+        else if (formData.minCost < 200) {
             toast.error('Please enter valid minimum cost')
         }
-        else if(formData.googlemapLocation.length < 10){
+        else if (formData.googlemapLocation.length < 10) {
             toast.error('Please enter a valid location link')
         }
-        else if(formData.contactNumber.length != 10){
+        else if (formData.contactNumber.length != 10) {
             toast.error('Please Enter a valid contact number')
         }
-        else if(formData.banners[0]===''){
+        else if (formData.banners[0] === '') {
             toast.error('Please select atleast one banner')
         }
 
@@ -111,7 +123,7 @@ const RestaurantForm = () => {
 
             const res = await addRestaurant(form)
             const data = res?.data
-            if(data.status){
+            if (data.status) {
                 setLoading(false)
                 router.replace('/vendor/restaurants')
             }
@@ -121,139 +133,160 @@ const RestaurantForm = () => {
 
 
 
+
+
     return (
         <>
-        <form onSubmit={handleRequestApproval} encType='multipart/form-data'>
-            <Toaster
-                position="top-right"
-                reverseOrder={false}
-            />
-            <div className='flex flex-wrap'>
-                <div className='flex flex-col p-2 w-full md:w-1/2 '>
-                    <label htmlFor="">Restaurant Name</label>
-                    <input type="text" name='restaurantName' value={formData.restaurantName} onChange={(e) => handleInputChange(e, 'restaurantName')} className='border border-gray-400 p-2' />
-                </div>
-                <div className='flex flex-col p-2 w-full md:w-1/2'>
-                    <label htmlFor="">Landmark</label>
-                    <input type="text" name='landmark' value={formData.landmark} onChange={(e) => handleInputChange(e, 'landmark')} className='border border-gray-400 p-2' />
-                </div>
-                <div className='flex flex-col p-2 w-full md:w-1/2 '>
-                    <label htmlFor="">Locality</label>
-                    <input type="text" name='locality' value={formData.locality} onChange={(e) => handleInputChange(e, 'locality')} className='border border-gray-400 p-2' />
-                </div>
-                <div className='flex flex-col p-2 w-full md:w-1/2'>
-                    <label htmlFor="">District</label>
-                    <input type="text" name='district' value={formData.district} onChange={(e) => handleInputChange(e, 'district')} className='border border-gray-400 p-2' />
-                </div>
-                <div className='flex flex-col p-2 w-full md:w-1/2 '>
-                    <label htmlFor="">Opening Time</label>
-                    <input type="time" name="openingTime" value={formData.openingTime} onChange={(e) => handleInputChange(e, 'openingTime')} className='border border-gray-400 p-2' />
-                </div>
-                <div className='flex flex-col p-2 w-full md:w-1/2'>
-                    <label htmlFor="">Closing Time</label>
-                    <input type="time" name='closingTime' value={formData.closingTime} onChange={(e) => handleInputChange(e, 'closingTime')} className='border border-gray-400 p-2' />
-                </div>
-                <div className='flex flex-col p-2 w-full md:w-1/2'>
-                    <label htmlFor="">Minimum Cost For Two People</label>
-                    <input type="number" name='minCost' value={formData.minCost} onChange={(e) => handleInputChange(e, 'minCost')} className='border border-gray-400 p-2' />
-                </div>
-                <div className='flex flex-col p-2 w-full md:w-1/2'>
-                    <label htmlFor="">Googlemap Location</label>
-                    <input type="text" name='googlemapLocation' value={formData.googlemapLocation} onChange={(e) => handleInputChange(e, 'googlemapLocation')} className='border border-gray-400 p-2' />
-                </div>
-                <div className='flex flex-col p-2 w-full md:w-1/2'>
-                    <label htmlFor="">Restaurant Contact Number</label>
-                    <input type="text" name='contactNumber' value={formData.contactNumber} onChange={(e) => handleInputChange(e, 'contactNumber')} className='border border-gray-400 p-2' />
-                </div>
-            </div>
-            <div className='p-2 mt-3'>
-                <label htmlFor="">Enter Table Counts</label>
-                <div className='flex py-2 gap-2'>
-                    <div className='p-2 border border-gray-900 w-1/2 md:w-1/4 flex justify-between'>
-                        <h4>2 Seater</h4>
-                        <select name="tableCounts" id="" value={formData.tableCounts['2Seater']} onChange={(e) => handleTableCountChange(e, '2Seater')} className='w-1/4'>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
+            <form onSubmit={handleRequestApproval} encType='multipart/form-data'>
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                />
+                <div className='flex flex-wrap'>
+                    <div className='flex flex-col p-2 w-full md:w-1/2 '>
+                        <label htmlFor="">Restaurant Name</label>
+                        <input type="text" name='restaurantName' value={formData.restaurantName} onChange={(e) => handleInputChange(e, 'restaurantName')} className='border border-gray-400 p-2' />
                     </div>
-                    <div className='p-2 border border-gray-900 w-1/2 md:w-1/4 flex justify-between'>
-                        <h4>4 Seater</h4>
-                        <select name="" id="" value={formData.tableCounts['4Seater']} onChange={(e) => handleTableCountChange(e, '4Seater')} className='w-1/4'>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
+                    <div className='flex flex-col p-2 w-full md:w-1/2'>
+                        <label htmlFor="">Landmark</label>
+                        <input type="text" name='landmark' value={formData.landmark} onChange={(e) => handleInputChange(e, 'landmark')} className='border border-gray-400 p-2' />
                     </div>
-                    <div className='p-2 border border-gray-900 w-1/2 md:w-1/4 flex justify-between'>
-                        <h4>6 Seater</h4>
-                        <select name="" id="" value={formData.tableCounts['6Seater']} onChange={(e) => handleTableCountChange(e, '6Seater')} className='w-1/4'>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
+                    <div className='flex flex-col p-2 w-full md:w-1/2'>
+                        <label htmlFor="">District</label>
+                        {/* <input type="text" name='district' value={formData.district} onChange={(e) => handleInputChange(e, 'district')} className='border border-gray-400 p-2' /> */}
+                        <select name='district' value={formData.district} onChange={(e) => handleInputChange(e, 'district')} className='border border-gray-400 p-2' >
+                            <option className='py-2 px-1' value="">Select a district</option>
+                            <option value="kasargod">Kasargod</option>
+                            <option value="kannur">Kannur</option>
+                            <option value="kozhikode">Kozhikode</option>
+                            <option value="wayanad">Wayanad</option>
+                            <option value="malappura">Malappuram</option>
+                            <option value="thrissur">Thrissur</option>
+                            <option value="ernakulam">Ernakulam</option>
+                            <option value="palakkad">Palakkad</option>
+                            <option value="idukki">Idukki</option>
+                            <option value="alappuzha">Alappuzha</option>
+                            <option value="kottayam">Kottayam</option>
+                            <option value="pathanamthitta">Pathanamthitta</option>
+                            <option value="kollam">Kollam</option>
+                            <option value="thiruvananthapuram">Thiruvanthapuram</option>
                         </select>
+
                     </div>
-                    <div className='p-2 border border-gray-900 w-1/2 md:w-1/4 flex justify-between'>
-                        <h4>8 Seater</h4>
-                        <select name="" id="" value={formData.tableCounts['8Seater']} onChange={(e) => handleTableCountChange(e, '8Seater')} className='w-1/4'>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
+                    <div className='flex flex-col p-2 w-full md:w-1/2 '>
+                        <label htmlFor="">Locality</label>
+                        <input type="text" name='locality' value={formData.locality} onChange={(e) => handleInputChange(e, 'locality')} className='border border-gray-400 p-2' />
+                    </div>
+
+                    <div className='flex flex-col p-2 w-full md:w-1/2 '>
+                        <label htmlFor="">Opening Time</label>
+                        <input type="time" name="openingTime" value={formData.openingTime} onChange={(e) => handleInputChange(e, 'openingTime')} className='border border-gray-400 p-2' />
+                    </div>
+                    <div className='flex flex-col p-2 w-full md:w-1/2'>
+                        <label htmlFor="">Closing Time</label>
+                        <input type="time" name='closingTime' value={formData.closingTime} onChange={(e) => handleInputChange(e, 'closingTime')} className='border border-gray-400 p-2' />
+                    </div>
+                    <div className='flex flex-col p-2 w-full md:w-1/2'>
+                        <label htmlFor="">Minimum Cost For Two People</label>
+                        <input type="number" name='minCost' value={formData.minCost} onChange={(e) => handleInputChange(e, 'minCost')} className='border border-gray-400 p-2' />
+                    </div>
+                    <div className='flex flex-col p-2 w-full md:w-1/2'>
+                        <label htmlFor="">Googlemap Location</label>
+                        <input type="text" name='googlemapLocation' value={formData.googlemapLocation} onChange={(e) => handleInputChange(e, 'googlemapLocation')} className='border border-gray-400 p-2' />
+                    </div>
+                    <div className='flex flex-col p-2 w-full md:w-1/2'>
+                        <label htmlFor="">Restaurant Contact Number</label>
+                        <input type="text" name='contactNumber' value={formData.contactNumber} onChange={(e) => handleInputChange(e, 'contactNumber')} className='border border-gray-400 p-2' />
                     </div>
                 </div>
-            </div>
-            <div className='py-4 p-2'>
-                <label htmlFor="">Select Banners</label>
-                <div className='py-2 flex flex-wrap gap-3'>
-                    {formData.banners.map((banner, index) => (
-                        <div key={index} className='p-2 border border-gray-400'>
-                            <label htmlFor={`bannerFileInput${index}`} className='flex items-center font-bold'>
-                                Banner {index + 1}
-                                <input type="file" id={`bannerFileInput${index}`} onChange={(e) => handleFileChange(e, index)} name='image' className='hidden' />
-                            </label>
-                            {banner && <img src={banner} alt={`Banner ${index + 1}`} style={{ maxWidth: '200px' }} />}
+                <div className='p-2 mt-3'>
+                    <label htmlFor="">Enter Table Counts</label>
+                    <div className='flex py-2 gap-2'>
+                        <div className='p-2 border border-gray-900 w-1/2 md:w-1/4 flex justify-between'>
+                            <h4>2 Seater</h4>
+                            <select name="tableCounts" id="" value={formData.tableCounts['2Seater']} onChange={(e) => handleTableCountChange(e, '2Seater')} className='w-1/4'>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
                         </div>
-                    ))}
+                        <div className='p-2 border border-gray-900 w-1/2 md:w-1/4 flex justify-between'>
+                            <h4>4 Seater</h4>
+                            <select name="" id="" value={formData.tableCounts['4Seater']} onChange={(e) => handleTableCountChange(e, '4Seater')} className='w-1/4'>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <div className='p-2 border border-gray-900 w-1/2 md:w-1/4 flex justify-between'>
+                            <h4>6 Seater</h4>
+                            <select name="" id="" value={formData.tableCounts['6Seater']} onChange={(e) => handleTableCountChange(e, '6Seater')} className='w-1/4'>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <div className='p-2 border border-gray-900 w-1/2 md:w-1/4 flex justify-between'>
+                            <h4>8 Seater</h4>
+                            <select name="" id="" value={formData.tableCounts['8Seater']} onChange={(e) => handleTableCountChange(e, '8Seater')} className='w-1/4'>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <button className='w-full text-center mt-8 p-2 text-white font-bold bg-gray-600'>REQUEST ADMIN FOR APPROVAL</button>
-            </div>
-        </form>
-        {loading &&
-            <Spinner/>
-        }
+                <div className='py-4 p-2'>
+                    <label htmlFor="">Select Banners</label>
+                    <div className='py-2 flex flex-wrap gap-3'>
+                        {formData.banners.map((banner, index) => (
+                            <div key={index} className='p-2 border border-gray-400'>
+                                <label htmlFor={`bannerFileInput${index}`} className='flex items-center font-bold'>
+                                    Banner {index + 1}
+                                    <input type="file" accept="image/*" id={`bannerFileInput${index}`} onChange={(e) => handleFileChange(e, index)} name='image' className='hidden' />
+                                </label>
+                                {banner && <img src={banner} alt={`Banner ${index + 1}`} style={{ maxWidth: '200px' }} />}
+                            </div>
+                        ))}
+                    </div>
+                    <button className='w-full text-center mt-8 p-2 text-white font-bold bg-gray-600'>REQUEST ADMIN FOR APPROVAL</button>
+                </div>
+            </form>
+            {loading &&
+                <Spinner />
+            }
         </>
     )
 }

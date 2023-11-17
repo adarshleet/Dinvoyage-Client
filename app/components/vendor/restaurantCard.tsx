@@ -84,8 +84,8 @@ const RestaurantCard = () => {
             </div>
             <div className='p-5 bg-white shadow-sm'>
                 <div className="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row">
-                    <div>
-                        <img className="" src={restaurant.banners ? restaurant.banners[0] : ''} alt='' />
+                    <div style={{maxWidth:'47rem',maxHeight:'26rem'}} className='overflow-hidden flex justify-center items-center'>
+                        <img className="overflow-hidden" src={restaurant.banners ? restaurant.banners[0] : ''} alt='' />
                     </div>
                     <div className="flex flex-col justify-start h-full p-4 leading-normal w-full md:w-1/2">
                         <h5 className="text-2xl font-bold tracking-tight text-gray-900 ">{restaurant.restaurantName}</h5>

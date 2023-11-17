@@ -1,25 +1,12 @@
 'use client'
 import Navbar from "./components/user/navbar"
-import Image from "next/image"
-import banner from '../public/dineVoyageBanner.png'
 import OfferCard from "./components/user/offerCard"
 import HotelCard from "./components/user/hotelCard"
 import { Toaster } from "react-hot-toast"
-import Slider from "react-slick"
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import HomeBanners from "./components/admin/homeBanners"
+
 
 export default function Home() {
-
-    const settings = {
-        dots: true,
-        infinite: true, // Enables infinite looping
-        speed: 1000,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true, // Enables automatic sliding
-        autoplaySpeed: 4000, // Adjust the speed as needed
-    };
 
     return (
         <>
@@ -28,16 +15,7 @@ export default function Home() {
                 <Navbar />
             </header>
             <main className="pt-16">
-                <div className="overflow-hidden">
-                    <Slider {...settings}>
-                        <div className="">
-                            <Image priority={false} src={banner} alt="banner" />
-                        </div>
-                        <div className="">
-                            <Image priority={false} src={banner} alt="banner" />
-                        </div>
-                    </Slider>
-                </div>
+                <HomeBanners/>
                 
                 <div className="flex justify-center py-16 px-4 items-center container mx-auto">
                     <div style={{ width: '50rem' }}>

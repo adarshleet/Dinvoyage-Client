@@ -122,7 +122,7 @@ const RestaurantCard = ({ id }: requestProps) => {
                                     <button onClick={()=>changeStatus(4)}
                                         className="block px-4 py-2 hover:bg-gray-100 "
                                     >
-                                        Active
+                                        Approve
                                     </button>
                                 </li>
                             </ul>

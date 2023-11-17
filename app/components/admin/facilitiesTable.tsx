@@ -119,7 +119,7 @@ const FacilitiesTable = () => {
                     {facilities.length > 0 ? facilities.map((facility, index) => (
                         <tr className="bg-white" key={index}>
                             <td
-                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                             >
                                 {editIndex === index ? (
                                     <input

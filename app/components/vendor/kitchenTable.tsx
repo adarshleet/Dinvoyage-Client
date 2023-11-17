@@ -1,8 +1,11 @@
 'use client'
-import { addItemToKitchen, allCategories, getAllKitchenItems, getRestaurant } from '@/apis/vendor'
+import { addItemToKitchen, allCategories, getAllKitchenItems, getRestaurant, selectedCuisinesAndFacilities } from '@/apis/vendor'
 import React, { useEffect, useState } from 'react'
 import { BsFillArrowRightSquareFill, BsFillArrowLeftSquareFill } from 'react-icons/bs'
 import KitchenModal from './kitchenModal'
+import CardRestaurant from '../loadingPages/cardRestaurant'
+import Link from 'next/link'
+import toast from 'react-hot-toast'
 
 
 const KitchenTable = () => {
@@ -25,24 +28,34 @@ const KitchenTable = () => {
     const [allRestaurant, setAllRestaurant] = useState<any>([])
     const [page, setPage] = useState(0)
 
+    const [loading,setLoading] = useState(true)
+    const [categoryEmpty,setCategoryEmpty] = useState(false)
+
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getRestaurant()
-            console.log(res)
+            // const res = await getRestaurant()
+            const res = await selectedCuisinesAndFacilities();
+
             if (res?.data) {
                 const restaurantData = res.data.data;
                 console.log(restaurantData)
                 setAllRestaurant(restaurantData);
                 setRestaurant(restaurantData[page])
                 if (restaurantData[page]) {
-                    const res = await getAllKitchenItems(restaurantData[page]._id)
-                    const kitchenItems = res.data.data
-                    setItems(kitchenItems.items)
                     const response = await allCategories(restaurantData[page]._id)
                     const categories = response?.data.data
                     setCategories(categories)
-                }
+                    setLoading(false)
 
+                    if(categories.length){
+                        const res = await getAllKitchenItems(restaurantData[page]._id)
+                        const kitchenItems = res.data.data
+                        setItems(kitchenItems.items)
+                    }
+                    else{
+                        setCategoryEmpty(true)
+                    }
+                }
             }
         }
         fetchData()
@@ -53,6 +66,9 @@ const KitchenTable = () => {
         setPage(page + 1)
         setRestaurant(allRestaurant[page + 1])
         if (allRestaurant[page + 1]) {
+            const response = await allCategories(allRestaurant[page+1]._id)
+            const categories = response?.data.data
+            setCategories(categories)
             const res = await getAllKitchenItems(allRestaurant[page + 1]._id)
             const kitchenItems = res.data.data
             console.log(kitchenItems)
@@ -65,6 +81,9 @@ const KitchenTable = () => {
         setPage(page - 1)
         setRestaurant(allRestaurant[page - 1])
         if (allRestaurant[page - 1]) {
+            const response = await allCategories(allRestaurant[page-1]._id)
+            const categories = response?.data.data
+            setCategories(categories)
             const res = await getAllKitchenItems(allRestaurant[page - 1]._id)
             const kitchenItems = res.data.data
             console.log(kitchenItems)
@@ -91,6 +110,17 @@ const KitchenTable = () => {
 
     const handleKitchenFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log(itemData)
+
+        if(itemData.itemName.trim().length < 4){
+            return toast.error('Please enter a valid item name')
+        }
+        else if(parseInt(itemData.price.trim()) < 5 || itemData.price.trim().length == 0){
+            return toast.error('Please enter correct item price')
+        }
+        else if(itemData.category.trim().length == 0){
+            return toast.error('Please select a category')
+        }
 
         const res = await addItemToKitchen(restaurant._id,itemData)
         console.log(res)
@@ -112,12 +142,34 @@ const KitchenTable = () => {
     };
 
 
+    if(loading){
+        return <CardRestaurant/>
+    }
+
+    if(!allRestaurant.length && !loading){
+        return <div className='text-center py-4'>
+            <h2 className='font-bold text-2xl mb-2'>NO APPROVED RESTAURANTS FOUND</h2>
+            {/* <Link href={'/vendor/addRestaurant'} className='px-4 py-3 rounded-lg bg-gray-600 text-white font-bold m-2'>ADD A RESTAURANT</Link> */}
+            <p className='font-semibold text-base'>You can only add Kitchen Items after approval of admin.</p>
+        </div>
+    }
+
+    if(categoryEmpty){
+        return <div className='text-center py-4'>
+            <h2 className='font-bold text-2xl mb-2'>NO CATEGORIES FOUND</h2>
+            <p className='font-semibold text-base mb-3'>Items can only be added to the kitchen after assigning a category.</p>
+            <Link href={'/vendor/categories'} className='px-4 py-2 rounded-lg bg-gray-600 text-white font-bold m-2'>ADD CATEGORY</Link>
+
+        </div>
+    }
+
+
     return (
         <>
             <div className='flex justify-between items-center p-3 border shadow-md bg-white mb-2'>
                 <div className=''>
-                    <h4 className='text-2xl text-gray-800 font-bold'>{restaurant.restaurantName}</h4>
-                    <h5 className='text-xl text-gray-700 font-bold'>{restaurant.landmark}</h5>
+                    <h4 className='text-2xl text-gray-800 font-bold'>{restaurant?.restaurantName}</h4>
+                    <h5 className='text-xl text-gray-700 font-bold'>{restaurant?.landmark}</h5>
                 </div>
                 <div className='flex gap-4 text-xl text-gray-600 font-bold'>
                     <button onClick={pageMinus} disabled={page == 0}><BsFillArrowLeftSquareFill /></button>

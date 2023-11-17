@@ -114,7 +114,7 @@ const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,setItemData
                                         value={itemData.category}
                                         onChange={handleInputChange}
                                     >
-                                        <option >Select category</option>
+                                        <option value='empty'>Select category</option>
                                         { categories.map((category,index)=>(
                                             <option key={index} value={category._id} style={{ padding: '8px' }}>{category.category}</option>
                                         ))}

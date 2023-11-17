@@ -1,11 +1,12 @@
+import Link from 'next/link'
 import React from 'react'
 import { GrMapLocation } from 'react-icons/gr'
 
 interface restaurantProps {
-    restaurant: object
+    restaurant: object,
+    booking: boolean
 }
-const RestaurantCard = ({ restaurant }: restaurantProps) => {
-    console.log(restaurant)
+const RestaurantCard = ({ restaurant,booking }: restaurantProps) => {
 
     function timeFormat(time: string) {
         const originalTime: string | undefined = time
@@ -38,7 +39,9 @@ const RestaurantCard = ({ restaurant }: restaurantProps) => {
                     <p>Opens at {openingTime}</p>
                     <p>Closes at {closingTime}</p>
                 </div>
-                <button className="py-2 text-white font-bold" style={{ backgroundColor: '#247F9E' }}>BOOK A TABLE</button>
+                {!booking &&
+                    <Link href={`/restaurantBooking/${restaurant._id}`} className="py-2 text-white font-bold text-center" style={{ backgroundColor: '#247F9E' }}>BOOK A TABLE</Link>
+                }
             </div>
         </div>
     )

@@ -31,7 +31,19 @@ const adminRoutes = {
 
     singleRestaurantRequest : '/api/admin/restaurantRequest',
 
-    changeRestaurantStatus : '/api/admin/changeRestaurantStatus'
+    changeRestaurantStatus : '/api/admin/changeRestaurantStatus',
+
+
+    addBanner : '/api/admin/addBanner',
+
+    getBanners : '/api/admin/getBanners',
+
+    deleteBanner : '/api/admin/deleteBanner',
+
+
+    addLocality : '/api/admin/addLocality',
+
+    allLocality : '/api/admin/allLocality'
 
 }
 

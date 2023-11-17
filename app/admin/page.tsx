@@ -15,13 +15,13 @@ const page = () => {
     const dispatch = useDispatch()
 
 
-    useEffect(()=>{
-        const adminInfo = typeof window !== 'undefined' ? localStorage.getItem('adminInfo') : null
-        console.log(adminInfo)
-        if(adminInfo){
-            router.push('/admin/dashboard')
-        }
-    },[])
+    // useEffect(()=>{
+    const adminInfo = localStorage.getItem('adminInfo')
+    console.log(adminInfo)
+    if(adminInfo){
+        router.push('/admin/dashboard')
+    }
+    // },[])
 
     const [error, setError] = useState('')
     const [formData, setFormData] = useState({

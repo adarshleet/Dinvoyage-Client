@@ -10,7 +10,7 @@ const page = () => {
             </div>
             <div className='px-6'>
                 <div className='border shadow bg-white p-4 flex justify-between items-center'>
-                    <h3 className='font-bold text-lg'>VENDOR DASHBOARD</h3>
+                    <h3 className='font-bold text-lg'>ADMIN DASHBOARD</h3>
                     <AdminLogout/>
                 </div>
             </div>

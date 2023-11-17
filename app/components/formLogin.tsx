@@ -24,7 +24,7 @@ function FormLogin({user}:formLogin) {
 
     useEffect(() => {
         if(user){
-            const userInfo = typeof window !== 'undefined' ? localStorage.getItem('userInfo') : null;
+            const userInfo = localStorage.getItem('userInfo')
             if (userInfo) {
                 router.replace('/')
             }

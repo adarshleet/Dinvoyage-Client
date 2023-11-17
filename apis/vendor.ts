@@ -1,5 +1,6 @@
 import Api from "@/services/api";
 import vendorRoutes from "@/services/endpoints/vendorEndpoints";
+import errorHandle from "./errorHandler";
 
 
 interface Formvalues{
@@ -71,6 +72,8 @@ export const addRestaurant = async (restaurantData:FormData)=>{
         return res
     } catch (error) {
         console.log(error)
+        const err: Error = error as Error;
+        return errorHandle(err);
     }
 }
 
@@ -80,7 +83,9 @@ export const getRestaurant = async()=>{
         const res = await Api.get(vendorRoutes.getRestaurant)
         return res
     } catch (error) {
-        console.log(error)
+        // console.log(error)
+        const err: Error = error as Error;
+        return errorHandle(err);
     }
 }
 
@@ -92,6 +97,8 @@ export const selectedCuisinesAndFacilities = async()=>{
         return res
     } catch (error) {
         console.log(error)
+        const err: Error = error as Error;
+        return errorHandle(err);
     }
 }
 
@@ -102,6 +109,8 @@ export const SetSelectedCuisines = async(cuisines:Array<string>,restaurantId:str
         return res
     } catch (error) {
         console.log(error)
+        const err: Error = error as Error;
+        return errorHandle(err);
     }
 }
 
@@ -112,6 +121,8 @@ export const SetSelectedFacilities = async(facilities:Array<string>,restaurantId
         return res
     } catch (error) {
         console.log(error)
+        const err: Error = error as Error;
+        return errorHandle(err);
     }
 }
 
@@ -123,40 +134,71 @@ export const allCategories = async(restaurantId:string)=>{
         return res
     } catch (error) {
         console.log(error);
-        
+        const err: Error = error as Error;
+        return errorHandle(err);
     }
 }
 
 
 export const addRestaurantCategory =  async(restaurantId:string,category:string)=>{
-    const res = await Api.post(`${vendorRoutes.addRestaurantCategory}?restaurantId=${restaurantId}`,{category})
-    return res
+    try {
+        const res = await Api.post(`${vendorRoutes.addRestaurantCategory}?restaurantId=${restaurantId}`,{category})
+        return res
+    } catch (error) {
+        console.log(error);
+        const err: Error = error as Error;
+        return errorHandle(err);
+    }
 }
 
 
 
 export const editRestaurantCategory = async(categoryId:string,category:string)=>{
-    const res = await Api.post(`${vendorRoutes.editRestaurantCategory}?categoryId=${categoryId}`,{category})
-    return res
+    try {
+        const res = await Api.post(`${vendorRoutes.editRestaurantCategory}?categoryId=${categoryId}`,{category})
+        return res
+    } catch (error) {
+        console.log(error);
+        const err: Error = error as Error;
+        return errorHandle(err);
+    }
 }
 
 
 
 export const changeCategoryStatus = async (categoryId:string)=>{
-    const res = await Api.post(`${vendorRoutes.changeCategoryStatus}?categoryId=${categoryId}`)
-    return res
+    try {
+        const res = await Api.post(`${vendorRoutes.changeCategoryStatus}?categoryId=${categoryId}`)
+        return res
+    } catch (error) {
+        console.log(error);
+        const err: Error = error as Error;
+        return errorHandle(err);
+    }
 }
 
 
 export const getAllKitchenItems = async(restaurantId:string)=>{
-    const res = await Api.get(`${vendorRoutes.getAllKitchenItems}?restaurantId=${restaurantId}`)
-    return res
+    try {
+        const res = await Api.get(`${vendorRoutes.getAllKitchenItems}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error);
+        const err: Error = error as Error;
+        return errorHandle(err);
+    }
 }
 
 
 export const addItemToKitchen = async(restauarntId:string,itemData:itemData)=>{
-    const res = await Api.post(`${vendorRoutes.addItemToKitchen}?restaurantId=${restauarntId}`,{itemData})
-    return res
+    try {
+        const res = await Api.post(`${vendorRoutes.addItemToKitchen}?restaurantId=${restauarntId}`,{itemData})
+        return res
+    } catch (error) {
+        console.log(error);
+        const err: Error = error as Error;
+        return errorHandle(err);
+    }
 }
 
 

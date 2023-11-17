@@ -11,7 +11,10 @@ const userRoutes={
 
     restaurantsToShow : '/api/user/restaurantsToDisplay',
 
-    singleRestaurant : '/api/user/singleRestaurant'
+    singleRestaurant : '/api/user/singleRestaurant',
+
+
+    allKitchenItems : '/api/user/allKitchenItems'
 }
 
 export default userRoutes

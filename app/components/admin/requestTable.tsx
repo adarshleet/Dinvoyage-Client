@@ -26,7 +26,7 @@ const RequestTable = () => {
           case 3:
             return 'Rejected';
           case 4:
-            return 'Active';
+            return 'Approved';
           default:
             return 'Unknown';
         }

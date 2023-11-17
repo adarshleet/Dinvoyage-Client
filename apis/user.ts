@@ -1,5 +1,6 @@
 import Api from "@/services/api";
 import userRoutes from "@/services/endpoints/userEndpoints";
+import errorHandle from "./errorHandler";
 
 interface Formvalues{
     name?: string | undefined;
@@ -58,7 +59,8 @@ export const restaurantsToDisplay = async()=>{
         const res = await Api.get(userRoutes.restaurantsToShow)
         return res
     } catch (error) {
-        console.log(error)
+        const err: Error = error as Error;
+        return errorHandle(err);
     }
 }
 
@@ -72,5 +74,17 @@ export const singleRestaurant = async(restauarntId:string)=>{
     } catch (error) {
         console.log(error);
         
+    }
+}
+
+
+
+//all kitchen items
+export const allKitchenItems = async(restaurantId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.allKitchenItems}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error)
     }
 }

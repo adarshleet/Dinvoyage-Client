@@ -6,6 +6,7 @@ import {AiFillShop} from 'react-icons/ai'
 import {FaUsers} from 'react-icons/fa'
 import {MdStyle} from 'react-icons/md'
 import {TbTableOptions} from 'react-icons/tb'
+import { FaLocationDot } from "react-icons/fa6";
 import Link from 'next/link'
 
 interface Page{
@@ -108,15 +109,26 @@ const Sidebar = ({page}:Page) => {
                             </Link>
                         </li>
                        
-                        <li>
+                        <li  className={page=='banners' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
-                                href="#"
-                                className="flex items-center justify-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                href="/admin/banners"
+                                className="flex items-center justify-center p-3 rounded-lg group"
                             >
                                 <MdStyle className="text-2xl" />
                                 <span className="flex-1 ml-3 whitespace-nowrap">Banners</span>
                             </Link>
                         </li>
+
+                        <li  className={page=='locations' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
+                            <Link
+                                href="/admin/locations"
+                                className="flex items-center justify-center p-3 rounded-lg group"
+                            >
+                                <FaLocationDot className="text-2xl" />
+                                <span className="flex-1 ml-3 whitespace-nowrap">Locations</span>
+                            </Link>
+                        </li>
+
                         <li>
                             <Link
                                 href="#"

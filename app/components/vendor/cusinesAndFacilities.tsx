@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import CardRestaurant from '../loadingPages/cardRestaurant'
 import toast from 'react-hot-toast'
+import Link from 'next/link'
 
 const CusinesAndFacilities = () => {
 
@@ -29,13 +30,16 @@ const CusinesAndFacilities = () => {
                 setAllFacility(responseFacilities?.data)
 
                 const res = await selectedCuisinesAndFacilities();
+                console.log(res?.data.data)
                 if (res?.data) {
                     const restaurantData = res.data.data;
                     console.log(restaurantData)
                     setAllRestaurant(restaurantData);
-                    setRestaurant(restaurantData[page])
-                    setSelectedCuisines(restaurantData[0].cuisines)
-                    setSelectedFacilities(restaurantData[0].facilities)
+                    if(restaurantData[page]){
+                        setRestaurant(restaurantData[page])
+                        setSelectedCuisines(restaurantData[0].cuisines)
+                        setSelectedFacilities(restaurantData[0].facilities)
+                    }
                     setLoading(false)
                 }
             } catch (error) {
@@ -111,6 +115,15 @@ const CusinesAndFacilities = () => {
 
     if (loading) {
         return <CardRestaurant />
+    }
+
+    if(!allRestaurant.length && !loading){
+        return <div className='text-center py-4'>
+            <h2 className='font-bold text-2xl mb-2'>NO APPROVED RESTAURANTS FOUND</h2>
+            <p className='font-semibold text-base'>You can only add cuisines and facilities after approval of admin.</p>
+
+            {/* <Link href={'/vendor/addRestaurant'} className='px-4 py-3 rounded-lg bg-gray-600 text-white font-bold m-2'>ADD A RESTAURANT</Link> */}
+        </div>
     }
 
     return (

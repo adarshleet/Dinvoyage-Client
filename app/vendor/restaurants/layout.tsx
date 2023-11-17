@@ -1,6 +1,7 @@
 import '../../../app/globals.css'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
+import LoginProtect from '@/app/loginProtectVendor'
 
 const inter = Open_Sans({ subsets: ['latin'] })
 
@@ -16,7 +17,11 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`${inter.className}`}>{children}</body>
+            <body className={`${inter.className}`}>
+                <LoginProtect>
+                    {children}
+                </LoginProtect>
+            </body>
         </html>
     )
 }

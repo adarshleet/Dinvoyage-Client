@@ -28,15 +28,15 @@ const Form = ({ user }:formProps) => {
 
     useEffect(() => {
         if(user){
-            const userInfo = typeof window !== 'undefined' ? localStorage.getItem('userInfo') : null;
+            const userInfo = localStorage.getItem('userInfo')
             if (userInfo) {
-                router.push('/')
+                router.replace('/')
             }
         }
         else if(!user){
-            const vendorInfo = typeof window !== 'undefined' ? localStorage.getItem('vendorInfo') : null
+            const vendorInfo = localStorage.getItem('vendorInfo')
             if(vendorInfo){
-                router.push('/vendor/dashboard')
+                router.replace('/vendor/dashboard')
             }
         }
     }, []);

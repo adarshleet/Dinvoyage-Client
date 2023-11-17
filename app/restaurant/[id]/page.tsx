@@ -34,7 +34,7 @@ const page = ({params}:restaurantProps) => {
             </header>
             <main className='flex justify-center py-24 px-4'>
                 <div>
-                    <RestaurantCard restaurant={restaurant}/>
+                    <RestaurantCard restaurant={restaurant} booking={false}/>
                     <div className='bg-white my-6 shadow flex'>
                         <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
                             <h3 className='font-bold'>Menu</h3>

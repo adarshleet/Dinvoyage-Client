@@ -1,10 +1,12 @@
 'use client'
 import React, { use, useEffect, useState } from 'react'
 import CategoryModal from './categoryModal'
-import { addRestaurantCategory, allCategories, changeCategoryStatus, editRestaurantCategory, getRestaurant } from '@/apis/vendor'
+import { addRestaurantCategory, allCategories, changeCategoryStatus, editRestaurantCategory, getRestaurant, selectedCuisinesAndFacilities } from '@/apis/vendor'
 import {BsFillArrowRightSquareFill,BsFillArrowLeftSquareFill} from 'react-icons/bs'
 import toast from 'react-hot-toast'
 import ConfirmPopup from './confirmPopup'
+import CardRestaurant from '../loadingPages/cardRestaurant'
+import Link from 'next/link'
 
 interface Data {
     allCategory: Array<string>
@@ -23,11 +25,14 @@ const CategoryTable = () => {
     const [editCategoryId,setEditCategoryId] = useState('')
 
     const [confirmBox,setConfirmBox] = useState(false)
+    const [loading,setLoading] = useState(true)
 
 
     useEffect(()=>{
         const fetchData = async ()=>{
-            const res = await getRestaurant()
+            // const res = await getRestaurant()
+            const res = await selectedCuisinesAndFacilities();
+
             if(res?.data){
                 const restaurantData = res.data.data;
                 console.log(restaurantData)
@@ -38,6 +43,7 @@ const CategoryTable = () => {
                     const categories = response?.data.data
                     setAllCategory(categories)
                 }
+                setLoading(false)
             }
         }
         fetchData()
@@ -162,16 +168,26 @@ const CategoryTable = () => {
     }
 
 
+    if(loading){
+        return <CardRestaurant/>
+    }
 
+    if(!allRestaurant.length && !loading){
+        return <div className='text-center py-4'>
+            <h2 className='font-bold text-2xl mb-2'>NO APPROVED RESTAURANTS FOUND</h2>
+            <p className='font-semibold text-base'>You can only add item categories after approval of admin.</p>
 
+            {/* <Link href={'/vendor/addRestaurant'} className='px-4 py-3 rounded-lg bg-gray-600 text-white font-bold m-2'>ADD A RESTAURANT</Link> */}
+        </div>
+    }
 
 
     return (
         <>
         <div className='flex justify-between items-center p-3 border shadow-md bg-white mb-2'>
             <div className=''>
-                <h4 className='text-2xl text-gray-800 font-bold'>{restaurant.restaurantName}</h4>
-                <h5 className='text-xl text-gray-700 font-bold'>{restaurant.landmark}</h5>
+                <h4 className='text-2xl text-gray-800 font-bold'>{restaurant?.restaurantName}</h4>
+                <h5 className='text-xl text-gray-700 font-bold'>{restaurant?.landmark}</h5>
             </div>
             <div className='flex gap-4 text-xl text-gray-600 font-bold'>
                 <button onClick={pageMinus} disabled={page==0}><BsFillArrowLeftSquareFill/></button>

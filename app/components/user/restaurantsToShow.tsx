@@ -19,7 +19,7 @@ const RestaurantsToShow = () => {
 
     return (
         <>
-        {restaurants.map((restaurant)=>(
+        {restaurants?.map((restaurant)=>(
             <HotelCard restaurant={restaurant}/>
         ))
 

@@ -167,8 +167,62 @@ export const singleRestaurantRequest = async (id:string) =>{
 
 export const changeRestaurantStatus = async (id:string,status:number) =>{
     try {
-        console.log(id,status)
         const res = Api.post(`${adminRoutes.changeRestaurantStatus}?id=${id}&status=${status}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+//add banners
+export const addBanner = async(banners:FormData)=>{
+    try {
+        const res = Api.post(adminRoutes.addBanner,banners)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const getBanners = async()=>{
+    try {
+        const res = Api.get(adminRoutes.getBanners)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+export const deleteBanner = async(banner:string)=>{
+    try {
+        const res = Api.put(`${adminRoutes.deleteBanner}?banner=${banner}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+export const addLocality =  async(district:string,locality:string)=>{
+    try {
+        const res = Api.post(adminRoutes.addLocality,{district,locality})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const allLocalities = async()=>{
+    try {
+        const res = Api.get(adminRoutes.allLocality)
         return res
     } catch (error) {
         console.log(error)
