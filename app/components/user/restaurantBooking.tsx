@@ -6,41 +6,140 @@ import 'react-calendar/dist/Calendar.css';
 import { startOfDay, addDays, isBefore, isAfter } from 'date-fns';
 import { DayPicker, Row, RowProps } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+import { tableCounts } from '@/apis/user';
+import { useRouter } from 'next/navigation';
 
 function CurrentWeekRow(props: RowProps) {
     return <Row {...props} />;
 }
 
-const RestaurantBooking = () => {
+interface bookingProps{
+    openingTime : string,
+    closingTime : string,
+    restaurantId: string
+}
+
+const RestaurantBooking = ({openingTime,closingTime,restaurantId}:bookingProps) => {
+
 
     const [guestCount, setGuestCount] = useState(0)
     const [showTimeSlot, setShowTimeSlots] = useState('breakfast')
-    const [timeSelect, setTimeSelect] = useState('')
 
+    const [timeSelect, setTimeSelect] = useState('')
+    const [selected, setSelected] = React.useState<Date|null>(null);
+
+    const [guestDetails,setGuestDetails] = useState({
+        name:'',
+        mobile : '',
+        special : ''
+    })
+
+    const [table,setTable] = useState('')
+
+    const router = useRouter()
+   
+
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+    
+        // Update the state based on the input field name
+        setGuestDetails((prevDetails) => ({
+          ...prevDetails,
+          [name]: value
+        }));
+        console.log(guestDetails)
+    };
+
+
+
+    //submitting the details
+    const checkBookingDetails = async()=>{
+        if(guestDetails.name.trim().length < 3){
+            return showToast('Please enter the name')
+        }
+        else if(guestDetails.mobile.trim().length != 10){
+            return showToast('Please enter a valid mobile number')
+        }
+        else if(guestCount == 0){
+            return showToast('Guest count cannot be zero')
+        }
+        else if(selected == null){
+            return showToast('Please Select a date')
+        }
+        else if(timeSelect == ''){
+            return showToast('Please select time')
+        }
+        else{
+            const guestData={
+                restaurantId,
+                ...guestDetails,
+                guestCount,
+                date : selected,
+                time : timeSelect,
+                table
+
+            }
+            console.log(guestData)
+            const res = await tableCounts(guestData)
+            const data = res?.data.seatCounts.data
+            console.log(data[table])
+            if(data[table] == 0){
+                return showToast('Sorry table is not available')
+            }
+            else{
+                router.push(`/kitchen/${restaurantId}`)
+            }
+
+        }
+    }
+
+    //toast design
+    const showToast = (message:string) => {
+        return toast(message, {
+          style: {
+            borderRadius: '0px',
+            padding: '5px',
+            fontSize: '.9rem',
+            color: '#ffff',
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          }
+        });
+    };
+
+
+    //for day picker
     const today = startOfDay(new Date());
     const endOfNext14Days = addDays(today, 13);
 
-    const [selected, setSelected] = React.useState<Date>();
 
     // console.log(selected?.toLocaleString('en-US', { timeZone: 'UTC' }))
-    const localISOString = selected?.toISOString();
-    console.log(localISOString ? new Date(localISOString).toLocaleString() : undefined);
-    console.log(timeSelect)
+    // const localISOString = new Date(selected)
+    // console.log(localISOString ? new Date(localISOString).toLocaleString() : undefined);
+    console.log(selected)
 
     const guestCountPlus = () => {
-        if (guestCount == 15) {
-            return toast('You can only select maximum of 15 people', {
-                style: {
-                    borderRadius: '0px',
-                    padding: '5px',
-                    fontSize: '.9rem',
-                    color: '#ffff',
-                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                }
-            });
+        if (guestCount == 8) {
+            return showToast('You can only select maximum of 8 people')
         }
         setGuestCount(guestCount + 1)
+        const count = guestCount +1
+
+        if(count <= 2){
+            setTable('2Seater')
+        }
+        else if(count <= 4){
+            setTable('4Seater')
+        }
+        else if(count <= 6){
+            setTable('6Seater')
+        }
+        else if(count <= 8){
+            setTable('8Seater')
+        }
     }
+
+    console.log(table)
 
     const guestCountMinus = () => {
         if (guestCount == 0) {
@@ -49,9 +148,23 @@ const RestaurantBooking = () => {
         setGuestCount(guestCount - 1)
     }
 
-    const startTime = '10:00 AM'
-    const endTime = '11:00 PM'
-    function timeGenerate(startTime, endTime) {
+
+    //time slots generating
+    function timeFormat(time: string) {
+        const originalTime: string | undefined = time
+        const [hours, minutes] = originalTime ? originalTime.split(':') : ['', ''];
+        const formattedTime = new Date(0, 0, 0, parseInt(hours, 10), parseInt(minutes, 10)).toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+        });
+        return formattedTime
+    }
+    
+
+    const startTime = timeFormat(openingTime)
+    const endTime = timeFormat(closingTime)
+    function timeGenerate(startTime:string, endTime:string) {
         const timeSlots = [];
 
         // Parse start and end times into Date objects
@@ -104,15 +217,15 @@ const RestaurantBooking = () => {
             </div>
             <div className='my-1 w-full'>
                 <p className='text-sm'>Enter The Name</p>
-                <input className='py-2 px-3 w-full focus:outline-none border focus:border-gray-400' type="text" />
+                <input value={guestDetails.name} onChange={handleInputChange} name='name' className='py-2 px-3 w-full focus:outline-none border focus:border-gray-400' type="text" />
             </div>
             <div className='my-1 w-full'>
                 <p className='text-sm'>Enter The Mobile</p>
-                <input className='py-2 px-3 w-full focus:outline-none border focus:border-gray-400' type="text" />
+                <input value={guestDetails.mobile} onChange={handleInputChange} name='mobile' className='py-2 px-3 w-full focus:outline-none border focus:border-gray-400' type="number" />
             </div>
             <div className='my-1 w-full'>
                 <p className='text-sm'>Any Special Request (optional)</p>
-                <input className='py-2 px-3 w-full focus:outline-none border focus:border-gray-400' type="text" />
+                <input value={guestDetails.special} onChange={handleInputChange} name='special' className='py-2 px-3 w-full focus:outline-none border focus:border-gray-400' type="text" />
             </div>
         </div>
         <div className='flex flex-col md:flex-row bg-white p-3'>
@@ -158,7 +271,7 @@ const RestaurantBooking = () => {
                 </div>
             </div>
         </div>
-        <div className='my-16 py-4 bg-white'>
+        {/* <div className='my-16 py-4 bg-white'>
             <h3 className='text-center font-bold text-xl'>SELECT YOUR TASTE</h3>
             <div>
                 <div className='py-2'>
@@ -176,7 +289,8 @@ const RestaurantBooking = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */}
+        <button onClick={checkBookingDetails} className='py-3 w-full bg-cyan-800 my-8 text-white rounded-sm text-base font-bold'>CHECK AVAILABILITY AND CONTINUE TO KITCHEN</button>
         </>
     )
 }

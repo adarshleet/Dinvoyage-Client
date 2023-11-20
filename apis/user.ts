@@ -9,6 +9,15 @@ interface Formvalues{
     password ?: string | undefined;
 }
 
+interface guestData{
+    restaurantId?:string;
+    name?:string;
+    mobile ?: string;
+    guestCount ?: number;
+    table ?: string,
+    time ?: string,
+    date ?: string
+}
 
 export const signup = async (userData: Formvalues)=>{
     try {
@@ -86,5 +95,28 @@ export const allKitchenItems = async(restaurantId:string)=>{
         return res
     } catch (error) {
         console.log(error)
+    }
+}
+
+
+//BOOKING SIDE
+//table counts left
+export const tableCounts = async(guestData:guestData)=>{
+    try {
+        const res = await Api.post(userRoutes.seatCountsLeft,guestData)
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+//all kitchen items showing in booking page
+export const kitchenItems = async(restaurantId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.kitchenItems}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error);
     }
 }

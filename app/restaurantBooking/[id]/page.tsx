@@ -34,7 +34,7 @@ const page = ({ params }: restaurantProps) => {
             <main className='flex justify-center py-24 px-4'>
                 <div>
                     <RestaurantCard restaurant={restaurant} booking={true}/>
-                    <RestaurantBooking/>
+                    <RestaurantBooking openingTime={restaurant?.openingTime} closingTime={restaurant.closingTime} restaurantId={restaurant._id}/>
                 </div>
             </main>
         </>

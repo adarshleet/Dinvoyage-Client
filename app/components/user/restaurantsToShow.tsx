@@ -19,8 +19,8 @@ const RestaurantsToShow = () => {
 
     return (
         <>
-        {restaurants?.map((restaurant)=>(
-            <HotelCard restaurant={restaurant}/>
+        {restaurants?.map((restaurant,index)=>(
+            <HotelCard key={index} restaurant={restaurant}/>
         ))
 
         }
