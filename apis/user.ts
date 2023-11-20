@@ -120,3 +120,14 @@ export const kitchenItems = async(restaurantId:string)=>{
         console.log(error);
     }
 }
+
+
+//payment in booking
+export const payment =  async(bookingDetails:FormData)=>{
+    try {
+        const res = await Api.post(userRoutes.payment,bookingDetails)
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}

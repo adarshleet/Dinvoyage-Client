@@ -20,7 +20,12 @@ const userRoutes={
     //booking side
     seatCountsLeft : '/api/user/tableCounts',
 
-    kitchenItems : '/api/user/kitchenItems'
+    kitchenItems : '/api/user/kitchenItems',
+
+
+    //make payment
+    payment : '/api/user/proceedToPayment'
+
 }
 
 export default userRoutes
