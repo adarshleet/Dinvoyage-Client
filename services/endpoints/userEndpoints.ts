@@ -24,7 +24,12 @@ const userRoutes={
 
 
     //make payment
-    payment : '/api/user/proceedToPayment'
+    payment : '/api/user/proceedToPayment',
+
+    //user bookings
+    userBookings : '/api/user/allbookings',
+
+    cancelBooking :'/api/user/cancelBooking'
 
 }
 

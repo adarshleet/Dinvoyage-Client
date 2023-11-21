@@ -100,7 +100,7 @@ const page = ({ params }: restaurantProps) => {
             const bookingDetails = {
                 ...guestDetails,
                 items: selectedItems,
-                total: subTotal + 100
+                totalAmount: subTotal + 100
             }
             console.log(bookingDetails)
 

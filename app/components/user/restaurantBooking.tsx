@@ -191,7 +191,7 @@ const RestaurantBooking = ({openingTime,closingTime,restaurantId}:bookingProps) 
     }
 
     const LunchTime = '12:00 PM'
-    const dinnerTime = '5:00 PM'
+    const dinnerTime = '05:00 PM'
 
     const breakFastTimeSlots = timeGenerate(startTime, LunchTime);
     const lunchTimeSlots = timeGenerate(LunchTime, dinnerTime)

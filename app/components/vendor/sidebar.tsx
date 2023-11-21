@@ -107,10 +107,10 @@ const Sidebar = ({page}:Page) => {
                             </Link>
                         </li>
                         
-                        <li>
+                        <li className={page=='bookings' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
                                 href="/vendor/bookings"
-                                className="flex items-center p-3 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                className="flex items-center p-3 rounded-lg   group"
                             >
                                 <BsFillCalendarCheckFill className="text-2xl" />
                                 <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Bookings</span>

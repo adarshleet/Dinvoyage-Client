@@ -131,3 +131,25 @@ export const payment =  async(bookingDetails:FormData)=>{
         console.log(error);
     }
 }
+
+
+//user bookings
+export const userBookings = async()=>{
+    try {
+        const res = await Api.get(userRoutes.userBookings)
+        return res
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+//cancel booking
+export const cancelBooking = async(bookingId:string,reason:string)=>{
+    try {
+        const res = await Api.put(`${userRoutes.cancelBooking}?bookingId=${bookingId}`,{reason})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}

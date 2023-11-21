@@ -43,8 +43,12 @@ const adminRoutes = {
 
     addLocality : '/api/admin/addLocality',
 
-    allLocality : '/api/admin/allLocality'
+    allLocality : '/api/admin/allLocality',
 
+
+    allBookings : '/api/admin/allBookingDetails',
+
+    bookingCancellation : '/api/admin/changeBookingStatus'
 }
 
 export default adminRoutes
