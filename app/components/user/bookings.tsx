@@ -27,7 +27,7 @@ const Bookings = () => {
         }
     }, [])
 
-    const transformedResult = bookings.map((item) => ({
+    const transformedResult = bookings.map((item:object) => ({
         ...item,
         restaurant: item.restaurantId, // Rename 'restaurantId' to 'restaurant'
         bookings: item.bookings.map((booking) => ({

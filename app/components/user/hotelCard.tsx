@@ -2,7 +2,13 @@ import Link from 'next/link'
 import React from 'react'
 
 interface restaurantProps{
-    restaurant: Array<object>
+    restaurant: {
+        banners : Array<string>
+        restaurantName ?: string
+        landmark  : string
+        locality : string,
+        minCost : number
+    }
 }
 
 const HotelCard = ({restaurant}:restaurantProps) => {

@@ -49,6 +49,7 @@ const Sidebar = ({page}:Page) => {
                             className=""
                             alt="DineVoyage"
                             width={150}
+                            priority
                         />
                         <span className="self-center text-xl whitespace-nowra font-bold">
                             VENDOR

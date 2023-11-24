@@ -90,6 +90,27 @@ export const getRestaurant = async()=>{
 }
 
 
+//get single restaurant details
+export const getRestaurantDetails = async(restauarntId:string)=>{
+    try {
+        const res = await Api.get(`${vendorRoutes.getRestaurantDetails}?restaurantId=${restauarntId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//delete banner
+export const deleteRestaurantBanner = async(restaurantId:string,image:string)=>{
+    try {
+        const res = await Api.put(`${vendorRoutes.deleteRestaurantBanner}?restaurantId=${restaurantId}&image=${image}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 export const selectedCuisinesAndFacilities = async()=>{
     try {

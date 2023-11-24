@@ -3,7 +3,16 @@ import React from 'react'
 import { GrMapLocation } from 'react-icons/gr'
 
 interface restaurantProps {
-    restaurant: object,
+    restaurant: {
+        restaurantName :string
+        openingTime : string,
+        closingTime : string,
+        banners : Array<string>
+        landmark  : string
+        locality : string,
+        minCost : number
+        googlemapLocation :string
+    },
     booking: boolean
 }
 const RestaurantCard = ({ restaurant,booking }: restaurantProps) => {
@@ -25,7 +34,7 @@ const RestaurantCard = ({ restaurant,booking }: restaurantProps) => {
     return (
         <div className="flex flex-col items-center bg-white border border-gray-200 shadow md:flex-row md:max-w-4xl">
             <div style={{maxWidth:'40rem',maxHeight:'22.5rem'}} className='overflow-hidden flex justify-center items-center'>
-                <img className="" src={restaurant.banners} alt="" />
+                <img className="" src={restaurant.banners[0]} alt="" />
             </div>
             <div className="flex flex-col justify-start h-full p-4 leading-normal w-full md:w-1/2">
                 <h5 className="mb-1 text-xl font-bold tracking-tight text-gray-900 ">{restaurant.restaurantName}</h5>

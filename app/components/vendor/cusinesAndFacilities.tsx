@@ -130,8 +130,8 @@ const CusinesAndFacilities = () => {
         <div className='p-6 shadow-sm bg-white'>
             <div className='flex justify-between items-center p-3 border border-gray-500 bg-gray-600'>
                 <div className=''>
-                    <h4 className='text-2xl text-white font-bold'>{restaurant.restaurantName}</h4>
-                    <h5 className='text-xl text-white font-bold'>{restaurant.landmark}</h5>
+                    <h4 className='text-xl text-white font-bold'>{restaurant.restaurantName}</h4>
+                    <h5 className='text-md text-white font-semibold'>{restaurant.landmark}</h5>
                 </div>
                 <div className='flex gap-4 text-xl text-white font-bold'>
                     <button onClick={pageMinus} disabled={page==0}><FaArrowLeft /></button>

@@ -11,7 +11,9 @@ import { useRouter } from 'next/navigation';
 
 
 interface restaurantProps {
-    params: string
+    params:{
+        id:string
+    }
 }
 
 const page = ({ params }: restaurantProps) => {
@@ -23,7 +25,6 @@ const page = ({ params }: restaurantProps) => {
     const [allItems, setAllItems] = useState([])
     const [guestDetails, setGuestDetails] = useState({})
 
-    console.log(selectedItems)
 
     const { id } = params
 
@@ -107,7 +108,6 @@ const page = ({ params }: restaurantProps) => {
             const stripe = await loadStripe('pk_test_51OEOTHSFAVCVwY62lVqaB5GwF666YpNTLBjIF8KibE3yclRVMS2yiPxXYg4nit60L2bhvrXqY1DREUdI3EvYsVvY00WM1EwgTk');
             const res = await payment(bookingDetails)
             const sessionId = res?.data.data
-            console.log(sessionId)
 
             const result = stripe?.redirectToCheckout({
                 sessionId: sessionId

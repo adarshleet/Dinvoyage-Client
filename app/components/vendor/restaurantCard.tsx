@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { GrMapLocation } from 'react-icons/gr'
 import {BsFillArrowLeftSquareFill,BsFillArrowRightSquareFill} from 'react-icons/bs'
 import CardRestaurant from '../loadingPages/cardRestaurant'
+import { FaEdit } from "react-icons/fa";
 
 const RestaurantCard = () => {
     const [restaurant, setRestaurant] = useState<any>({})
@@ -85,7 +86,7 @@ const RestaurantCard = () => {
             <div className='p-5 bg-white shadow-sm'>
                 <div className="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row">
                     <div style={{maxWidth:'47rem',maxHeight:'26rem'}} className='overflow-hidden flex justify-center items-center'>
-                        <img className="overflow-hidden" src={restaurant.banners ? restaurant.banners[0] : ''} alt='' />
+                        <img src={restaurant.banners ? restaurant.banners[0] : ''} alt='' />
                     </div>
                     <div className="flex flex-col justify-start h-full p-4 leading-normal w-full md:w-1/2">
                         <h5 className="text-2xl font-bold tracking-tight text-gray-900 ">{restaurant.restaurantName}</h5>
@@ -96,8 +97,10 @@ const RestaurantCard = () => {
                             <a href={restaurant.googlemapLocation} target="_blank"><p className='font-bold text-md text-blue-500'>View Location</p></a>
                         </div>
                         <p className='font-bold'>Time </p>
-                        <p>Opens at {restaurant.openingTime}</p>
-                        <p className='mb-8'>Closes at {restaurant.closingTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</p>
+                        <p className='text-sm'>Opens at {restaurant.openingTime}</p>
+                        <p className='mb-2 text-sm'>Closes at {restaurant.closingTime}</p>
+                        <Link className='mb-8 py-2 px-3 bg-gray-500 w-1/2 flex items-center gap-2 text-white font-bold rounded-sm' href={`editRestaurant/${restaurant._id}`}><FaEdit/> Edit Restaurant</Link>
+
                         <h3 className='text-lg font-bold'>Status : {status}</h3>
                     </div>
                 </div>

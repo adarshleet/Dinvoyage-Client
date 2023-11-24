@@ -29,7 +29,11 @@ const vendorRoutes = {
 
     getAllKitchenItems : '/api/vendor/viewItems',
 
-    addItemToKitchen : '/api/vendor/addItem'
+    addItemToKitchen : '/api/vendor/addItem',
+
+    getRestaurantDetails : '/api/vendor/getRestaurantDetails',
+
+    deleteRestaurantBanner : '/api/vendor/deleteBanner'
 
 }
 
