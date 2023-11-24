@@ -1,7 +1,7 @@
-import LoginProtectUser from '@/app/loginProtectUser'
-import '../../globals.css'
+import '../../app/globals.css'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
+import LoginProtectUser from '../loginProtectUser'
 
 const inter = Open_Sans({ subsets: ['latin'] })
 

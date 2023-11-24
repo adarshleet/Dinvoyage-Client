@@ -8,6 +8,7 @@ import { logout } from '@/apis/user';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { setUserLogout } from '@/redux/slices/authSlice';
+import { CiUser } from "react-icons/ci";
 
 const Navbar = () => {
 
@@ -23,7 +24,6 @@ const Navbar = () => {
 
     useEffect(()=>{
         const userInfo = localStorage.getItem('userInfo');
-        console.log(userInfo)
         if(userInfo){
             setUser(true)
         }
@@ -68,7 +68,8 @@ const Navbar = () => {
 
                     <div className="hidden md:flex md:items-center">
                         {user ? 
-                            (<button onClick={userLogout} className='bg-red-600 px-4 py-2 text-white font-bold rounded-lg'>LogOut</button>)
+                            // (<button onClick={userLogout} className='bg-red-600 px-4 py-2 text-white font-bold rounded-lg'>LogOut</button>)
+                            <Link className='flex items-center gap-1' href={'/profile'}><CiUser className="text-base"/>Profile</Link>
                         :
                             (<Link href="/signup" className="text-md text-white font-bold border px-4 py-2 rounded-lg mr-2" style={{ backgroundColor: '#247F9E' }} >SignUp</Link>)
                         }
@@ -76,7 +77,11 @@ const Navbar = () => {
 
                     <div className="md:hidden flex cursor-pointer items-center">
                         {user ? 
-                            (<button className='bg-red-600 px-4 py-2 text-white font-bold rounded-lg'>LogOut</button>)
+                            // (<button className='bg-red-600 px-4 py-2 text-white font-bold rounded-lg'>LogOut</button>)
+                            <Link className='flex items-center gap-1 mr-2' href={'/profile'}>
+                            <div className='text-base'><CiUser/></div>
+                            Profile</Link>
+
                         :
                             (<Link href="/signup" className="text-md text-white font-bold border px-4 py-2 rounded-lg mr-2" style={{ backgroundColor: '#247F9E' }} >SignUp</Link>)
                         }

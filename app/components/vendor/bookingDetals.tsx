@@ -158,6 +158,7 @@ const BookingDetals = () => {
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-0 p-3 border-2 shadow-sm border-black mb-2' key={index}>
                         <div className=''>
                             <h1 className='text-lg font-bold'>BOOKING DETAILS</h1>
+                            <p className='font-semibold'>ORD{booking._id}</p>
                             <div className='pt-1 pb-2'>
                                 <p>Name : {booking.name}</p>
                                 <p>Mobile : {booking.mobile}</p>

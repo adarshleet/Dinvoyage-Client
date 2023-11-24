@@ -24,7 +24,7 @@ const RestaurantCard = ({ restaurant,booking }: restaurantProps) => {
 
     return (
         <div className="flex flex-col items-center bg-white border border-gray-200 shadow md:flex-row md:max-w-4xl">
-            <div>
+            <div style={{maxWidth:'40rem',maxHeight:'22.5rem'}} className='overflow-hidden flex justify-center items-center'>
                 <img className="" src={restaurant.banners} alt="" />
             </div>
             <div className="flex flex-col justify-start h-full p-4 leading-normal w-full md:w-1/2">

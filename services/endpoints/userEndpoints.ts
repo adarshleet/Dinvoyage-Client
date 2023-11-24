@@ -29,7 +29,12 @@ const userRoutes={
     //user bookings
     userBookings : '/api/user/allbookings',
 
-    cancelBooking :'/api/user/cancelBooking'
+    cancelBooking :'/api/user/cancelBooking',
+
+    //search restaurants
+    searchRestaurants : '/api/user/search',
+
+    filterRestaurants : '/api/user/filterRestaurants'
 
 }
 

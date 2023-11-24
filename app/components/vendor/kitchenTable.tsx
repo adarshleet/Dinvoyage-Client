@@ -135,6 +135,15 @@ const KitchenTable = () => {
             itemData.category = {category: categoryName}
             setItems((prevItems) => [...prevItems,itemData]);
 
+            setItemData({
+                itemName: '',
+                category: '',
+                price: '',
+                veg: false,
+                description: '',
+                isListed: true
+            });
+
             setItemModal(false);
 
         }

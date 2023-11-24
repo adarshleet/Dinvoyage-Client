@@ -13,10 +13,9 @@ const page = () => {
             </div>
             <div className='pl-4 pr-10'>
                 <div className='w-full bg-cyan-600 p-3 rounded-md mb-2'>
-                    <h1 className='font-bold text-white'>ACTIVE BOOKINGS</h1>
+                    <h1 className='font-bold text-white'>ALL BOOKINGS</h1>
                 </div>
                 <BookingDetals/>
-                
             </div>
         </div>
     </>

@@ -129,6 +129,8 @@ export const payment =  async(bookingDetails:FormData)=>{
         return res
     } catch (error) {
         console.log(error);
+        const err: Error = error as Error;
+        return errorHandle(err);
     }
 }
 
@@ -139,7 +141,9 @@ export const userBookings = async()=>{
         const res = await Api.get(userRoutes.userBookings)
         return res
     } catch (error) {
-        console.log(error);
+        // console.log(error);
+        const err: Error = error as Error;
+        return errorHandle(err);
     }
 }
 
@@ -148,6 +152,30 @@ export const userBookings = async()=>{
 export const cancelBooking = async(bookingId:string,reason:string)=>{
     try {
         const res = await Api.put(`${userRoutes.cancelBooking}?bookingId=${bookingId}`,{reason})
+        return res
+    } catch (error) {
+        console.log(error)
+        const err: Error = error as Error;
+        return errorHandle(err);
+    }
+}
+
+
+//search restaurants
+export const searchRestaurants = async(searchQuery:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.searchRestaurants}?search=${searchQuery}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//filter restaurants
+export const filterRestaurants = async(cuisines:string[],facilities:string[])=>{
+    try {
+        const res = await Api.post(userRoutes.filterRestaurants,{cuisines,facilities})
         return res
     } catch (error) {
         console.log(error)

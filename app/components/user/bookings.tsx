@@ -3,6 +3,7 @@ import { cancelBooking, userBookings } from '@/apis/user'
 import React, { useEffect, useState } from 'react'
 import BookingCancellationModal from './bookingCancellationModal'
 import toast from 'react-hot-toast'
+import Link from 'next/link'
 
 const Bookings = () => {
 
@@ -146,11 +147,12 @@ const Bookings = () => {
             <div className='overflow-y-scroll' style={{ maxHeight: '30rem' }}>
                 {sortedBookingsArray.map((booking, index) => (
                     <div className='border-2 p-6 w-full mb-2' key={index}>
+                        <p className='font-normal text-sm mb-1'>ORD{booking._id}</p>
                         <div className='flex justify-between border-b pb-4'>
                             <div className='flex flex-col md:flex-row'>
-                                <div className='w-36'>
+                                <Link href={`/restaurant/${booking.restaurant._id}`} className='w-36'>
                                     <img src={booking.restaurant.banners} alt="" />
-                                </div>
+                                </Link>
                                 <div className='md:px-2'>
                                     <h5 className='font-bold'>{booking.restaurant.restaurantName}</h5>
                                     <h5 className='text-sm'>{booking.restaurant.locality}</h5>
@@ -175,10 +177,10 @@ const Bookings = () => {
                             {booking.items.map((item, index) => (
                                 <div className='flex justify-between' key={index}>
                                     <p>{item.item} x{item.count}</p>
-                                    <p>₹{item.price}</p>
+                                    <p>₹{item.price * item.count}</p>
                                 </div>
                             ))}
-                            <div className='flex justify-between'>
+                            <div className='flex justify-between font-semibold mt-1'>
                                 <p>Reservation Charge</p>
                                 <p>₹100</p>
                             </div>
