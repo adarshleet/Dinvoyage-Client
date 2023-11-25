@@ -31,9 +31,15 @@ const vendorRoutes = {
 
     addItemToKitchen : '/api/vendor/addItem',
 
+    editItem : '/api/vendor/editItem',
+
+    changeItemStatus : '/api/vendor/changeItemStatus',
+
     getRestaurantDetails : '/api/vendor/getRestaurantDetails',
 
-    deleteRestaurantBanner : '/api/vendor/deleteBanner'
+    deleteRestaurantBanner : '/api/vendor/deleteBanner',
+
+    editRestaurant : '/api/vendor/editRestaurant'
 
 }
 

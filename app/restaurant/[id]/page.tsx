@@ -5,7 +5,9 @@ import RestaurantCard from '../../components/user/restaurantCard'
 import { singleRestaurant } from '@/apis/user'
 
 interface restaurantProps {
-    params: string
+    params:{
+        id:string
+    }
 }
 
 const page = ({params}:restaurantProps) => {
@@ -13,13 +15,12 @@ const page = ({params}:restaurantProps) => {
     const [restaurant,setRestaurant] = useState({})
 
     const { id } = params
-    console.log(id)
 
     useEffect(()=>{
         const fetchData = async()=>{
             const res = await singleRestaurant(id)
             const restaurant = res?.data.data
-            console.log(restaurant)
+            console.log(restaurant.banners[0])
             setRestaurant(restaurant)
         }
         fetchData()

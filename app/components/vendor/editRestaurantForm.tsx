@@ -2,7 +2,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 import Spinner from '../loadingPages/spinner'
-import { deleteRestaurantBanner, getRestaurantDetails } from '@/apis/vendor'
+import { deleteRestaurantBanner, editRestaurant, getRestaurantDetails } from '@/apis/vendor'
 import { useRouter } from 'next/navigation'
 
 interface editProps {
@@ -12,7 +12,7 @@ interface editProps {
 const EditRestaurantForm = ({ restaurantId }: editProps) => {
 
     const [restaurant, setRestaurant] = useState({})
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [images, setImages] = useState([])
     const [existingImages,setExistingImages] = useState([])
 
@@ -92,7 +92,7 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
     };
 
 
-    const handleRequestApproval = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleEditDetails = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const form = new FormData();
         if (formData.restaurantName.length < 5) {
@@ -148,26 +148,54 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
             form.append('googlemapLocation', formData.googlemapLocation)
             form.append('contactNumber', formData.contactNumber)
 
-            // const res = await addRestaurant(form)
-            // const data = res?.data
-            // if (data.status) {
-            //     setLoading(false)
-            //     router.replace('/vendor/restaurants')
-            // }
+            const res = await editRestaurant(restaurantId,form)
+            console.log(res)
+            const data = res?.data
+            if (data.status) {
+                setLoading(false)
+                router.replace('/vendor/restaurants')
+            }
         }
     }
 
     const deleteImage = async(image:string)=>{
-        // e.preventDefault()
-        console.log(image)
         const res = await deleteRestaurantBanner(restaurant._id,image)
+        setExistingImages((prevImages) => {
+            const index = prevImages.indexOf(image);
+
+            if (index !== -1) {
+                const newArray = [...prevImages];
+                newArray.splice(index, 1);
+                return newArray;
+            }
+
+            return prevImages;
+        });
+        setFormData((prevFormData) => {
+            // Copy the existing state
+            const updatedFormData = { ...prevFormData };
+    
+            // Ensure banners is an array
+            if (Array.isArray(updatedFormData.banners)) {
+                // Find the index of the image in the banners array
+                const imageIndex = updatedFormData.banners.indexOf(image);
+    
+                // Check if the image name is found
+                if (imageIndex !== -1) {
+                    // Remove the image by index
+                    updatedFormData.banners.splice(imageIndex, 1);
+                }
+            }
+    
+            return updatedFormData;
+        });
         console.log(res)
     }
 
 
     return (
         <>
-            <form encType='multipart/form-data'>
+            <form onSubmit={handleEditDetails} encType='multipart/form-data'>
                 <Toaster
                     position="top-right"
                     reverseOrder={false}
@@ -319,7 +347,7 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
                                 {formData.banners[index] && (
                                     <>
                                         <img src={formData.banners[index]} alt={`Banner ${index + 1}`} className='' />
-                                       {existingImages.includes(formData.banners[index]) && <h1 className='px-3 py-2 mt-1 text-center bg-red-700 text-white font-bold text-sm cursor-pointer' onClick={()=>deleteImage(formData.banners[index])}>Delete</h1>}
+                                       {(existingImages.includes(formData.banners[index]) && existingImages.length != 1) && <h1 className='px-3 py-2 mt-1 text-center bg-red-700 text-white font-bold text-sm cursor-pointer' onClick={()=>deleteImage(formData.banners[index])}>Delete</h1>}
                                     </>
                                 )}
                                 {!formData.banners[index] && (
@@ -336,9 +364,9 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
                     <button className='w-full text-center mt-8 p-2 text-white font-bold bg-gray-600'>REQUEST ADMIN FOR APPROVAL</button>
                 </div>
             </form>
-            {/* {loading &&
+            {loading &&
                 <Spinner />
-            } */}
+            }
         </>
     )
 }

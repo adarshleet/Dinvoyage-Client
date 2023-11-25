@@ -112,9 +112,9 @@ export const tableCounts = async(guestData:guestData)=>{
 
 
 //all kitchen items showing in booking page
-export const kitchenItems = async(restaurantId:string)=>{
+export const kitchenItems = async(restaurantId:string,veg:boolean)=>{
     try {
-        const res = await Api.get(`${userRoutes.kitchenItems}?restaurantId=${restaurantId}`)
+        const res = await Api.get(`${userRoutes.kitchenItems}?restaurantId=${restaurantId}&veg=${veg}`)
         return res
     } catch (error) {
         console.log(error);

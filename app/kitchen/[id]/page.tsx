@@ -11,8 +11,8 @@ import { useRouter } from 'next/navigation';
 
 
 interface restaurantProps {
-    params:{
-        id:string
+    params: {
+        id: string
     }
 }
 
@@ -25,6 +25,16 @@ const page = ({ params }: restaurantProps) => {
     const [allItems, setAllItems] = useState([])
     const [guestDetails, setGuestDetails] = useState({})
 
+    const [veg, setVeg] = useState(false);
+
+    const toggleSwitch = async () => {
+        const response = await kitchenItems(id, !veg)
+        const items = response?.data.kitchenAllItems.data
+        console.log(items)
+        setAllItems(items)
+        setVeg((prev) => !prev);
+    };
+
 
     const { id } = params
 
@@ -36,11 +46,10 @@ const page = ({ params }: restaurantProps) => {
             const res = await singleRestaurant(id)
             const restaurant = res?.data.data
             setRestaurant(restaurant)
-            const response = await kitchenItems(id)
+            const response = await kitchenItems(id, veg)
             const items = response?.data.kitchenAllItems.data
             setAllItems(items)
             const guestDetails = response?.data?.sessionData?.bookingDetails
-            console.log('ferr', guestDetails)
             if (guestDetails.items) {
                 setSelectedItems(guestDetails.items)
             }
@@ -175,8 +184,28 @@ const page = ({ params }: restaurantProps) => {
                         <button className='py-1 my-2 bg-cyan-800 w-full tex-sm text-white font-bold' disabled={selectedItems.length == 0} onClick={makePayment}>PROCEED TO PAYMENT</button>
                     </div>
                 </div>
-                <div className='flex justify-center'>
-                    <div className='my-16 py-4 bg-white w-full'>
+
+
+                <div className='flex flex-col justify-center'>
+                    <div className="flex items-start mt-16">
+                        <span className="mr-2 font-bold">VEG ONLY</span>
+                        <label
+                            className={`${veg ? 'bg-orange-600' : 'bg-gray-300'
+                                } relative inline-flex items-center h-6 rounded-md w-11 cursor-pointer`}
+                        >
+                            <input
+                                type="checkbox"
+                                className="hidden "
+                                onChange={toggleSwitch}
+                                checked={veg}
+                            />
+                            <span
+                                className={`${veg ? 'translate-x-6' : 'translate-x-1'
+                                    } inline-block w-4 h-4 transform bg-white rounded-sm `}
+                            />
+                        </label>
+                    </div>
+                    <div className='mb-16 mt-3 py-4 bg-white w-full'>
                         <h3 className='text-center font-bold text-xl px-36 md:px-80'>SELECT YOUR TASTE</h3>
                         {allItems.map((item, index) => (
                             <div className='border-b-8 border-gray-200' key={index}>
@@ -196,26 +225,34 @@ const page = ({ params }: restaurantProps) => {
                                                     <p className='text-sm text-gray-500 whitespace-normal'>{item.description}</p>
                                                 </div>
                                             </div>
-                                            <div className='flex items-center shadow-md border h-full py-1'>
-                                                {!selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count ?
-                                                    <button className='px-7 font-bold text-orange-600' onClick={() => handleCounterChange(index, item.itemName, (selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count || 0) + 1, item.price)}>Add</button>
-                                                    :
-                                                    <>
-                                                        <button
-                                                            className='px-2 py-1 text-gray-800 rounded'
-                                                            onClick={() => handleCounterChange(index, item.itemName, Math.max((selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count || 0) - 1, 0), item.price)}
-                                                        >
-                                                            <FiMinus />
-                                                        </button>
-                                                        <h1><span className='mx-2 text-orange-600 font-bold'>{selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count || 0}</span></h1>
-                                                        <button
-                                                            className='px-2 py-1 text-gray-800 rounded'
-                                                            onClick={() => handleCounterChange(index, item.itemName, (selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count || 0) + 1, item.price)}
-                                                        >
-                                                            <FiPlus />
-                                                        </button>
-                                                    </>
-                                                }
+                                            <div>
+                                                <div className='relative'>
+                                                    <div className='w-32 m-2 h-24 rounded-md shadow-lg border  overflow-hidden'>
+                                                        <img className="w-full h-full object-cover" src={item.image ? item.image : "https://www.thespruceeats.com/thmb/XDBL9gA6A6nYWUdsRZ3QwH084rk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SES-chicken-biryani-recipe-7367850-hero-A-ed211926bb0e4ca1be510695c15ce111.jpg"} alt="" />
+                                                    </div>
+                                                    <div className='flex items-center bg-white rounded-sm shadow-md border w-24 absolute top-20 left-6 justify-center py-1 px-2'>
+                                                    {!selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count ?
+                                                        <button className='px-7 font-bold text-orange-600 ' onClick={() => handleCounterChange(index, item.itemName, (selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count || 0) + 1, item.price)}>Add</button>
+                                                        :
+                                                        <>
+                                                            <button
+                                                                className='px-2 py-1 text-gray-800 rounded'
+                                                                onClick={() => handleCounterChange(index, item.itemName, Math.max((selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count || 0) - 1, 0), item.price)}
+                                                            >
+                                                                <FiMinus />
+                                                            </button>
+                                                            <h1><span className='mx-2 text-orange-600 font-bold'>{selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count || 0}</span></h1>
+                                                            <button
+                                                                className='px-2 py-1 text-gray-800 rounded'
+                                                                onClick={() => handleCounterChange(index, item.itemName, (selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count || 0) + 1, item.price)}
+                                                            >
+                                                                <FiPlus />
+                                                            </button>
+                                                        </>
+                                                    }
+                                                </div>
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                     ))}

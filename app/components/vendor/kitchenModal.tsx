@@ -11,10 +11,18 @@ interface kitchenModalProps{
     itemData,
     setItemData,
     handleFormSubmit : (e)=>void
+    handleFileChange : (e)=>void
+    edit:boolean
 }
 
-const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,setItemData,handleInputChange,handleFormSubmit}:kitchenModalProps) => {
+const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,handleInputChange,handleFormSubmit,handleFileChange,edit,editId,setItemData}:kitchenModalProps) => {
 
+    //for editing
+    if(edit){
+        useEffect(()=>{
+            console.log(editId)
+        },[])
+    }
 
     return (
         <>
@@ -30,7 +38,7 @@ const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,setItemData
                         {/* Modal header */}
                         <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t ">
                             <h3 className="text-lg font-semibold text-gray-900 ">
-                                Add New item
+                                {edit ? 'Edit Item Details' :  "Add New item"}
                             </h3>
                             <button
                                 type="button"
@@ -57,7 +65,7 @@ const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,setItemData
                             </button>
                         </div>
                         {/* Modal body */}
-                        <form onSubmit={handleFormSubmit} className="p-4 md:p-5">
+                        <form onSubmit={handleFormSubmit} className="p-4 md:p-5" encType='multipart/form-data'>
                             <div className="grid gap-4 mb-4 grid-cols-2">
                                 <div className="col-span-1">
                                     <label
@@ -131,11 +139,20 @@ const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,setItemData
                                         id="description"
                                         name='description'
                                         rows={3}
-                                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                                        className="block resize-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                                         placeholder="Write Item description here"
                                         value={itemData.description}
                                         onChange={handleInputChange}
                                     />
+                                </div>
+                                <div className='flex justify-between items-center w-full col-span-2'>
+                                    <div>
+                                        <label htmlFor="itemImage" className='px-3 py-2 border-gray-500 border-2 font-bold text-sm'>Select Item Image</label>
+                                        <input type="file" name='image' id='itemImage' className='hidden' onChange={(e) => handleFileChange(e)}/>
+                                    </div>
+                                    {itemData.image && <div className='w-32 m-2 h-24 overflow-hidden'>
+                                        <img src={itemData.image} alt="item image" className='w-full h-full object-cover'/>
+                                    </div>}
                                 </div>
                             </div>
                             <button
@@ -154,7 +171,7 @@ const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,setItemData
                                         clipRule="evenodd"
                                     />
                                 </svg>
-                                Add new Item
+                                {edit ? 'Edit Item Details' : 'Add new Item'}
                             </button>
                         </form>
                     </div>

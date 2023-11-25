@@ -112,6 +112,16 @@ export const deleteRestaurantBanner = async(restaurantId:string,image:string)=>{
 }
 
 
+//edit restaurant details
+export const editRestaurant = async(restaurantId:string,restaurantData:FormData)=>{
+    try {
+        const res = Api.put(`${vendorRoutes.editRestaurant}?restaurantId=${restaurantId}`,restaurantData)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const selectedCuisinesAndFacilities = async()=>{
     try {
         const res = await Api.get(vendorRoutes.selectedCuisinesAndFacilities)
@@ -211,14 +221,33 @@ export const getAllKitchenItems = async(restaurantId:string)=>{
 }
 
 
-export const addItemToKitchen = async(restauarntId:string,itemData:itemData)=>{
+export const addItemToKitchen = async(restauarntId:string,itemData:FormData)=>{
     try {
-        const res = await Api.post(`${vendorRoutes.addItemToKitchen}?restaurantId=${restauarntId}`,{itemData})
+        const res = await Api.post(`${vendorRoutes.addItemToKitchen}?restaurantId=${restauarntId}`,itemData)
         return res
     } catch (error) {
         console.log(error);
         const err: Error = error as Error;
         return errorHandle(err);
+    }
+}
+
+
+export const editItem = async(itemId:string,itemData:FormData)=>{
+    try {
+        const res = await Api.patch(`${vendorRoutes.editItem}?itemId=${itemId}`,itemData)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const changeItemStatus =  async(itemId:string)=>{
+    try {
+        const res = await Api.put(`${vendorRoutes.changeItemStatus}?itemId=${itemId}`)
+        return res
+    } catch (error) {
+        console.log(error)
     }
 }
 
