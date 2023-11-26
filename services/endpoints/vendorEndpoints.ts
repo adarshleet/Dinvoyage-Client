@@ -39,7 +39,12 @@ const vendorRoutes = {
 
     deleteRestaurantBanner : '/api/vendor/deleteBanner',
 
-    editRestaurant : '/api/vendor/editRestaurant'
+    editRestaurant : '/api/vendor/editRestaurant',
+
+
+    allBookings : '/api/vendor/allBookingDetails',
+
+    bookingCancellation : '/api/vendor/changeBookingStatus'
 
 }
 

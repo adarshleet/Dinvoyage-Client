@@ -46,9 +46,7 @@ const adminRoutes = {
     allLocality : '/api/admin/allLocality',
 
 
-    allBookings : '/api/admin/allBookingDetails',
-
-    bookingCancellation : '/api/admin/changeBookingStatus'
+    
 }
 
 export default adminRoutes

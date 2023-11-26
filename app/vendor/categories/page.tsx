@@ -12,9 +12,7 @@ const page = () => {
                 <Sidebar page={'categories'} />
             </div>
             <div className='pl-4 pr-10'>
-                <div className='w-full bg-cyan-600 p-3 rounded-md mb-4'>
-                    <h1 className='font-bold text-white'>CATEGORIES</h1>
-                </div>
+                
                 <CategoryTable/>
             </div>
         </div>

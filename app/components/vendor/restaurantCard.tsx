@@ -74,14 +74,16 @@ const RestaurantCard = () => {
     }
 
     return (
-        <>
-            <div className='pb-3 flex items-center justify-between'>
-                <Link href={'/vendor/addRestaurant'} className='px-3 py-2 bg-slate-600 text-white font-bold rounded-md'>ADD NEW RESTAURANT</Link>
-                <div className='flex gap-2'>
-                    <button  onClick={pageMinus} disabled={page == 0}><BsFillArrowLeftSquareFill className="text-2xl"/></button>
+        <>  
+            <div className='w-full flex justify-between items-center bg-slate-700 p-3 rounded-md mb-4'>
+                    <h1 className='font-bold text-white'>RESTAURANT DETAILS</h1>
+            <div className='flex items-center justify-between'>
+                <div className='flex gap-2 text-white'>
+                    <button  onClick={pageMinus} disabled={page == 0}><BsFillArrowLeftSquareFill className="text-xl"/></button>
                     <p className='font-bold'>{page+1} / {allRestaurant.length}</p>
-                    <button  onClick={pagePlus} disabled={page == allRestaurant.length-1}><BsFillArrowRightSquareFill className="text-2xl"/></button>
+                    <button  onClick={pagePlus} disabled={page == allRestaurant.length-1}><BsFillArrowRightSquareFill className="text-xl"/></button>
                 </div>
+            </div>
             </div>
             <div className='p-5 bg-white shadow-sm'>
                 <div className="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row">
@@ -104,6 +106,9 @@ const RestaurantCard = () => {
                         <h3 className='text-lg font-bold'>Status : {status}</h3>
                     </div>
                 </div>
+            </div>
+            <div className='mt-4'>
+                <Link href={'/vendor/addRestaurant'} className='px-3 py-2 text-sm bg-slate-600 text-white font-bold rounded-md'>ADD NEW RESTAURANT</Link>
             </div>
         </>
     )

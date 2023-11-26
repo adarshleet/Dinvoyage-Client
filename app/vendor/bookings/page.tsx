@@ -7,14 +7,12 @@ const page = () => {
     return (
         <>
         <div><Toaster position='top-right'/></div>
-        <div className='flex flex-col pt-16 md:ml-72'>
+        <div className='flex flex-col pt-10 md:ml-72'>
             <div className=''>
                 <Sidebar page={'bookings'} />
             </div>
             <div className='pl-4 pr-10'>
-                <div className='w-full bg-cyan-600 p-3 rounded-md mb-2'>
-                    <h1 className='font-bold text-white'>ALL BOOKINGS</h1>
-                </div>
+                
                 <BookingDetals/>
             </div>
         </div>

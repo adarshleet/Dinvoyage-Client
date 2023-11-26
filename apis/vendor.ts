@@ -159,9 +159,9 @@ export const SetSelectedFacilities = async(facilities:Array<string>,restaurantId
 
 
 
-export const allCategories = async(restaurantId:string)=>{
+export const allCategories = async(restaurantId:string,search:string,page:number)=>{
     try {
-        const res = await Api.get(`${vendorRoutes.allCategories}?restaurantId=${restaurantId}`)
+        const res = await Api.get(`${vendorRoutes.allCategories}?restaurantId=${restaurantId}&search=${search}&page=${page}`)
         return res
     } catch (error) {
         console.log(error);
@@ -209,9 +209,9 @@ export const changeCategoryStatus = async (categoryId:string)=>{
 }
 
 
-export const getAllKitchenItems = async(restaurantId:string)=>{
+export const getAllKitchenItems = async(restaurantId:string,search:string,page:number)=>{
     try {
-        const res = await Api.get(`${vendorRoutes.getAllKitchenItems}?restaurantId=${restaurantId}`)
+        const res = await Api.get(`${vendorRoutes.getAllKitchenItems}?restaurantId=${restaurantId}&search=${search}&page=${page}`)
         return res
     } catch (error) {
         console.log(error);
@@ -251,6 +251,26 @@ export const changeItemStatus =  async(itemId:string)=>{
     }
 }
 
+
+//booking management
+export const allBookingDetails = async(restaurantId:string,page:number)=>{
+    try {
+        const res = Api.get(`${vendorRoutes.allBookings}?restaurantId=${restaurantId}&page=${page}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const bookingCancellation = async(bookingId:string,reason:string)=>{
+    try {
+        const res = Api.put(`${vendorRoutes.bookingCancellation}?bookingId=${bookingId}`,{reason})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 export const vendorLogout = async()=>{
     try {

@@ -12,9 +12,6 @@ const page = () => {
                 <Sidebar page={'cuisines'} />
             </div>
             <div className='pl-4 pr-10'>
-                <div className='w-full bg-cyan-600 p-3 rounded-md mb-4'>
-                    <h1 className='font-bold text-white'>CUISINES AND FACILITIES</h1>
-                </div>
                 <CusinesAndFacilities />
             </div>
         </div>

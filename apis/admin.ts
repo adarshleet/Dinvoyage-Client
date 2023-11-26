@@ -230,21 +230,3 @@ export const allLocalities = async()=>{
 }
 
 
-export const allBookingDetails = async(restaurantId:string)=>{
-    try {
-        const res = Api.get(`${adminRoutes.allBookings}?restaurantId=${restaurantId}`)
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-
-export const bookingCancellation = async(bookingId:string,reason:string)=>{
-    try {
-        const res = Api.put(`${adminRoutes.bookingCancellation}?bookingId=${bookingId}`,{reason})
-        return res
-    } catch (error) {
-        console.log(error)
-    }
-}

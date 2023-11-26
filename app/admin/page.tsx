@@ -15,13 +15,13 @@ const page = () => {
     const dispatch = useDispatch()
 
 
-    // useEffect(()=>{
+    useEffect(()=>{
     const adminInfo = localStorage.getItem('adminInfo')
     console.log(adminInfo)
     if(adminInfo){
         router.push('/admin/dashboard')
     }
-    // },[])
+    },[])
 
     const [error, setError] = useState('')
     const [formData, setFormData] = useState({

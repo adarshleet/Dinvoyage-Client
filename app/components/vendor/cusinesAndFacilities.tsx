@@ -2,7 +2,7 @@
 import { allCuisines, allFacilities } from '@/apis/admin'
 import { SetSelectedCuisines, SetSelectedFacilities, getRestaurant, selectedCuisinesAndFacilities } from '@/apis/vendor'
 import React, { useEffect, useState } from 'react'
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+import {BsFillArrowRightSquareFill,BsFillArrowLeftSquareFill} from 'react-icons/bs'
 import CardRestaurant from '../loadingPages/cardRestaurant'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
@@ -127,22 +127,26 @@ const CusinesAndFacilities = () => {
     }
 
     return (
-        <div className='p-6 shadow-sm bg-white'>
-            <div className='flex justify-between items-center p-3 border border-gray-500 bg-gray-600'>
-                <div className=''>
-                    <h4 className='text-xl text-white font-bold'>{restaurant.restaurantName}</h4>
-                    <h5 className='text-md text-white font-semibold'>{restaurant.landmark}</h5>
-                </div>
-                <div className='flex gap-4 text-xl text-white font-bold'>
-                    <button onClick={pageMinus} disabled={page==0}><FaArrowLeft /></button>
-                    <h5>{page+1}/{allRestaurant.length}</h5>
-                    <button onClick={pagePlus} disabled={page == allRestaurant.length-1}><FaArrowRight /></button>
+        <>
+        <div className='w-full bg-slate-700 pb-10 p-3 rounded-md mb-16 relative'>
+                <h1 className='font-bold text-white text-center mb-2'>CUISINES & FACILITIES</h1>
+                <div className='flex justify-between items-center p-3 border shadow-md bg-white mb-2 absolute rounded-sm left-3 right-3'>
+                    <div className=''>
+                        <h4 className='text-xl text-gray-800 font-bold'>{restaurant?.restaurantName}</h4>
+                        <h5 className='text-md text-gray-700 font-semibold'>{restaurant?.landmark}</h5>
+                    </div>
+                    <div className='flex gap-4 text-xl text-gray-600 font-bold'>
+                        <button onClick={pageMinus} disabled={page === 0}><BsFillArrowLeftSquareFill /></button>
+                        <h5>{page + 1}/{allRestaurant.length}</h5>
+                        <button onClick={pagePlus} disabled={page === allRestaurant.length - 1}><BsFillArrowRightSquareFill /></button>
+                    </div>
                 </div>
             </div>
+        <div className='p-6 shadow-sm bg-white'>    
             <div className='my-2 p-4'>
-                <div className='my-6'>
+                <div className='mb-10'>
                     <h3 className='text-lg font-bold'>Select Available Cuisines</h3>
-                    <div className='flex flex-wrap py-3 gap-8 mb-5'>
+                    <div className='flex flex-wrap py-3 gap-8 mb-2'>
                         {
                             cuisines.map((cuisine, index) => (
                                 <div className='' key={index}>
@@ -152,11 +156,11 @@ const CusinesAndFacilities = () => {
                             ))
                         }
                     </div>
-                    <button className='px-3 py-2 bg-cyan-600 text-white font-bold rounded-sm' onClick={handleButtonClick}>UPDATE CUISINE LIST</button>
+                    <button className='px-3 py-2 text-sm bg-cyan-600 text-white font-bold rounded-sm' onClick={handleButtonClick}>UPDATE CUISINE LIST</button>
                 </div>
-                <div className='my-10'>
+                <div className=''>
                     <h3 className='text-lg font-bold'>Select Available Facilities</h3>
-                    <div className='flex flex-wrap py-3 gap-8 mb-5'>
+                    <div className='flex flex-wrap py-3 gap-8 mb-2'>
                         {
                             allFacility.map((facility: string, index: number) => (
                                 <div className='' key={index}>
@@ -166,10 +170,11 @@ const CusinesAndFacilities = () => {
                             ))
                         }
                     </div>
-                    <button className='px-3 py-2 bg-cyan-600 text-white font-bold rounded-sm' onClick={handleFacilityButtonClick}>UPDATE FACILITIES LIST</button>
+                    <button className='px-3 py-2 text-sm bg-cyan-600 text-white font-bold rounded-sm' onClick={handleFacilityButtonClick}>UPDATE FACILITIES LIST</button>
                 </div>
             </div>
         </div>
+        </>
     )
 }
 
