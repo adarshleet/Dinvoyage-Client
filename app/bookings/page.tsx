@@ -10,8 +10,8 @@ const page = () => {
             <header>
                 <Navbar />
             </header>
-            <main className='bg-white py-24 md:px-10'>
-                <div className='flex bg-white p-4 border-2'>
+            <main className='bg-white py-24 md:px-10 flex justify-center'>
+                <div className='flex bg-white p-4 border-2 md:w-3/4'>
                     <ProfileSideBAr page='bookings'/>
                     <Bookings/>
                 </div>

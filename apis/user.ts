@@ -50,6 +50,59 @@ export const login = async (userData:Formvalues)=>{
 }
 
 
+export const findUser = async()=>{
+    try {
+        const res = await Api.get(userRoutes.findUser)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//change user name
+export const changeName = async(name:string)=>{
+    try {
+        const res = await Api.put(userRoutes.changeName,{name})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//verify new mobile for changing
+export const verifyNewMobile = async(mobile:string | number)=>{
+    try {
+        const res = Api.post(userRoutes.verifyNewMobile,{mobile})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//verify otp and change mobile
+export const changeMobile = async(otp:string | number,mobile:number|string)=>{
+    try {
+        const res = Api.put(userRoutes.changeMobile,{otp,mobile})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//change password
+export const changePassword = async(passwords:object)=>{
+    try {
+        const res = Api.put(userRoutes.changePassword,passwords)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 export const logout = async()=>{
     try {
         const res = await Api.get(userRoutes.logout)

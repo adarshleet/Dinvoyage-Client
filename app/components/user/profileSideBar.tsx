@@ -6,7 +6,7 @@ interface sideBarProps{
 }
 const ProfileSideBar = ({page}:sideBarProps) => {
     return (
-        <div className='hidden md:block ps-4 py-4 bg-gray-300 font-bold text-base text-center' style={{ minHeight: '30rem', width: '15rem' }}>
+        <div className='hidden md:block col-span-1 ps-4 py-4 bg-cyan-100 font-bold text-base text-center' style={{ minHeight: '30rem', width: '18rem' }}>
             <div className={`py-5 px-8 ${page=='profile' && 'bg-white'}`}>
                 <Link href={'/profile'}>Profile</Link>
             </div>

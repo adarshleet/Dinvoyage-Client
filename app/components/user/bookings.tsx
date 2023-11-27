@@ -107,7 +107,6 @@ const Bookings = () => {
         }
 
         const res = await cancelBooking(cancelBookingId,cancelReason)
-        console.log(res?.data.data)
         if(res?.data.data){
             setBookings((prevBookings) => {
                 // Map over the previous bookings array
@@ -126,6 +125,7 @@ const Bookings = () => {
               
                 return updatedBookings; // Return the updated array
               });
+            closeModal()
               return toast('Booking Cancelled', {
                 style: {
                   borderRadius: '0px',
@@ -135,7 +135,6 @@ const Bookings = () => {
                   backgroundColor: 'rgba(0, 0, 0, 0.6)',
                 }
             });
-            closeModal()
 
         }
     }

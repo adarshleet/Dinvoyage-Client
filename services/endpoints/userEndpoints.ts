@@ -8,6 +8,16 @@ const userRoutes={
     logout : '/api/user/logout',
 
 
+    findUser : '/api/user/findUser',
+
+    changeName : '/api/user/changeName',
+
+    verifyNewMobile : '/api/user/verifyNewMobile',
+
+    changeMobile : '/api/user/changeMobile',
+
+    changePassword : '/api/user/changePassword',
+
 
     restaurantsToShow : '/api/user/restaurantsToDisplay',
 
