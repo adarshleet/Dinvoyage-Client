@@ -66,6 +66,62 @@ export const vendorLogin = async (vendor : Formvalues)=>{
 }
 
 
+//get user details
+export const getVendorDetails = async()=>{
+    try {
+        const res = await Api.get(vendorRoutes.getVendorDetails)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//change vendor name
+export const changeVendorName = async(name:string)=>{
+    try {
+        const res = await Api.put(vendorRoutes.changeVendorName,{name})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//verify new mobile
+export const verifyMobile = async(mobile:string | number)=>{
+    try {
+        const res = await Api.post(vendorRoutes.verifyMobile,{mobile})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//change mobile
+export const changeMobile = async(mobile:string | number,otp:string | number)=>{
+    try {
+        const res = await Api.put(vendorRoutes.changeMobile,{mobile,otp})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//change password
+export const changePassword = async(passwords:object)=>{
+    try {
+        const res = await Api.put(vendorRoutes.changePassword,passwords)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//restaurant apis
 export const addRestaurant = async (restaurantData:FormData)=>{
     try {
         const res = await Api.post(vendorRoutes.addRestaurant,restaurantData)

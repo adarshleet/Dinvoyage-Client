@@ -5,6 +5,18 @@ const vendorRoutes = {
 
     vendorLogin : '/api/vendor/login',
 
+
+    getVendorDetails : '/api/vendor/getVendorDetails',
+
+    changeVendorName : '/api/vendor/changeName',
+
+    verifyMobile : '/api/vendor/verifyMobile',
+
+    changeMobile : '/api/vendor/changeMobile',
+
+    changePassword : '/api/vendor/changePassword',
+
+
     addRestaurant : '/api/vendor/addRestaurant',
 
     getRestaurant : '/api/vendor/getRestaurant',
