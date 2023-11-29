@@ -1,6 +1,7 @@
 import React from 'react'
 import Sidebar from '@/app/components/admin/sidebar'
 import AdminLogout from '@/app/components/admin/adminLogout'
+import AdminDashboard from '@/app/components/admin/adminDashboard'
 
 const page = () => {
     return (
@@ -13,6 +14,7 @@ const page = () => {
                     <h3 className='font-bold text-lg'>ADMIN DASHBOARD</h3>
                     <AdminLogout/>
                 </div>
+                <AdminDashboard/>
             </div>
         </div>
     )

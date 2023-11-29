@@ -61,7 +61,6 @@ const KitchenTable = () => {
 
                     const response = await allCategories(restaurantData[page]._id,searchQuery,pageForCat)
                     const categories = response?.data.data
-                    console.log(categories)
                     setCategories(categories)
                     setLoading(false)
 

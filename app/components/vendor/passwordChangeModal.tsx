@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 
 interface passwordProps{
     toaster : (message:string)=>void
-    setPasswordModal : (change)=>void
+    setPasswordModal : (change:boolean)=>void
 }
 
 const PasswordChangeModal = ({toaster,setPasswordModal}:passwordProps) => {

@@ -32,7 +32,6 @@ const BookingDetals = () => {
                     if (restaurantData[page]) {
                         const res = await allBookingDetails(restaurantData[page]._id,pagination)
                         const bookings = res?.data?.data
-                        console.log(bookings)
                         setBookings(bookings.allBookingDetails)
                         setCurrentPage(bookings.currentPage)
                         setTotalPages(bookings.totalPages)
@@ -50,6 +49,7 @@ const BookingDetals = () => {
         setPagination(1)
         setPage((prevPage) => Math.max(prevPage - 1, 0));
         if (allRestaurant[page - 1]) {
+            setRestaurant(allRestaurant[page-1])
             const res = await allBookingDetails(allRestaurant[page - 1]._id,pagination)
             const bookings = res?.data?.data
             setBookings(bookings.allBookingDetails)
@@ -62,6 +62,7 @@ const BookingDetals = () => {
         setPagination(1)
         setPage((prevPage) => Math.min(prevPage + 1, allRestaurant.length - 1));
         if (allRestaurant[page + 1]) {
+            setRestaurant(allRestaurant[page+1])
             const res = await allBookingDetails(allRestaurant[page + 1]._id,pagination)
             const bookings = res?.data?.data
             setBookings(bookings.allBookingDetails)

@@ -328,6 +328,19 @@ export const bookingCancellation = async(bookingId:string,reason:string)=>{
     }
 }
 
+
+
+//sales report
+export const salesChart = async(restaurantId:string)=>{
+    try {
+        const res = Api.get(`${vendorRoutes.salesCharts}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error)        
+    }
+}
+
+
 export const vendorLogout = async()=>{
     try {
         const res = await Api.get(vendorRoutes.vendorLogout)

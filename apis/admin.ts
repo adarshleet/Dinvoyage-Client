@@ -230,3 +230,13 @@ export const allLocalities = async()=>{
 }
 
 
+export const adminDashboard = async()=>{
+    try {
+        const res = Api.get(adminRoutes.adminDashboard)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+

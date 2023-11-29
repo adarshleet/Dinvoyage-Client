@@ -46,7 +46,7 @@ const adminRoutes = {
     allLocality : '/api/admin/allLocality',
 
 
-    
+    adminDashboard : '/api/admin/dashboard'
 }
 
 export default adminRoutes
