@@ -124,7 +124,7 @@ const Sidebar = ({page}:Page) => {
                         
                        
                         
-                        <li>
+                        {/* <li>
                             <Link
                                 href="/vendor/offers"
                                 className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
@@ -132,7 +132,7 @@ const Sidebar = ({page}:Page) => {
                                 <BiSolidOffer className="text-2xl"/>
                                 <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Offers</span>
                             </Link>
-                        </li>
+                        </li> */}
                         
                     </ul>
                 </div>

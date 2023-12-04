@@ -13,7 +13,6 @@ const page = () => {
                 <Sidebar page={'dashboard'} />
             </div>
             <div className='px-6'>
-                
                 <Dashbord/>
             </div>
         </div>

@@ -1,0 +1,32 @@
+.vendor span{
+    color: white;
+    width: 0;
+    height: 0;
+    border-right: 18px solid #6b7280;
+    border-bottom: 18px solid transparent;
+    border-top: 0px solid transparent;
+    position: absolute;
+    left: -.8rem;
+    top: 0;
+}
+
+.vendor{
+    background-color: #6b7280;
+}
+
+.own{
+    align-self: flex-end;
+    margin-right: 1.2rem;
+    background-color: #6b7280;
+}
+
+.own span{
+    width: 0;
+    height: 0;
+    border-top: 0px solid transparent;
+    border-bottom: 18px solid transparent;
+    border-left: 18px solid #6b7280;
+    position: absolute;
+    right: -.8rem;
+    top: 0;
+}

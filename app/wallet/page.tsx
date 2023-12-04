@@ -1,29 +1,24 @@
-'use client'
 import React from 'react'
 import { Toaster } from 'react-hot-toast'
 import Navbar from '../components/user/navbar'
-import ProfileSideBAr from '../components/user/profileSideBar'
+import ProfileSideBar from '../components/user/profileSideBar'
+import WalletProfile from '../components/user/walletProfile'
 
-import Profile from '../components/user/profile'
 const page = () => {
-
-    
-
-
-    return (
-        <>
+  return (
+    <>
             <Toaster position='bottom-center' />
             <header>
                 <Navbar/>
             </header>
             <main className='bg-white h-full py-24 md:px-10 flex justify-center'>
                 <div className='flex bg-white md:p-4 md:border-2 w-3/4'>
-                    <ProfileSideBAr page='profile'/>
-                    <Profile/>
+                    <ProfileSideBar page='wallet'/>
+                    <WalletProfile/>
                 </div>
             </main>
         </>
-    )
+  )
 }
 
 export default page

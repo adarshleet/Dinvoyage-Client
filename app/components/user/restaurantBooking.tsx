@@ -80,17 +80,14 @@ const RestaurantBooking = ({openingTime,closingTime,restaurantId}:bookingProps) 
                 table
 
             }
-            console.log(guestData)
             const res = await tableCounts(guestData)
             const data = res?.data.seatCounts.data
-            console.log(data[table])
             if(data[table] == 0){
                 return showToast('Sorry table is not available')
             }
             else{
                 router.push(`/kitchen/${restaurantId}`)
             }
-
         }
     }
 

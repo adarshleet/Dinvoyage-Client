@@ -129,10 +129,10 @@ const Sidebar = ({page}:Page) => {
                             </Link>
                         </li>
 
-                        <li>
+                        <li className={page=='coupons' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
-                                href="#"
-                                className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                href="/admin/coupons"
+                                className="flex items-center p-3 rounded-lg group"
                             >
                                 <BiSolidOffer className="text-2xl"/>
                                 <span className="flex-1 ml-3 whitespace-nowrap">Offers</span>

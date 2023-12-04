@@ -1,6 +1,16 @@
 import Api from "@/services/api";
 import adminRoutes from "@/services/endpoints/adminEndpoints";
 
+
+
+
+interface coupon{
+    couponName:string,
+    maximumDiscount : string,
+    minimumPurchase : string,
+    expiryDate : string
+}
+
 //admin login
 export const login = async(admin:{email:string,password:string})=>{
     try {
@@ -239,4 +249,26 @@ export const adminDashboard = async()=>{
     }
 }
 
+
+
+//coupon management
+export const addCoupon = async(coupon:coupon)=>{
+    try {
+        const res = Api.post(adminRoutes.addCoupon,coupon)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//allCoupons
+export const allCoupons = async(page:number)=>{
+    try {
+        const res = Api.get(`${adminRoutes.allCoupons}?page=${page}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
 

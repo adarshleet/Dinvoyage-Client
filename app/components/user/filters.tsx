@@ -25,6 +25,9 @@ const Filters = ({setRestaurant}:filterProps) => {
             const response = await allFacilities()
             setCuisines(res?.data)
             setFacilities(response?.data)
+            // const resp = await filterRestaurants(updatedCheckedCuisines, checkedFacilities);
+            // const data = resp?.data.data;
+            // setRestaurant(data.filterResult);
         }
         fetchData()
     },[])
@@ -38,9 +41,11 @@ const Filters = ({setRestaurant}:filterProps) => {
         setCheckedCuisines(updatedCheckedCuisines);
       
         const res = await filterRestaurants(updatedCheckedCuisines, checkedFacilities);
-        const restaurants = res?.data.data;
-        setRestaurant(restaurants);
+        const data = res?.data.data;
+        setRestaurant(data.filterResult);
       };
+
+
 
       const handleFacilityChange = async (index, checked) => {
         const updatedCheckedFacilities = checked
@@ -50,8 +55,8 @@ const Filters = ({setRestaurant}:filterProps) => {
         setCheckedFacilities(updatedCheckedFacilities);
       
         const res = await filterRestaurants(checkedCuisines, updatedCheckedFacilities);
-        const restaurants = res?.data.data;
-        setRestaurant(restaurants);
+        const data = res?.data.data;
+        setRestaurant(data.filterResult);
       };
       
 

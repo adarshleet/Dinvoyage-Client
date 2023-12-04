@@ -1,6 +1,7 @@
 import Api from "@/services/api";
 import userRoutes from "@/services/endpoints/userEndpoints";
 import errorHandle from "./errorHandler";
+import BookingDetals from "@/app/components/vendor/bookingDetals";
 
 interface Formvalues{
     name?: string | undefined;
@@ -116,9 +117,9 @@ export const logout = async()=>{
 
 
 //restaurant in display
-export const restaurantsToDisplay = async()=>{
+export const restaurantsToDisplay = async(page:number)=>{
     try {
-        const res = await Api.get(userRoutes.restaurantsToShow)
+        const res = await Api.get(`${userRoutes.restaurantsToShow}?page=${page}`)
         return res
     } catch (error) {
         const err: Error = error as Error;
@@ -229,6 +230,29 @@ export const searchRestaurants = async(searchQuery:string)=>{
 export const filterRestaurants = async(cuisines:string[],facilities:string[])=>{
     try {
         const res = await Api.post(userRoutes.filterRestaurants,{cuisines,facilities})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+//user coupon 
+export const couponsToShow = async()=>{
+    try {
+        const res = await Api.get(userRoutes.couponsToShow)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//pay with wallet
+export const bookingWithWallet = async(BookingDetalis:FormData)=>{
+    try {
+        const res = await Api.post(userRoutes.payWithWallet,BookingDetalis)
         return res
     } catch (error) {
         console.log(error)

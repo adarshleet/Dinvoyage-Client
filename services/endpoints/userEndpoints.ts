@@ -36,6 +36,9 @@ const userRoutes={
     //make payment
     payment : '/api/user/proceedToPayment',
 
+
+    payWithWallet : '/api/user/payWithWallet',
+
     //user bookings
     userBookings : '/api/user/allbookings',
 
@@ -44,7 +47,11 @@ const userRoutes={
     //search restaurants
     searchRestaurants : '/api/user/search',
 
-    filterRestaurants : '/api/user/filterRestaurants'
+    filterRestaurants : '/api/user/filterRestaurants',
+
+
+    //coupons
+    couponsToShow : '/api/user/couponsToShow'
 
 }
 

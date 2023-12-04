@@ -20,7 +20,7 @@ const VendorLogout = () => {
 
     return (
         <>
-            <button onClick={logoutVendor} className='px-4 py-2 bg-red-600 text-white font-bold rounded-lg'>LOGOUT</button>
+            <button onClick={logoutVendor} className='px-4 py-1 bg-red-600 text-white font-bold rounded-lg'>LOGOUT</button>
         </>
     )
 }

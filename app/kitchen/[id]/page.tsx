@@ -3,11 +3,16 @@ import React, { useState, useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Navbar from '../../components/user/navbar'
 import { FiChevronDown, FiChevronUp, FiPlus, FiMinus } from "react-icons/fi";
-import { kitchenItems, payment, singleRestaurant } from '@/apis/user';
-
+import { bookingWithWallet, kitchenItems, payment, singleRestaurant } from '@/apis/user';
+import toast from 'react-hot-toast';
 import { loadStripe } from '@stripe/stripe-js';
+import Link from 'next/link';
 
 import { useRouter } from 'next/navigation';
+import { BiSolidOffer } from "react-icons/bi";
+import { IoWalletSharp } from "react-icons/io5"
+import Coupons from '@/app/components/user/coupons';
+import Wallet from '@/app/components/user/wallet';
 
 
 interface restaurantProps {
@@ -27,10 +32,20 @@ const page = ({ params }: restaurantProps) => {
 
     const [veg, setVeg] = useState(false);
 
+    const [couponModal,setCouponModal] = useState(false)
+    const [subTotalLast,setSubtotalLast] = useState(0)
+    const [appliedCoupon,setAppliedCoupon] = useState(null)
+
+    const [walletModal,setWalletModal] = useState(false)
+    const [walletUsageFull,setWalletUsageFull] = useState<boolean | null>(null)
+    const [walletApplied,setWalletApplied] = useState(false)
+    const [walletAmountUsed,setWalletAmountUsed] = useState(0)
+
+    const route = useRouter()
+
     const toggleSwitch = async () => {
         const response = await kitchenItems(id, !veg)
         const items = response?.data.kitchenAllItems.data
-        console.log(items)
         setAllItems(items)
         setVeg((prev) => !prev);
     };
@@ -71,7 +86,6 @@ const page = ({ params }: restaurantProps) => {
     const handleCounterChange = (category: string, item: string, count: number, price: number) => {
         const updatedItems = [...selectedItems];
         const existingItemIndex = updatedItems.findIndex((i) => i.category === category && i.item === item);
-        console.log(existingItemIndex)
 
         if (existingItemIndex !== -1) {
             if (count === 0) {
@@ -84,22 +98,31 @@ const page = ({ params }: restaurantProps) => {
         }
 
         setSelectedItems(updatedItems);
+        if(subTotal<appliedCoupon?.minimumPurchase){
+            setAppliedCoupon(null)
+        }
+        // calculateTotalPrice
     };
 
     const calculateTotalPrice = () => {
         return selectedItems.reduce((total, item) => total + item.count * item.price, 0);
     };
-    const subTotal = calculateTotalPrice()
+
+    let subTotal = calculateTotalPrice()
+
+
+
+    
+
+
 
 
     //convert date
     // const dateString = "2023-11-23T18:30:00.000Z";
     const dateObject = new Date(guestDetails.date);
-
     const options = { day: 'numeric', month: 'short', year: 'numeric' };
     const formattedDate = dateObject.toLocaleDateString('en-US', options);
 
-    console.log(formattedDate);
 
 
 
@@ -107,10 +130,14 @@ const page = ({ params }: restaurantProps) => {
     const makePayment = async () => {
         try {
 
+            const walletAmountUsed = (walletApplied ? Wallet : 0)
+
             const bookingDetails = {
                 ...guestDetails,
                 items: selectedItems,
-                totalAmount: subTotal + 100
+                totalAmount: subTotalLast,
+                appliedCoupon,
+                walletAmountUsed
             }
             console.log(bookingDetails)
 
@@ -126,6 +153,91 @@ const page = ({ params }: restaurantProps) => {
             console.log(error);
         }
     }
+
+
+    //coupon handling
+    const closeCouponModal = ()=>{
+        setCouponModal(false)
+    }
+
+
+    const applyCoupon = (coupon:object)=>{
+        if(coupon.minimumPurchase > subTotal){
+            return showToast('Purchase amount is less to apply this coupon')
+        }
+        else{
+            setAppliedCoupon(coupon)
+            subTotal = subTotal - coupon.maximumDiscount
+            const subTotalLast = subTotal - (appliedCoupon?.maximumDiscount || 0) - walletAmountUsed + 100
+            setSubtotalLast(subTotalLast)
+        }
+    }
+
+    const removeCoupon = ()=>{
+        setAppliedCoupon(null)
+    }
+
+    //toast design
+    const showToast = (message:string) => {
+        return toast(message, {
+          style: {
+            borderRadius: '0px',
+            padding: '5px',
+            fontSize: '.9rem',
+            color: '#ffff',
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          }
+        });
+    };
+
+
+    //wallet mangagement
+    const closeWalletModal = ()=>{
+        setWalletModal(false)
+    }
+
+
+    const applyWallet = (wallet:number)=>{
+        console.log(wallet)
+        if(subTotal == 0){
+            return showToast('Add some items to apply coupon')
+        }
+        setWalletApplied(true)
+        if(subTotal+100 >= wallet){
+            setWalletUsageFull(false)
+            setWalletAmountUsed(wallet)
+            const subTotalLast = subTotal + 100 - (appliedCoupon?.maximumDiscount || 0) - wallet 
+            setSubtotalLast(subTotalLast)
+        }
+        else{
+            setWalletUsageFull(true)
+            const walletUsed = wallet - (wallet-subTotal-100)
+            setWalletAmountUsed(walletUsed)
+            const subTotalLast = subTotal + 100 - (appliedCoupon?.maximumDiscount || 0) - walletUsed 
+            setSubtotalLast(subTotalLast)
+        }
+        setWalletModal(false)
+    }
+
+
+    const payWithWallet = async()=>{
+        const walletAmountUsed =  subTotal + 100 - (appliedCoupon?.maximumDiscount || 0) 
+        const totalAmount = subTotal + 100 - walletAmountUsed
+
+        const bookingDetails = {
+            ...guestDetails,
+            items: selectedItems,
+            totalAmount: subTotal,
+            appliedCoupon,
+            walletAmountUsed 
+        }
+
+        const res = await bookingWithWallet(bookingDetails)
+        if(res?.data.data){
+            route.push('/bookingConfirmed')
+        }
+    }
+
 
     return (
         <>
@@ -152,7 +264,18 @@ const page = ({ params }: restaurantProps) => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white px-8 py-6' style={{ minWidth: '25rem' }}>
+                    <div className='bg-white px-6 py-4' style={{ minWidth: '25rem' }}>
+                        <div className='flex w-full justify-around border border-gray-300 p-0.5 font-semibold'>
+                            <div className='py-2 px-3 flex gap-1 items-center cursor-pointer' onClick={()=>setCouponModal(true)}>
+                                <BiSolidOffer className="text-2xl text-gray-600"/> 
+                                <h4>Coupons</h4>
+                            </div>
+                             
+                            <div className='py-2 px-3 flex gap-1 items-center cursor-pointer' onClick={()=>setWalletModal(true)}>
+                                <IoWalletSharp className="text-2xl text-gray-600"/>
+                                <h4>Wallet</h4>
+                            </div>
+                        </div>
                         <div className='border-b py-4'>
                             {selectedItems.length == 0 ?
                                 <h1 className='text-center'>Select the items from the menu</h1>
@@ -165,23 +288,38 @@ const page = ({ params }: restaurantProps) => {
                                     </div>
                                 ))}
                         </div>
-                        <div className='py-3 border-b border-b-black pb-10'>
+                        <div className='py-3 border-b border-b-black pb-5'>
                             <div className='flex justify-between text-sm font-semibold px-4 py-1'>
                                 <p>Item Total</p>
                                 <p>₹{subTotal}</p>
                             </div>
+                            {appliedCoupon && 
+                            <div className='flex justify-between text-sm font-semibold px-4 py-1'>
+                                <p>Coupon Discount</p>
+                                <p>-₹{appliedCoupon.maximumDiscount}</p>
+                            </div>}
+                            
                             <div className='flex justify-between text-sm font-semibold px-4'>
                                 <p>Reservation Charge</p>
                                 <p>₹100</p>
                             </div>
+                            {walletApplied && <div className='flex justify-between text-sm font-semibold px-4'>
+                                <p>Wallet used</p>
+                                <p>-₹{walletAmountUsed}</p>
+                            </div>}
                         </div>
                         <div>
                             <div className='flex justify-between px-4 font-bold text-base py-2'>
                                 <p>To Pay</p>
-                                <p>₹{subTotal + 100}</p>
+                                {(appliedCoupon || walletApplied) ? 
+                                    <p>₹{subTotalLast}</p>
+                                    :
+                                    <p>₹{subTotal + 100}</p>
+                                }
                             </div>
                         </div>
-                        <button className='py-1 my-2 bg-cyan-800 w-full tex-sm text-white font-bold' disabled={selectedItems.length == 0} onClick={makePayment}>PROCEED TO PAYMENT</button>
+                        {!walletUsageFull && <button className='py-1 my-2 bg-cyan-800 w-full tex-sm text-white font-bold' disabled={selectedItems.length == 0} onClick={makePayment}>PROCEED TO PAYMENT</button>}                        
+                        {walletUsageFull == true && <button className='py-1 my-2 bg-cyan-800 w-full tex-sm text-white font-bold' disabled={selectedItems.length == 0} onClick={payWithWallet}>PAY WITH WALLET</button>}
                     </div>
                 </div>
 
@@ -261,6 +399,8 @@ const page = ({ params }: restaurantProps) => {
                     </div>
                 </div>
             </main>
+            {couponModal && <Coupons couponModal={couponModal} closeCouponModal={closeCouponModal} subTotal={subTotal} applyCoupon={applyCoupon} appliedCoupon={appliedCoupon} removeCoupon={removeCoupon}/>}
+            {walletModal && <Wallet walletModal={walletModal} closeWalletModal={closeWalletModal} applyWallet={applyWallet}/>}
         </>
     )
 }
