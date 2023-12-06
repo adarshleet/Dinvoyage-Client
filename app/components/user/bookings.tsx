@@ -1,9 +1,11 @@
 'use client'
-import { cancelBooking, userBookings } from '@/apis/user'
+import { cancelBooking, newConversation, userBookings } from '@/apis/user'
 import React, { useEffect, useState } from 'react'
 import BookingCancellationModal from './bookingCancellationModal'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
+import { IoChatboxEllipses } from "react-icons/io5";
+import { useRouter } from 'next/navigation'
 
 const Bookings = () => {
 
@@ -13,6 +15,8 @@ const Bookings = () => {
     const [modal,setModal] = useState(false)
     const [cancelBookingId,setCancelBookingId] = useState('')
     const [cancelReason,setCancelReason] = useState('')
+
+    const router = useRouter()
 
     useEffect(() => {
         try {
@@ -140,6 +144,21 @@ const Bookings = () => {
     }
 
 
+    const chatWithVendor = async(restaurantId:string)=>{
+        try {
+            const res = await newConversation(restaurantId)
+            const data = res?.data.data
+            console.log(data)
+            if(data){
+                router.push(`/chatWithVendor/${data._id}`)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     return (
         <>
         <div className='p-6 w-full'>
@@ -157,7 +176,10 @@ const Bookings = () => {
                                     <h5 className='text-sm'>{booking.restaurant.locality}</h5>
 
                                     {(calculateRemainingHours(booking.date, booking.time) && booking.orderStatus == 1) &&
-                                        <button className='py-1 px-2 bg-red-700 text-white font-bold text-sm mt-1' onClick={()=>openModal(booking._id)}>CANCEL</button>
+                                       <div className='flex gap-1'>
+                                            <button className='py-1 px-2 bg-red-700 text-white font-bold text-sm mt-1' onClick={()=>openModal(booking._id)}>Cancel</button>
+                                            <button className='py-1 px-2 bg-gray-500 font-bold text-sm flex gap-1 items-center mt-1 text-white' onClick={()=>chatWithVendor(booking.restaurant._id)}>Message <IoChatboxEllipses/></button>
+                                       </div>
                                     }
 
 

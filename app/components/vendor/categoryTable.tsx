@@ -42,7 +42,6 @@ const CategoryTable = () => {
 
             if(res?.data){
                 const restaurantData = res.data.data;
-                console.log(restaurantData)
                 setAllRestaurant(restaurantData);
                 setRestaurant(restaurantData[page])
                 if(restaurantData[page]){

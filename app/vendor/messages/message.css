@@ -1,0 +1,36 @@
+.user span{
+    color: white;
+    width: 0;
+    height: 0;
+    border-right: 18px solid #d1d5db;
+    border-bottom: 18px solid transparent;
+    border-top: 0px solid transparent;
+    position: absolute;
+    left: -.8rem;
+    top: 0;
+}
+
+.user{
+    background-color: #d1d5db;
+}
+
+.own{
+    align-self: flex-end;
+    margin-right: 1.2rem;
+    background-color: #86efac;
+}
+
+.own span{
+    width: 0;
+    height: 0;
+    border-top: 0px solid transparent;
+    border-bottom: 18px solid transparent;
+    border-left: 18px solid #86efac;
+    position: absolute;
+    right: -.8rem;
+    top: 0;
+}
+
+
+
+

@@ -66,12 +66,12 @@ function FormLogin({user}:formLogin) {
             else {
                if(user){
                     const res = await login(formData)
-                    console.log(res)
+                    console.log('nbewe',res?.data.data)
+                    const userId = res?.data.data.userId
                     if (res?.data.data.success) {
-                        dispatch(setUserLogin('userLoggedIn'))
+                        dispatch(setUserLogin(userId))
                         toast.success('login successfull')
                         router.replace('/');
-                        console.log('login successfull')
                     }
                     else {
                         setError(res?.data.data.message)

@@ -61,6 +61,17 @@ export const findUser = async()=>{
 }
 
 
+//findUserById 
+export const findUserById = async(userId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.findUserById}?userId=${userId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 //change user name
 export const changeName = async(name:string)=>{
     try {
@@ -253,6 +264,58 @@ export const couponsToShow = async()=>{
 export const bookingWithWallet = async(BookingDetalis:FormData)=>{
     try {
         const res = await Api.post(userRoutes.payWithWallet,BookingDetalis)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const newConversation = async(recieverId:string)=>{
+    try {
+        const res = await Api.post(`${userRoutes.newConversation}?recieverId=${recieverId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const getMessages = async(conversationId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.getMessages}?conversationId=${conversationId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const newMessage = async(text:string,conversationId:string,sender:string)=>{
+    try {
+        const res = await Api.post(userRoutes.newMessage,{text,conversationId,sender})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+export const getConversations = async(restaurantId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.getConversations}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+export const getConversation = async(conversationId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.getConversation}?conversationId=${conversationId}`)
         return res
     } catch (error) {
         console.log(error)

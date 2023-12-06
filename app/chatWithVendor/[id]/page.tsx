@@ -1,10 +1,20 @@
 import React from 'react'
 import { Toaster } from 'react-hot-toast'
-import Navbar from '../components/user/navbar'
-import ProfileSideBAr from '../components/user/profileSideBar'
-import Bookings from '../components/user/bookings'
-import Chat from '../components/user/chat'
-const page = () => {
+import Navbar from '../../components/user/navbar'
+import ProfileSideBAr from '../../components/user/profileSideBar'
+import Bookings from '../../components/user/bookings'
+import Chat from '../../components/user/chat'
+
+interface chatProps{
+    params:{
+        id:string
+    }
+}
+
+const page = ({params}:chatProps) => {
+
+    const {id} = params
+
     return (
         <>
             <Toaster position='bottom-center' />
@@ -15,7 +25,7 @@ const page = () => {
                 <div className='flex bg-white p-4 border-2 md:w-3/4'>
                     <ProfileSideBAr page='bookings'/>
                     {/* <Bookings/> */}
-                    <Chat/>
+                    <Chat conversationId={id}/>
                 </div>
             </main>
         </>

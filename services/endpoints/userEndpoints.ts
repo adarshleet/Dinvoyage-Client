@@ -10,6 +10,8 @@ const userRoutes={
 
     findUser : '/api/user/findUser',
 
+    findUserById:'/api/user/findUserById',
+
     changeName : '/api/user/changeName',
 
     verifyNewMobile : '/api/user/verifyNewMobile',
@@ -51,7 +53,25 @@ const userRoutes={
 
 
     //coupons
-    couponsToShow : '/api/user/couponsToShow'
+    couponsToShow : '/api/user/couponsToShow',
+
+
+    //new chat creating
+    newConversation : '/api/user/newConversation',
+
+    //get messages 
+    getMessages : '/api/user/getMessages',
+
+    //new message
+    newMessage : '/api/user/newMessage',
+
+    //get conversations
+    getConversations : '/api/user/getConversations',
+
+
+    //get conversation by id
+    getConversation : '/api/user/getConversation'
+
 
 }
 

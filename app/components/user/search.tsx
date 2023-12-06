@@ -5,12 +5,12 @@ import React, { useEffect, useState } from 'react'
 
 const Search = () => {
 
-    const [searchQuery,setSearchQuery] = useState(null)
-    const [restaurants,setRestaurants] = useState([])
+    const [searchQuery, setSearchQuery] = useState(null)
+    const [restaurants, setRestaurants] = useState([])
 
-    useEffect(()=>{
+    useEffect(() => {
         try {
-            const fetchData = async()=>{
+            const fetchData = async () => {
                 const res = await searchRestaurants(searchQuery)
                 const restaurants = res?.data.data
                 setRestaurants(restaurants)
@@ -19,7 +19,7 @@ const Search = () => {
         } catch (error) {
             console.log(error)
         }
-    },[searchQuery])
+    }, [searchQuery])
 
     return (
         <div>
@@ -28,18 +28,24 @@ const Search = () => {
                     <div>
                         <h1 className="text-xl md:text-3xl font-bold py-2 text-center" style={{ color: '#94A911' }}>Indulge your cravings with peace of mind! </h1>
                         <div className="flex bg-white border-2 rounded-md">
-                            <input placeholder="Search for  Restaurants, Locations " className="w-full border-gray-300  focus:outline-none p-3" type="text" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)}/>
-                            <button className="px-4 m-2 text-white font-bold rounded-md" style={{ backgroundColor: "#247F9E" }}>Search</button>
+                            <input
+                                placeholder="Search for  Restaurants, Locations "
+                                className="w-full border-gray-300  focus:outline-none p-3"
+                                type="text"
+                                value={searchQuery !== null ? searchQuery : ''}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                            {/* <button className="px-4 m-2 text-white font-bold rounded-md" style={{ backgroundColor: "#247F9E" }}>Search</button> */}
                         </div>
                     </div>
                 </div>
             </div>
             <div className='flex justify-center pb-16 px-4 items-center '>
-                {restaurants.length != 0  && <div className='bg-white sticky overflow-y-scroll' style={{maxHeight:'15rem'}}>
-                    {restaurants.map((restaurant,index)=>(
+                {restaurants.length != 0 && <div className='bg-white sticky overflow-y-scroll' style={{ maxHeight: '15rem' }}>
+                    {restaurants.map((restaurant, index) => (
                         <Link href={`/restaurant/${restaurant._id}`}>
                             <div className='flex py-4 px-10 gap-2 hover:bg-gray-200' key={index}>
-                                <div className='overflow-hidden' style={{width:'5rem'}}>
+                                <div className='overflow-hidden' style={{ width: '5rem' }}>
                                     <img src={restaurant.banners} alt="" />
                                 </div>
                                 <div className='text-gray-500 '>
@@ -49,7 +55,7 @@ const Search = () => {
                             </div>
                         </Link>
                     ))}
-                    
+
                 </div>}
             </div>
         </div>

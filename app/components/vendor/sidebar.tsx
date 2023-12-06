@@ -8,6 +8,7 @@ import Link from 'next/link'
 import {BsGraphUpArrow, BsFillCalendarCheckFill} from 'react-icons/bs'
 import {MdRestaurant} from 'react-icons/md'
 import {GrRestaurant} from 'react-icons/gr'
+import { LuMessagesSquare } from "react-icons/lu";
 
 interface Page{
     page:string
@@ -113,26 +114,23 @@ const Sidebar = ({page}:Page) => {
                                 href="/vendor/bookings"
                                 className="flex items-center p-3 rounded-lg   group"
                             >
-                                <BsFillCalendarCheckFill className="text-2xl" />
+                                <BsFillCalendarCheckFill className="text-xl" />
                                 <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Bookings</span>
-                                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ">
+                                {/* <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ">
                                     3
-                                </span>
+                                </span> */}
                             </Link>
                         </li>
-
                         
-                       
-                        
-                        {/* <li>
+                        <li className={page=='messages' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
-                                href="/vendor/offers"
-                                className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group"
+                                href="/vendor/messages"
+                                className="flex items-center p-3 rounded-lg  group"
                             >
-                                <BiSolidOffer className="text-2xl"/>
-                                <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Offers</span>
+                                <LuMessagesSquare className="text-2xl"/>
+                                <span className="flex-1 ml-3 whitespace-nowrap font-semibold">Messages</span>
                             </Link>
-                        </li> */}
+                        </li>
                         
                     </ul>
                 </div>

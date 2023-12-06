@@ -58,7 +58,10 @@ const vendorRoutes = {
 
     bookingCancellation : '/api/vendor/changeBookingStatus',
 
-    salesCharts : '/api/vendor/salesChart'
+    salesCharts : '/api/vendor/salesChart',
+
+
+
 
 }
 
