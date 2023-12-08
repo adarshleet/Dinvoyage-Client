@@ -341,6 +341,28 @@ export const salesChart = async(restaurantId:string)=>{
 }
 
 
+
+//forgot password
+export const forgotPassword = async(mobile:string)=>{
+    try {
+        const res = Api.get(`${vendorRoutes.forgotPassword}?mobile=${mobile}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const forgotPasswordChange = async(password:string)=>{
+    try {
+        const res = Api.put(vendorRoutes.forgotPasswordChangeVendor,{password})
+        return res
+    } catch (error) {
+       console.log(error)
+    }
+}
+
+
 export const vendorLogout = async()=>{
     try {
         const res = await Api.get(vendorRoutes.vendorLogout)

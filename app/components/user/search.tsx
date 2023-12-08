@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 const Search = () => {
 
-    const [searchQuery, setSearchQuery] = useState(null)
+    const [searchQuery, setSearchQuery] = useState<string | null>(null)
     const [restaurants, setRestaurants] = useState([])
 
     useEffect(() => {

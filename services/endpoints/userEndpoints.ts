@@ -12,6 +12,7 @@ const userRoutes={
 
     findUserById:'/api/user/findUserById',
 
+
     changeName : '/api/user/changeName',
 
     verifyNewMobile : '/api/user/verifyNewMobile',
@@ -70,8 +71,39 @@ const userRoutes={
 
 
     //get conversation by id
-    getConversation : '/api/user/getConversation'
+    getConversation : '/api/user/getConversation',
 
+
+
+    //get reviews
+    getReviews: '/api/user/getReviews',
+
+    //get average rating
+    getAverageRating : '/api/user/averageRating',
+
+
+    //user review checking
+    userInBooking : '/api/user/userInBooking',
+
+    //add review
+    addReview : '/api/user/addReview',
+
+    //find Review
+    findReview : '/api/user/findReview',
+
+    //edit review
+    editReview : '/api/user/editReview',
+
+
+    //forgotPasswor
+    forgotPasswordUser :  '/api/user/forgotPassword',
+
+
+    //verify mobile
+    verifyMobile : '/api/user/mobileVerify',
+
+
+    forgotPasswordChangeUser : '/api/user/forgotPasswordChange'
 
 }
 

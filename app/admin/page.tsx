@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import { setAdminLogin } from '@/redux/slices/authSlice'
 
 
-const page = () => {
+const usePage = () => {
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -97,4 +97,4 @@ const page = () => {
     )
 }
 
-export default page
+export default usePage

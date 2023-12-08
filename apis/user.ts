@@ -20,6 +20,11 @@ interface guestData{
     date ?: string
 }
 
+interface Review{
+    rating:number,
+    review : string
+}
+
 export const signup = async (userData: Formvalues)=>{
     try {
         const res = await Api.post(userRoutes.signup,userData)
@@ -70,6 +75,7 @@ export const findUserById = async(userId:string)=>{
         console.log(error)
     }
 }
+
 
 
 //change user name
@@ -227,7 +233,7 @@ export const cancelBooking = async(bookingId:string,reason:string)=>{
 
 
 //search restaurants
-export const searchRestaurants = async(searchQuery:string)=>{
+export const searchRestaurants = async(searchQuery:string | null)=>{
     try {
         const res = await Api.get(`${userRoutes.searchRestaurants}?search=${searchQuery}`)
         return res
@@ -290,7 +296,7 @@ export const getMessages = async(conversationId:string)=>{
     }
 }
 
-
+//get all messages
 export const newMessage = async(text:string,conversationId:string,sender:string)=>{
     try {
         const res = await Api.post(userRoutes.newMessage,{text,conversationId,sender})
@@ -301,7 +307,7 @@ export const newMessage = async(text:string,conversationId:string,sender:string)
 }
 
 
-
+//get all conversations
 export const getConversations = async(restaurantId:string)=>{
     try {
         const res = await Api.get(`${userRoutes.getConversations}?restaurantId=${restaurantId}`)
@@ -312,10 +318,109 @@ export const getConversations = async(restaurantId:string)=>{
 }
 
 
-
+//get single converstion
 export const getConversation = async(conversationId:string)=>{
     try {
         const res = await Api.get(`${userRoutes.getConversation}?conversationId=${conversationId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//get all reviews of the restaurant
+export const getReviews = async(restaurantId?:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.getReviews}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//get average rating
+export const averageRating = async(restaurantId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.getAverageRating}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+//checking user in booking for adding review
+export const userInBooking = async(restaurantId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.userInBooking}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//add review
+export const addReview = async(restaurantId:string | undefined,review:Review)=>{
+    try {
+        const res = await Api.post(`${userRoutes.addReview}?restaurantId=${restaurantId}`,review)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//findReview
+
+export const findReview = async(restaurantId:string)=>{
+    try {
+        const res = await Api.get(`${userRoutes.findReview}?restaurantId=${restaurantId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//edit review
+export const editReview = async(restaurantId:string | undefined,review:Review)=>{
+    try {
+        const res = await Api.put(`${userRoutes.editReview}?restaurantId=${restaurantId}`,review)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//forgot password user
+export const forgotPasswordUser = async(mobile:string)=>{
+    try {
+        const res = Api.get(`${userRoutes.forgotPasswordUser}?mobile=${mobile}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//verify mobile
+export const verifyMobile = async(otp:string | number) =>{
+    try {
+        const res = Api.post(userRoutes.verifyMobile,{otp})
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const forgotPasswordChangeUser = async(password:string)=>{
+    try {
+        const res = Api.put(userRoutes.forgotPasswordChangeUser,{password})
         return res
     } catch (error) {
         console.log(error)

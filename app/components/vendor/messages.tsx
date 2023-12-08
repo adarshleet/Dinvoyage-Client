@@ -185,10 +185,10 @@ const Messages = () => {
                 </div>
             </div>
             <div className='flex flex-col md:flex-row w-full gap-1 justify-between shadow-sm bg-white' style={{ minHeight: '31rem' }}>
-                {conversations.length != 0 ?
+                {conversations?.length != 0 ?
                 <>
                 <div className='max-w-full overflow-x-scroll md:overflow-auto md:flex-auto md:w-64 bg-gray-600 p-2'>
-                    {conversations.map((conversation, index) => (
+                    {conversations?.map((conversation, index) => (
                         <Conversations key={index} conversation={conversation} restaurantId={restaurantId} selectChat={selectChat}/>
                     ))}
                 </div>
@@ -203,7 +203,7 @@ const Messages = () => {
                         <p>{selectedChat}</p>
                     </div>
                     <div className='flex flex-col py-2 px-2 h-96 overflow-y-scroll'>
-                        {messages.map((message,index)=>(
+                        {messages?.map((message,index)=>(
                         <div className={`py-1 px-2 my-1 ml-4 w-fit rounded-md relative  ${restaurantId == message.sender ? 'own' : 'user'} text-black` } key={index} ref={index === messages.length - 1 ? scrollRef : null}>
                             <span />
                             <div className='items-end gap-2'>

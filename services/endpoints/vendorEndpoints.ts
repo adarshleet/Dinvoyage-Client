@@ -60,8 +60,9 @@ const vendorRoutes = {
 
     salesCharts : '/api/vendor/salesChart',
 
+    forgotPassword : '/api/vendor/forgotPassword',
 
-
+    forgotPasswordChangeVendor : 'api/vendor/forgotPasswordChange'
 
 }
 
