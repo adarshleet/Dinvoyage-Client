@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { setUserLogout } from '@/redux/slices/authSlice';
 import { CiUser } from "react-icons/ci";
+import { FaLocationDot } from "react-icons/fa6"
 
 const Navbar = () => {
 
@@ -61,9 +62,9 @@ const Navbar = () => {
                             <a href="#" className="text-gray-800 font-semibold  pl-4 pr-1">Search</a>
                             <svg className="_1GTCc" viewBox="5 -1 12 25" height="17" width="17" fill="#686b78"><path d="M17.6671481,17.1391632 L22.7253317,22.1973467 L20.9226784,24 L15.7041226,18.7814442 C14.1158488,19.8024478 12.225761,20.3946935 10.1973467,20.3946935 C4.56550765,20.3946935 0,15.8291858 0,10.1973467 C0,4.56550765 4.56550765,0 10.1973467,0 C15.8291858,0 20.3946935,4.56550765 20.3946935,10.1973467 C20.3946935,12.8789625 19.3595949,15.3188181 17.6671481,17.1391632 Z M10.1973467,17.8453568 C14.4212261,17.8453568 17.8453568,14.4212261 17.8453568,10.1973467 C17.8453568,5.97346742 14.4212261,2.54933669 10.1973467,2.54933669 C5.97346742,2.54933669 2.54933669,5.97346742 2.54933669,10.1973467 C2.54933669,14.4212261 5.97346742,17.8453568 10.1973467,17.8453568 Z"></path></svg>
                         </div>
-                        <div className='px-16'>
-                            <div className='border border-gray-400 rounded-md'>
-                                <p className='pr-32 pl-2 py-1'>Location</p>
+                        <div className='px-8'>
+                            <div className='border border-gray-400 rounded-md py-1'>
+                                <Link href={'/findByLocation'} className='pr-14 pl-2 py-1 text-sm flex items-center gap-1 font-bold text-gray-500'><FaLocationDot className="text-base"/> Show nearby</Link>
                             </div>
                         </div>
                     </div>

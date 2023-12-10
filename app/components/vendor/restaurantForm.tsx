@@ -1,10 +1,12 @@
 'use client'
 import { addRestaurant } from '@/apis/vendor';
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, cloneElement, useEffect, useState } from 'react'
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import Spinner from '../loadingPages/spinner';
 import { allLocalities } from '@/apis/admin';
+import { MdMyLocation } from "react-icons/md";
+import LocationSelect from './locationSelect';
 
 const RestaurantForm = () => {
 
@@ -19,6 +21,10 @@ const RestaurantForm = () => {
         closingTime: '',
         minCost: 0,
         googlemapLocation: '',
+        location : {
+            longitude:0,
+            latitude:0
+        },
         contactNumber: '',
         tableCounts: {
             '2Seater': 0,
@@ -33,7 +39,7 @@ const RestaurantForm = () => {
 
     const [loading, setLoading] = useState(false)
 
-    const [locations,setLocations] = useState([])
+    const [locationModal,setLocationModal] = useState(false)
 
 
     useEffect(()=>{
@@ -47,6 +53,7 @@ const RestaurantForm = () => {
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
         const value = e.target.value;
         setFormData({ ...formData, [key]: value });
+        console.log(formData)
     };
 
     const handleTableCountChange = (e: ChangeEvent<HTMLSelectElement>, type: string) => {
@@ -63,6 +70,14 @@ const RestaurantForm = () => {
             setImages([...images, file])
         }
     };
+
+
+    //selecting coordinates
+    const submitLocation = (viewport:object)=>{
+        console.log('jer',location)
+        setFormData({...formData,location:{longitude:viewport.longitude,latitude:viewport.latitude}})
+        closeModal()
+    }
 
 
     const handleRequestApproval = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -117,9 +132,12 @@ const RestaurantForm = () => {
             form.append('district', formData.district)
             form.append('openingTime', formData.openingTime)
             form.append('closingTime', formData.closingTime)
-            form.append('minCost', formData.minCost)
+            form.append('minCost', formData.minCost.toString())
             form.append('googlemapLocation', formData.googlemapLocation)
             form.append('contactNumber', formData.contactNumber)
+            // form.append('location',{longitude:formData.location.longitude,latitude:formData.location.latitude})
+            form.append('location[longitude]', formData.location.longitude.toString());
+            form.append('location[latitude]', formData.location.latitude.toString());
 
             const res = await addRestaurant(form)
             const data = res?.data
@@ -130,7 +148,9 @@ const RestaurantForm = () => {
         }
     }
 
-
+    const closeModal = ()=>{
+        setLocationModal(false)
+    }
 
 
 
@@ -198,7 +218,14 @@ const RestaurantForm = () => {
                         <label htmlFor="">Restaurant Contact Number</label>
                         <input type="text" name='contactNumber' value={formData.contactNumber} onChange={(e) => handleInputChange(e, 'contactNumber')} className='border border-gray-400 p-2' />
                     </div>
+                    <div className='flex flex-col p-2 w-full md:w-1/2' onClick={()=>setLocationModal(true)}>
+                        <label htmlFor="">Restaurant Location</label>
+                        <div className='p-2 border border-gray-400 flex gap-1 items-center cursor-pointer'>
+                            <MdMyLocation/>{formData.location.latitude == 0 ? <p>Select Location</p> : <p>Latitude : {formData.location.latitude} Longitude:{formData.location.longitude}</p> }
+                        </div>
+                    </div>
                 </div>
+                
                 <div className='p-2 mt-3'>
                     <label htmlFor="">Enter Table Counts</label>
                     <div className='flex py-2 gap-2'>
@@ -284,6 +311,7 @@ const RestaurantForm = () => {
                     <button className='w-full text-center mt-8 p-2 text-white font-bold bg-gray-600'>REQUEST ADMIN FOR APPROVAL</button>
                 </div>
             </form>
+            {locationModal && <LocationSelect closeModal={closeModal} submitLocation={submitLocation}/>}
             {loading &&
                 <Spinner />
             }

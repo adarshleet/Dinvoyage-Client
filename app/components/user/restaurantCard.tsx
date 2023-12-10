@@ -6,15 +6,18 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 interface restaurantProps {
     restaurant: {
-        _id:string,
-        restaurantName : string
+        _id: string,
+        restaurantName: string
         openingTime: string,
         closingTime: string,
         banners: Array<string>
         landmark: string
         locality: string,
-        minCost: number
         googlemapLocation: string
+        cuisines: string[],
+        facilities: string[],
+        minCost: number,
+        contactNumber: string
     },
     booking: boolean
 }
@@ -37,11 +40,11 @@ const RestaurantCard = ({ restaurant, booking }: restaurantProps) => {
         <div className="flex flex-col items-center bg-white border border-gray-200 shadow md:flex-row md:max-w-4xl">
             <div style={{ maxWidth: '40rem', maxHeight: '22.5rem' }} className='overflow-hidden flex justify-center items-center'>
                 {restaurant?.banners && restaurant.banners.length > 0 ? (
-                    <img className="" src={restaurant?.banners[0]} alt="" />  
-                ):
-                <div className='w-full h-full overflow-hidden'>
-                    <Skeleton className='w-60'/>
-                </div>
+                    <img className="" src={restaurant?.banners[0]} alt="" />
+                ) :
+                    <div className='w-full h-full overflow-hidden'>
+                        <Skeleton className='w-60' />
+                    </div>
                 }
             </div>
             <div className="flex flex-col justify-start h-full p-4 leading-normal w-full md:w-1/2">

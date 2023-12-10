@@ -7,6 +7,8 @@ import { GoStarFill, GoStar } from "react-icons/go";
 import Reviews from '@/app/components/user/reviewModal'
 import AllReviews from '@/app/components/user/allReviews'
 import { FaChevronDown } from "react-icons/fa";
+import { IoCall } from "react-icons/io5";
+import Link from 'next/link'
 
 interface restaurantProps {
     params: {
@@ -21,9 +23,17 @@ interface Rating {
 
 interface Restaurant {
     _id: string,
+    restaurantName: string
+    openingTime: string,
+    closingTime: string,
+    banners: Array<string>
+    landmark: string
+    locality: string,
+    googlemapLocation: string
     cuisines: string[],
     facilities: string[],
-    minCost: number
+    minCost: number,
+    contactNumber: string
 }
 
 const page = ({ params }: restaurantProps) => {
@@ -129,11 +139,11 @@ const page = ({ params }: restaurantProps) => {
             </header>
             <main className='flex justify-center py-24 px-4'>
                 <div>
-                    <RestaurantCard restaurant={restaurant || undefined} booking={false} />
+                    <RestaurantCard restaurant={restaurant as Restaurant} booking={false} />
                     <div className='bg-white my-6 shadow flex'>
-                        <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
+                        {/* <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
                             <h3 className='font-bold'>Menu</h3>
-                        </div>
+                        </div> */}
                         <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
                             <h3 className='font-bold'>About</h3>
                         </div>
@@ -144,12 +154,12 @@ const page = ({ params }: restaurantProps) => {
                             <h3 className='font-bold'>Help</h3>
                         </div>
                     </div>
-                    <div className='bg-white shadow p-3 mb-6'>
+                    {/* <div className='bg-white shadow p-3 mb-6'>
                         <h3 className='font-bold mb-1'>Menu</h3>
                         <div className="w-28 h-28 overflow-hidden">
                             <img src="https://b.zmtcdn.com/data/menus/533/900533/56c75b3e0de767c159c3b97994b98be0.jpg" alt="" />
                         </div>
-                    </div>
+                    </div> */}
                     <div className='bg-white shadow p-3 mb-6'>
                         <h3 className='font-bold mb-4'>About</h3>
                         <div>
@@ -195,7 +205,7 @@ const page = ({ params }: restaurantProps) => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white shadow p-3'>
+                    <div className='bg-white shadow p-3 mb-6'>
                         <h3 className='font-bold mb-3'>Ratings & Reviews</h3>
                         <div className='border border-1 px-3 py-10 flex text-center'>
                             <div className='w-1/2 flex flex-col items-center gap-1 justify-center'>
@@ -237,8 +247,20 @@ const page = ({ params }: restaurantProps) => {
                             <AllReviews restaurantId={restaurant?._id} />
                         }
                     </div>
-
+                    <div className='bg-white shadow p-3 mb-6'>
+                        <h3 className='font-bold mb-1'>We are here to help</h3>
+                        <Link href={`tel:${restaurant?.contactNumber}`} className="flex items-center gap-3">
+                            <div className='p-2 rounded-full bg-cyan-600'>
+                                <IoCall className="text-3xl text-white"/>
+                            </div>
+                            <div>
+                                <p>Call the restaurant</p>
+                                <p>{restaurant?.contactNumber}</p>
+                            </div>
+                        </Link>
+                    </div>
                 </div>
+                
             </main>
             <Reviews rating={rating} handleClick={handleClick} reviewModal={reviewModal} closeModal={closeModal} 
             userFound={userFound} review={review} setReview={setReview} handleReviewSubmit={handleReviewSubmit} reviewFound={reviewFound}/>

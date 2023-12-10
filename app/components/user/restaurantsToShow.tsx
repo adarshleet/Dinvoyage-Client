@@ -17,7 +17,6 @@ const RestaurantsToShow = () => {
         const fetchData = async () => {
             const res = await restaurantsToDisplay(page)
             const data = res?.data.data
-            console.log(data)
             if(data.restaurants){
                 setLoading(false)
                 setRestaurants(data.restaurants)
@@ -53,7 +52,7 @@ const RestaurantsToShow = () => {
                     <div className='flex mt-5'>
                         <button className='p-2 border-4 font-bold' disabled={page==1} onClick={()=>setPage(page-1)}>Prev</button>
                         <button className='p-2 border-4 font-bold'>{page}</button>
-                        <button className='p-2 border-4 font-bold' disabled={page==totalPages} onClick={()=>setPage(page+1)}>Next</button>
+                        <button className='p-2 border-4 font-bold' disabled={page==totalPages+1} onClick={()=>setPage(page+1)}>Next</button>
                     </div>
                 </div>
             </div>
