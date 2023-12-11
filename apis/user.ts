@@ -146,6 +146,18 @@ export const restaurantsToDisplay = async(page:number)=>{
 
 
 
+//restaurants for showing in map
+export const restaurantsForMap= async()=>{
+    try {
+        const res = Api.get(userRoutes.restaurantsForMap)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
 //single restaurant page
 export const singleRestaurant = async(restauarntId:string)=>{
     try {

@@ -25,13 +25,14 @@ const CouponTable = () => {
 
     const [allCoupon,setAllCoupon] = useState([])
     const [page,setPage] = useState(1)
+    const [edit,setEdit] = useState(false)
 
     useEffect(()=>{
         try {
             const fetchData = async()=>{
                 const res = await allCoupons(page)
                 const data = res?.data.data
-
+                console.log(data)
                 setAllCoupon(data.allCoupons)
             }
             fetchData()
@@ -91,6 +92,17 @@ const CouponTable = () => {
         return formattedDate
     }
 
+
+    const editCoupon = (index:number)=>{
+        setEdit(true)
+        setCouponModal(true)
+        setCoupon({
+            couponName: allCoupon[index]?.couponName,
+        maximumDiscount : allCoupon[index]?.maximumDiscount,
+        minimumPurchase : allCoupon[index]?.minimumPurchase,
+        expiryDate : allCoupon[index]?.expiryDate 
+        })
+    }
     
 
     return (
@@ -135,9 +147,8 @@ const CouponTable = () => {
                                         </td>
                                         <td className="px-4 py-3 border">
                                             <div className="flex items-center text-sm gap-3">
-                                                <button className="font-semibold text-black"><FaEdit className="text-base" /></button>
+                                                <button className="font-semibold text-black" onClick={()=>editCoupon(index)}><FaEdit className="text-base"/></button>
                                                 <button className="font-semibold text-black"><IoIosEye className="text-xl" /></button>
-
                                             </div>
                                         </td>
 
@@ -159,6 +170,7 @@ const CouponTable = () => {
 
         </div>
         {couponModal && <CouponModal closeModal={closeModal}
+            edit={edit}
             coupon={coupon}
             setCoupon={setCoupon}
             handleAddCoupon={handleAddCoupon}

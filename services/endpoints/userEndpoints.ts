@@ -103,7 +103,12 @@ const userRoutes={
     verifyMobile : '/api/user/mobileVerify',
 
 
-    forgotPasswordChangeUser : '/api/user/forgotPasswordChange'
+    forgotPasswordChangeUser : '/api/user/forgotPasswordChange',
+
+
+
+    //restaurants for showing in map
+    restaurantsForMap : '/api/user/restaurantsForMap'
 
 }
 

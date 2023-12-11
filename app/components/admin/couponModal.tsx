@@ -13,10 +13,11 @@ interface CouponProps{
     }
     setCoupon : (coupon:object)=>void,
     handleAddCoupon : ()=>void
+    edit:boolean
 }
 
 
-const CouponModal = ({closeModal,coupon,setCoupon,handleAddCoupon}:CouponProps) => {
+const CouponModal = ({closeModal,coupon,setCoupon,handleAddCoupon,edit}:CouponProps) => {
     return (
         <>
             {/* Code block starts */}
@@ -34,7 +35,7 @@ const CouponModal = ({closeModal,coupon,setCoupon,handleAddCoupon}:CouponProps) 
                                 <button onClick={closeModal}><FaWindowClose className="text-2xl text-red-700"/></button>
                             </div>
                             <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4 text-lg">
-                                    Add Coupon
+                                    {edit ? 'Edit Coupon' : 'Add Coupon'}
                                 </h1>
                             <div className='grid grid-cols-2 gap-4 mb-4'>
 
@@ -79,7 +80,7 @@ const CouponModal = ({closeModal,coupon,setCoupon,handleAddCoupon}:CouponProps) 
                            
                             <div className="flex items-center justify-start w-full">
                                 <button className="focus:outline-none focus:ring-2 w-full font-bold focus:ring-offset-2 transition duration-150 ease-in-out  bg-slate-600 rounded text-white px-8 py-2 text-sm" onClick={handleAddCoupon}>
-                                    Add Coupon
+                                    {edit ? 'UPDATE COUPON DETAILS' : 'Add Coupon'}
                                 </button>
                                
                             </div>

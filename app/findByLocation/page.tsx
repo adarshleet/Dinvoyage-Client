@@ -5,7 +5,7 @@ import Navbar from '../components/user/navbar'
 import ReactMapGL, { GeolocateControl, Marker, NavigationControl, MapRef } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import GeoCoder from '../components/user/geoCoder'
-import { restaurantsToDisplay } from '@/apis/user'
+import { restaurantsForMap, restaurantsToDisplay } from '@/apis/user'
 import SuperCluster from 'supercluster'
 import PopupMap from '../components/user/popupMap'
 
@@ -13,6 +13,26 @@ interface location {
     longitude: number,
     latitude: number,
     zoom: number
+}
+
+
+interface Restaurant{
+    _id: string,
+    restaurantName: string
+    openingTime: string,
+    closingTime: string,
+    banners: Array<string>
+    landmark: string
+    locality: string,
+    googlemapLocation: string
+    cuisines: string[],
+    facilities: string[],
+    minCost: number,
+    contactNumber: string,
+    location:{
+        longitude:string,
+        latitude:string
+    }
 }
 
 const page = () => {
@@ -58,8 +78,8 @@ const page = () => {
 
     useEffect(() => {
         const fetchData = (async () => {
-            const res = await restaurantsToDisplay(2)
-            const restaurants = res?.data.data.restaurants
+            const res = await restaurantsForMap()
+            const restaurants = res?.data.data
             console.log('res',restaurants)
             setRestaurants(restaurants)
         })
@@ -67,7 +87,7 @@ const page = () => {
     }, [])
 
     useEffect(() => {
-        const points = restaurants.map((restaurant) => ({
+        const points = restaurants.map((restaurant:Restaurant) => ({
             type: 'Feature',
             properties: {
                 clusters: false,
@@ -77,12 +97,12 @@ const page = () => {
                 locality : restaurant.locality,
                 minCost : restaurant.minCost,
                 banner : restaurant.banners,
-                longitude: restaurant.location.longitude,
-                latitude: restaurant.location.latitude
+                longitude: restaurant?.location?.longitude,
+                latitude: restaurant?.location?.latitude
             },
             geometry: {
                 type: 'Point',
-                coordinates: [parseFloat(restaurant.location.longitude), parseFloat(restaurant.location.latitude)]
+                coordinates: [parseFloat(restaurant?.location?.longitude), parseFloat(restaurant?.location?.latitude)]
             }
         }))
         setPoints(points)

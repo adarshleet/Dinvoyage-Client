@@ -4,6 +4,8 @@ import { Toaster, toast } from 'react-hot-toast'
 import Spinner from '../loadingPages/spinner'
 import { deleteRestaurantBanner, editRestaurant, getRestaurantDetails } from '@/apis/vendor'
 import { useRouter } from 'next/navigation'
+import { MdMyLocation } from "react-icons/md";
+import LocationSelect from './locationSelect';
 
 interface editProps {
     restaurantId: string
@@ -16,6 +18,9 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
     const [images, setImages] = useState([])
     const [existingImages,setExistingImages] = useState([])
 
+    const [locationModal,setLocationModal] = useState(false)
+
+
     const [formData, setFormData] = useState({
         restaurantName: '',
         landmark: '',
@@ -26,6 +31,10 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
         minCost: 0,
         googlemapLocation: '',
         contactNumber: '',
+        location : {
+            longitude:0,
+            latitude:0
+        },
         tableCounts: {
             '2Seater': 0,
             '4Seater': 0,
@@ -61,7 +70,11 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
                         '6Seater': restaurantData.tableCounts?.['6Seater'] || 0,
                         '8Seater': restaurantData.tableCounts?.['8Seater'] || 0
                     },
-                    banners: restaurantData.banners || ['', '', '', '']
+                    banners: restaurantData.banners || ['', '', '', ''],
+                    location:{
+                        longitude:restaurantData?.location?.longitude,
+                        latitude : restaurantData?.location?.latitude
+                    }
                 });
                 setExistingImages(restaurantData.banners)
             }
@@ -147,6 +160,8 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
             form.append('minCost', formData.minCost)
             form.append('googlemapLocation', formData.googlemapLocation)
             form.append('contactNumber', formData.contactNumber)
+            form.append('location[longitude]', formData.location.longitude.toString());
+            form.append('location[latitude]', formData.location.latitude.toString());
 
             const res = await editRestaurant(restaurantId,form)
             console.log(res)
@@ -192,6 +207,17 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
         console.log(res)
     }
 
+
+    const closeModal = ()=>{
+        setLocationModal(false)
+    }
+
+    //selecting coordinates
+    const submitLocation = (viewport:object)=>{
+        console.log('jer',location)
+        setFormData({...formData,location:{longitude:viewport.longitude,latitude:viewport.latitude}})
+        closeModal()
+    }
 
     return (
         <>
@@ -255,6 +281,12 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
                     <div className='flex flex-col p-2 w-full md:w-1/2'>
                         <label htmlFor="">Restaurant Contact Number</label>
                         <input type="text" name='contactNumber' value={formData.contactNumber} onChange={(e) => handleInputChange(e, 'contactNumber')} className='border border-gray-400 p-2' />
+                    </div>
+                    <div className='flex flex-col p-2 w-full md:w-1/2' onClick={()=>setLocationModal(true)}>
+                        <label htmlFor="">Restaurant Location</label>
+                        <div className='p-2 border border-gray-400 flex gap-1 items-center cursor-pointer'>
+                            <MdMyLocation/>{formData.location.latitude == 0 ? <p>Select Location</p> : <p>Latitude : {formData.location.latitude} Longitude:{formData.location.longitude}</p> }
+                        </div>
                     </div>
                 </div>
                 <div className='p-2 mt-3'>
@@ -361,9 +393,10 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
                             </div>
                         ))}
                     </div>
-                    <button className='w-full text-center mt-8 p-2 text-white font-bold bg-gray-600'>REQUEST ADMIN FOR APPROVAL</button>
+                    <button className='w-full text-center mt-8 p-2 text-white font-bold bg-gray-600'>EDIT RESTAURANT DETAILS</button>
                 </div>
             </form>
+            {locationModal && <LocationSelect closeModal={closeModal} submitLocation={submitLocation}/>}
             {loading &&
                 <Spinner />
             }
