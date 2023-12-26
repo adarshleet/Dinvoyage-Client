@@ -6,13 +6,10 @@ import toast from 'react-hot-toast';
 
 
 
-interface Data {
-    _id: string;
-    facilities: string[];
-}
+
 
 const FacilitiesTable = () => {
-    const [facilities, setFacilities] = useState<Data[]>([])
+    const [facilities, setFacilities] = useState<string[]>([])
     const [row, setRow] = useState(false)
     const [facility, setFacility] = useState('')
     const [editIndex, setEditIndex] = useState<number | null>(null)
@@ -49,7 +46,7 @@ const FacilitiesTable = () => {
         else {
             console.log('here')
 
-            const newFacilities: Data[] = [...facilities, facility]
+            const newFacilities: string[] = [...facilities, facility]
             setFacilities(newFacilities)
             setRow(false)
             setFacility('')

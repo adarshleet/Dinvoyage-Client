@@ -6,22 +6,55 @@ import { deleteRestaurantBanner, editRestaurant, getRestaurantDetails } from '@/
 import { useRouter } from 'next/navigation'
 import { MdMyLocation } from "react-icons/md";
 import LocationSelect from './locationSelect';
+import Image from 'next/image'
 
 interface editProps {
     restaurantId: string
 }
 
+interface Restaurant {
+    _id: string;
+}
+
+interface viewPort{
+    longitude:number
+    latitude:number
+}
+
+interface FormData{
+    restaurantName: string;
+    landmark: string;
+    locality: string;
+    district: string;
+    openingTime: string;
+    closingTime: string;
+    minCost: number;
+    googlemapLocation: string;
+    contactNumber: string;
+    location: {
+      latitude: number; // Replace with the actual type for latitude
+      longitude: number; // Replace with the actual type for longitude
+    };
+    tableCounts: {
+      '2Seater': number;
+      '4Seater': number;
+      '6Seater': number;
+      '8Seater': number;
+    };
+    banners: string[];
+  };
+
 const EditRestaurantForm = ({ restaurantId }: editProps) => {
 
-    const [restaurant, setRestaurant] = useState({})
+    const [restaurant, setRestaurant] = useState<Restaurant | object>({})
     const [loading, setLoading] = useState(false)
-    const [images, setImages] = useState([])
+    const [images, setImages] = useState<File[]>([])
     const [existingImages,setExistingImages] = useState([])
 
     const [locationModal,setLocationModal] = useState(false)
 
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         restaurantName: '',
         landmark: '',
         locality: '',
@@ -41,7 +74,7 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
             '6Seater': 0,
             '8Seater': 0
         },
-        banners: ['', '', '', ''] // To store file paths for banners
+        banners: ['', '', '', ''] as string[] // To store file paths for banners
     });
 
     const router = useRouter()
@@ -80,10 +113,10 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
             }
         }
         fetchData()
-    }, [])
+    }, [restaurantId])
 
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: string) => {
         const value = e.target.value;
         setFormData({ ...formData, [key]: value });
     };
@@ -146,9 +179,14 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
                 }
             });
 
+            // Object.keys(formData.tableCounts).forEach((key) => {
+            //     form.append(`tableCounts[${key}]`, formData.tableCounts[key]);
+            // });
+
             Object.keys(formData.tableCounts).forEach((key) => {
-                form.append(`tableCounts[${key}]`, formData.tableCounts[key]);
-            });
+                const tableKey = key as keyof typeof formData.tableCounts;
+                form.append(`tableCounts[${tableKey}]`, formData.tableCounts[tableKey].toString());
+              });
 
             console.log(formData.restaurantName, images)
             form.append('restaurantName', formData.restaurantName)
@@ -157,7 +195,7 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
             form.append('district', formData.district)
             form.append('openingTime', formData.openingTime)
             form.append('closingTime', formData.closingTime)
-            form.append('minCost', formData.minCost)
+            form.append('minCost', formData.minCost.toString())
             form.append('googlemapLocation', formData.googlemapLocation)
             form.append('contactNumber', formData.contactNumber)
             form.append('location[longitude]', formData.location.longitude.toString());
@@ -173,8 +211,8 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
         }
     }
 
-    const deleteImage = async(image:string)=>{
-        const res = await deleteRestaurantBanner(restaurant._id,image)
+    const deleteImage = async(image:never)=>{
+        const res = await deleteRestaurantBanner((restaurant as Restaurant)._id,image)
         setExistingImages((prevImages) => {
             const index = prevImages.indexOf(image);
 
@@ -213,7 +251,7 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
     }
 
     //selecting coordinates
-    const submitLocation = (viewport:object)=>{
+    const submitLocation = (viewport:viewPort)=>{
         console.log('jer',location)
         setFormData({...formData,location:{longitude:viewport.longitude,latitude:viewport.latitude}})
         closeModal()
@@ -238,7 +276,7 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
                     <div className='flex flex-col p-2 w-full md:w-1/2'>
                         <label htmlFor="">District</label>
                         {/* <input type="text" name='district' value={formData.district} onChange={(e) => handleInputChange(e, 'district')} className='border border-gray-400 p-2' /> */}
-                        <select name='district' value={formData.district} onChange={(e) => handleInputChange(e, 'district')} className='border border-gray-400 p-2' >
+                        <select name='district' value={formData.district} onChange={(e) => handleInputChange(e , 'district')} className='border border-gray-400 p-2' >
                             <option className='py-2 px-1' value="">Select a district</option>
                             <option value="kasargod">Kasargod</option>
                             <option value="kannur">Kannur</option>
@@ -378,8 +416,8 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
                                 <input type="file" accept="image/*" id={`bannerFileInput${index}`} onChange={(e) => handleFileChange(e, index)} name='image' className='hidden' />
                                 {formData.banners[index] && (
                                     <>
-                                        <img src={formData.banners[index]} alt={`Banner ${index + 1}`} className='' />
-                                       {(existingImages.includes(formData.banners[index]) && existingImages.length != 1) && <h1 className='px-3 py-2 mt-1 text-center bg-red-700 text-white font-bold text-sm cursor-pointer' onClick={()=>deleteImage(formData.banners[index])}>Delete</h1>}
+                                        <Image src={formData.banners[index]} alt={`Banner ${index + 1}`} className='' />
+                                       {(existingImages.includes(formData.banners[index] as never) && existingImages.length != 1) && <h1 className='px-3 py-2 mt-1 text-center bg-red-700 text-white font-bold text-sm cursor-pointer' onClick={()=>deleteImage(formData.banners[index] as never)}>Delete</h1>}
                                     </>
                                 )}
                                 {!formData.banners[index] && (

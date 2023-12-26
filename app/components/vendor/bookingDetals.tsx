@@ -5,11 +5,32 @@ import { selectedCuisinesAndFacilities } from '@/apis/vendor';
 import { allBookingDetails, bookingCancellation } from '@/apis/vendor';
 import BookingCancelModal from './bookingCancelModal';
 import toast, { Toaster } from 'react-hot-toast';
+import Image from 'next/image';
+
+interface booking{
+    _id: string;
+    name: string;
+    mobile: string;
+    date: string;
+    time: string;
+    guestCount: number;
+    special: string;
+    orderStatus: number;
+    cancelReason: string;
+    items:BookingItem[]
+    totalAmount : number
+}
+
+interface BookingItem {
+    item: string;
+    count: number;
+    price: number;
+}
 
 const BookingDetals = () => {
     const [restaurant, setRestaurant] = useState<any>({});
     const [allRestaurant, setAllRestaurant] = useState<any>([]);
-    const [bookings, setBookings] = useState([])
+    const [bookings, setBookings] = useState<booking[]>([])
     const [page, setPage] = useState(0);
 
     const [modal, setModal] = useState(false)
@@ -43,7 +64,7 @@ const BookingDetals = () => {
         };
 
         fetchData();
-    }, [pagination]);
+    }, [pagination,page]);
 
     const pageMinus = async () => {
         setPagination(1)
@@ -86,7 +107,9 @@ const BookingDetals = () => {
         const currentDateUTC = new Date();
         const currentDateLocal = new Date(currentDateUTC.getTime() + timeZoneOffset * 60 * 60 * 1000);
 
-        const timeDifferenceInHours = (new Date(newDateString) - currentDateLocal) / (1000 * 60 * 60);
+        // const timeDifferenceInHours = (new Date(newDateString) - currentDateLocal) / (1000 * 60 * 60);
+        const timeDifferenceInHours = (new Date(newDateString).getTime() - currentDateLocal.getTime()) / (1000 * 60 * 60);
+
 
         if (timeDifferenceInHours < 3) {
             return false
@@ -215,7 +238,7 @@ const BookingDetals = () => {
                                 <div>
                                     <div className='px-4'>
                                         <div className='pb-3 border-b-2 max-h-32 px-2 overflow-y-scroll'>
-                                            {booking.items.map((item, innerIndex) => (
+                                            {booking.items.map((item, innerIndex:number) => (
                                                 <div className='flex justify-between pb-1' key={innerIndex}>
                                                     <p>{item.item}</p>
                                                     <p>x{item.count}</p>
@@ -275,7 +298,7 @@ const BookingDetals = () => {
                 ) :
                     <div className='flex flex-col w-full items-center justify-center'>
                         <div className='items-center w-52'>
-                            <img src="https://png.pngtree.com/png-vector/20221013/ourmid/pngtree-calendar-icon-logo-2023-date-time-png-image_6310337.png" alt="" />
+                            <Image src="https://png.pngtree.com/png-vector/20221013/ourmid/pngtree-calendar-icon-logo-2023-date-time-png-image_6310337.png" alt="" />
                             <h1 className='text-center text-xl font-bold'>No Bookings Found</h1>
                         </div>
                     </div>

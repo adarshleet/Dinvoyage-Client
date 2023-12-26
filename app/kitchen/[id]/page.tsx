@@ -13,6 +13,7 @@ import { BiSolidOffer } from "react-icons/bi";
 import { IoWalletSharp } from "react-icons/io5"
 import Coupons from '@/app/components/user/coupons';
 import Wallet from '@/app/components/user/wallet';
+import Image from 'next/image';
 
 
 interface restaurantProps {
@@ -21,20 +22,54 @@ interface restaurantProps {
     }
 }
 
-const page = ({ params }: restaurantProps) => {
+interface SelectedItem {
+    category: string;
+    item: string;
+    count:number
+    price:number
+  }
+
+  interface appliedCoupon{
+    minimumPurchase:number
+    maximumDiscount : number
+  }
+
+  interface GuestDetails{
+    date: string
+    time :string
+    guestCount : number
+  }
+
+  interface Coupon{
+    minimumPurchase : number
+    maximumDiscount : number
+  }
+
+  interface Restaurant{
+    banners :string
+    restaurantName:string
+    landmark:string
+    locality :string
+  }
+
+const Usepage = ({ params }: restaurantProps) => {
 
     const [showItems, setShowItems] = useState('1')
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
 
-    const [restaurant, setRestaurant] = useState({})
+    const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
     const [allItems, setAllItems] = useState([])
-    const [guestDetails, setGuestDetails] = useState({})
+    const [guestDetails, setGuestDetails] = useState<GuestDetails>({
+        date: '',
+        time: '',
+        guestCount: 0,
+      })
 
     const [veg, setVeg] = useState(false);
 
     const [couponModal,setCouponModal] = useState(false)
     const [subTotalLast,setSubtotalLast] = useState(0)
-    const [appliedCoupon,setAppliedCoupon] = useState(null)
+    const [appliedCoupon,setAppliedCoupon] = useState<appliedCoupon | null>(null)
 
     const [walletModal,setWalletModal] = useState(false)
     const [walletUsageFull,setWalletUsageFull] = useState<boolean | null>(null)
@@ -65,6 +100,7 @@ const page = ({ params }: restaurantProps) => {
             const items = response?.data.kitchenAllItems.data
             setAllItems(items)
             const guestDetails = response?.data?.sessionData?.bookingDetails
+            console.log('check',response)
             if (guestDetails.items) {
                 setSelectedItems(guestDetails.items)
             }
@@ -74,7 +110,7 @@ const page = ({ params }: restaurantProps) => {
             setGuestDetails(guestDetails)
         }
         fetchData()
-    }, [])
+    }, [id,veg,router])
 
 
     const handleItemClick = (index: string) => {
@@ -98,9 +134,14 @@ const page = ({ params }: restaurantProps) => {
         }
 
         setSelectedItems(updatedItems);
-        if(subTotal<appliedCoupon?.minimumPurchase){
-            setAppliedCoupon(null)
+        // if(subTotal<appliedCoupon?.minimumPurchase){
+        //     setAppliedCoupon(null)
+        // }
+
+        if (appliedCoupon && subTotal < appliedCoupon.minimumPurchase) {
+            setAppliedCoupon(null);
         }
+
         // calculateTotalPrice
     };
 
@@ -120,7 +161,7 @@ const page = ({ params }: restaurantProps) => {
     //convert date
     // const dateString = "2023-11-23T18:30:00.000Z";
     const dateObject = new Date(guestDetails.date);
-    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    const options:object = { day: 'numeric', month: 'short', year: 'numeric' };
     const formattedDate = dateObject.toLocaleDateString('en-US', options);
 
 
@@ -132,7 +173,7 @@ const page = ({ params }: restaurantProps) => {
 
             const walletAmountUsed = (walletApplied ? Wallet : 0)
 
-            const bookingDetails = {
+            const bookingDetails:any = {
                 ...guestDetails,
                 items: selectedItems,
                 totalAmount: subTotalLast,
@@ -161,7 +202,7 @@ const page = ({ params }: restaurantProps) => {
     }
 
 
-    const applyCoupon = (coupon:object)=>{
+    const applyCoupon = (coupon:Coupon)=>{
         if(coupon.minimumPurchase > subTotal){
             return showToast('Purchase amount is less to apply this coupon')
         }
@@ -224,7 +265,7 @@ const page = ({ params }: restaurantProps) => {
         const walletAmountUsed =  subTotal + 100 - (appliedCoupon?.maximumDiscount || 0) 
         const totalAmount = subTotal + 100 - walletAmountUsed
 
-        const bookingDetails = {
+        const bookingDetails:any = {
             ...guestDetails,
             items: selectedItems,
             totalAmount: subTotal,
@@ -249,12 +290,12 @@ const page = ({ params }: restaurantProps) => {
                 <div className='flex flex-col md:flex-row justify-center gap-3'>
                     <div className='bg-white md:w-1/2'>
                         <div className='' style={{ maxWidth: '28rem' }}>
-                            <img src={restaurant.banners} alt="" />
+                            <Image width={430} height={241} src={restaurant?.banners[0] || ''} alt="" />
                         </div>
                         <div className='p-2 flex justify-between'>
                             <div>
-                                <h5 className="text-xl font-bold tracking-tight text-gray-900 ">{restaurant.restaurantName}</h5>
-                                <p className="mb-2 text-sm font-normal text-gray-500">{restaurant.landmark}, {restaurant.locality}</p>
+                                <h5 className="text-xl font-bold tracking-tight text-gray-900 ">{restaurant?.restaurantName}</h5>
+                                <p className="mb-2 text-sm font-normal text-gray-500">{restaurant?.landmark}, {restaurant?.locality}</p>
                             </div>
                             <div>
                                 <h2 className='font-bold text-lg'>Booking Details</h2>
@@ -345,16 +386,16 @@ const page = ({ params }: restaurantProps) => {
                     </div>
                     <div className='mb-16 mt-3 py-4 bg-white w-full'>
                         <h3 className='text-center font-bold text-xl px-36 md:px-80'>SELECT YOUR TASTE</h3>
-                        {allItems.map((item, index) => (
+                        {allItems.map((item:any, index:any) => (
                             <div className='border-b-8 border-gray-200' key={index}>
                                 <div className='py-2 px-2'>
-                                    <div className='text-lg font-bold px-2 flex justify-between items-center cursor-pointer' onClick={() => handleItemClick(index)}>
+                                    <div className='text-lg font-bold px-2 flex justify-between items-center cursor-pointer' onClick={() => handleItemClick(index.toString())}>
                                         <h3 className='capitalize'>{item?.category} ({item?.items.length})</h3>
-                                        <h1 className='text-2xl'>{index == showItems ? <FiChevronUp /> : <FiChevronDown />}</h1>
+                                        <h1 className='text-2xl'>{index.toString() == showItems ? <FiChevronUp /> : <FiChevronDown />}</h1>
                                     </div>
                                 </div>
                                 <div className='px-4'>
-                                    {index == showItems && item.items.map((item, innerIndex) => (
+                                    {index.toString() == showItems && item.items.map((item:any, innerIndex:number) => (
                                         <div className='pb-6 pt-3 border-b-2 mb-3 flex justify-between' key={innerIndex + item}>
                                             <div>
                                                 <h5 className='text-base font-semibold text-gray-800'>{item.itemName}</h5>
@@ -366,7 +407,7 @@ const page = ({ params }: restaurantProps) => {
                                             <div>
                                                 <div className='relative'>
                                                     <div className='w-32 m-2 h-24 rounded-md shadow-lg border  overflow-hidden'>
-                                                        <img className="w-full h-full object-cover" src={item.image ? item.image : "https://www.thespruceeats.com/thmb/XDBL9gA6A6nYWUdsRZ3QwH084rk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SES-chicken-biryani-recipe-7367850-hero-A-ed211926bb0e4ca1be510695c15ce111.jpg"} alt="" />
+                                                        <Image width={126} height={94} className="w-full h-full object-cover" src={item.image} alt="" />
                                                     </div>
                                                     <div className='flex items-center bg-white rounded-sm shadow-md border w-24 absolute top-20 left-6 justify-center py-1 px-2'>
                                                     {!selectedItems.find((i) => i.category === index && i.item === item.itemName)?.count ?
@@ -405,4 +446,4 @@ const page = ({ params }: restaurantProps) => {
     )
 }
 
-export default page
+export default Usepage

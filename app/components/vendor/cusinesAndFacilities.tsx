@@ -16,8 +16,8 @@ const CusinesAndFacilities = () => {
     const [page, setPage] = useState(0)
     const [loading, setLoading] = useState(true)
 
-    const [selectedCuisines,setSelectedCuisines] = useState([])
-    const [selectedFacilities,setSelectedFacilities] = useState([])
+    const [selectedCuisines,setSelectedCuisines] = useState<string[]>([])
+    const [selectedFacilities,setSelectedFacilities] = useState<string[]>([])
 
      useEffect(() => {
         const fetchData = async () => {
@@ -47,7 +47,7 @@ const CusinesAndFacilities = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [page]);
 
 
     const handleCheckboxChange = (clickedCuisine:string) => {

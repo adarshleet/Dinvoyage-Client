@@ -1,12 +1,20 @@
 'use client'
 import React from 'react'
+import { Dispatch, SetStateAction } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapBoxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import { useControl } from 'react-map-gl'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 interface geoCoder{
-    setViewport : ({})=>void
+    setViewport : (Dispatch<SetStateAction<Location>>)
+}
+
+interface Location {
+    longitude: number;
+    latitude : number
+    zoom : number
+    // latitude is missing here
 }
 
 const GeoCoder = ({setViewport}:geoCoder) => {

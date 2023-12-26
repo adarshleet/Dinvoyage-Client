@@ -8,14 +8,20 @@ interface couponProps{
     couponModal: boolean
     closeCouponModal : ()=>void
     subTotal : number
-    applyCoupon : (coupon:object)=>void
-    appliedCoupon : object | null
+    applyCoupon : (coupon:coupon)=>void
+    appliedCoupon : any
     removeCoupon : ()=>void
+}
+
+interface coupon{
+    couponName:string
+    maximumDiscount : number
+    minimumPurchase : number
 }
 
 const Coupons = ({couponModal,closeCouponModal,subTotal,applyCoupon,appliedCoupon,removeCoupon}:couponProps) => {
 
-    const [coupons,setCoupons] = useState([])
+    const [coupons,setCoupons] = useState<coupon[]>([])
     
 
     useEffect(()=>{

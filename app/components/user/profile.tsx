@@ -10,8 +10,8 @@ import PasswordChangeModal from './passwordChangeModal'
 
 
 interface User{
-    name : string
-    mobile ?: string | number
+    name ?: string
+    mobile : string | number
     email ?: string
 }
 
@@ -21,7 +21,7 @@ const Profile = () => {
     const dispatch = useDispatch()
     const [user,setUser] = useState<User>()
     const [input,setInput] = useState(false)
-    const [userName,setUsername] = useState<'' | string>('')
+    const [userName,setUsername] = useState<string>('')
 
     //mboile change
     const [mobile,setMobile] = useState<number|null>(null)
@@ -63,7 +63,12 @@ const Profile = () => {
         }
 
         if(res?.data.data){
-            setUser({...user,name:userName as string})
+            // setUser({...user,name:userName as string})
+            setUser((prevUser) => ({
+                ...prevUser,
+                name: userName as string,
+                mobile: prevUser?.mobile !== undefined ? prevUser?.mobile : '',
+            }));
             setInput(false)
             toaster('Name changed successfully')
         }
@@ -135,7 +140,7 @@ const Profile = () => {
             </div>
         </div>
         <MobileChangeModal  setMobileModal={setMobileModal} mobileModal={mobileModal}
-            currentMobile={user?.mobile}
+            currentMobile={user?.mobile !== undefined ? user?.mobile : ''}
             toaster={toaster}
             user={user}
             setUser={setUser}

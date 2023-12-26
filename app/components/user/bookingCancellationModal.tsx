@@ -5,7 +5,7 @@ interface modalProps{
     modal:boolean,
     closeModal : ()=>void,
     cancelReason : string,
-    setCancelReason : (e)=>void,
+    setCancelReason : (e: string)=>void,
     handleConfirm:()=>void
 }
 const BookingCancellationModal = ({modal,closeModal,cancelReason,setCancelReason,handleConfirm}:modalProps) => {
@@ -48,7 +48,7 @@ const BookingCancellationModal = ({modal,closeModal,cancelReason,setCancelReason
                                     onClick={handleConfirm}
                                     className="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2"
                                 >
-                                    Yes, I'm sure
+                                    Yes, I am sure
                                 </button>
                                 <button
                                     data-modal-hide="popup-modal"

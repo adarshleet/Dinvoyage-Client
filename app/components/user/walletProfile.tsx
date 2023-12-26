@@ -13,7 +13,7 @@ interface wallet{
 const WalletProfile = () => {
 
     const [walletAmount, setWalletAmount] = useState(0)
-    const [walletHistory, setWalletHistory] = useState<wallet | Array<object>>([])
+    const [walletHistory, setWalletHistory] = useState<wallet[]>([])
 
     useEffect(() => {
         try {
@@ -31,7 +31,7 @@ const WalletProfile = () => {
 
     const formatDate = (date:Date)=>{
         const dateObject = new Date(date);
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        const options:object = { day: 'numeric', month: 'short', year: 'numeric' };
         const formattedDate = dateObject.toLocaleDateString('en-US', options);
         return formattedDate
     }
@@ -43,7 +43,7 @@ const WalletProfile = () => {
                 <h2 className='text-4xl font-bold'>₹{walletAmount}</h2>
             </div>
             <div className="relative overflow-x-auto">
-            { walletHistory.length &&
+            { walletHistory?.length &&
             <table className="w-full text-sm text-left rtl:text-right text-gray-600 border">
                     <thead className="text-sm text-gray-900 uppercase bg-gray-50 ">
                         <tr>
@@ -63,7 +63,7 @@ const WalletProfile = () => {
                     </thead>
                     <tbody>
                     
-                    {   walletHistory.map((wallet:wallet,index:number)=>(      
+                    {   walletHistory.map((wallet,index:number)=>(      
                         <tr className="bg-white border-b " key={index}>
                                 <th
                                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "

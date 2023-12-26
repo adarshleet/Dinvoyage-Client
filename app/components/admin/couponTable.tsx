@@ -11,6 +11,7 @@ interface coupon{
     maximumDiscount : string,
     minimumPurchase : string,
     expiryDate : string
+    isListed ?: boolean 
 }
 
 const CouponTable = () => {
@@ -23,7 +24,7 @@ const CouponTable = () => {
         expiryDate : ''
     })
 
-    const [allCoupon,setAllCoupon] = useState([])
+    const [allCoupon,setAllCoupon] = useState<coupon[]>([])
     const [page,setPage] = useState(1)
     const [edit,setEdit] = useState(false)
 
@@ -39,7 +40,7 @@ const CouponTable = () => {
         } catch (error) {
             console.log(error);
         }
-    },[])
+    },[page])
 
     const closeModal = ()=>{
         setCoupon({
@@ -85,9 +86,9 @@ const CouponTable = () => {
 
     }
 
-    const convertDate = (date:Date)=>{
+    const convertDate = (date:string)=>{
         const dateObject = new Date(date);
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        const options:Object = { day: 'numeric', month: 'short', year: 'numeric' };
         const formattedDate = dateObject.toLocaleDateString('en-US', options);
         return formattedDate
     }

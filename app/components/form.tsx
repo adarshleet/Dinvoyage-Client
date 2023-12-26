@@ -39,7 +39,7 @@ const Form = ({ user }:formProps) => {
                 router.replace('/vendor/dashboard')
             }
         }
-    }, []);
+    }, [router,user]);
 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

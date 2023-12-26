@@ -4,13 +4,11 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 
-interface Data {
-    cuisines: Array<string>
-}
+
 const CuisineTable = () => {
-    const [cuisines, setCuisines] = useState<Data[]>([])
+    const [cuisines, setCuisines] = useState<string[]>([])
     const [row, setRow] = useState(false)
-    const [cuisine, setCuisine] = useState('')
+    const [cuisine, setCuisine] = useState<string>('')
     const [editIndex, setEditIndex] = useState<number | null>(null)
     const [editedCuisine, setEditedCuisine] = useState('')
     const [deleteIndex, setDeleteIndex] = useState<number | null>(null)
@@ -39,7 +37,7 @@ const CuisineTable = () => {
             toast.error('Already existing cuisine')
         }
         else {
-            const newCuisine: Data[] = [...cuisines, cuisine]
+            const newCuisine: string[] = [...cuisines, cuisine]
             setCuisines(newCuisine)
             setRow(false)
             setCuisine('')

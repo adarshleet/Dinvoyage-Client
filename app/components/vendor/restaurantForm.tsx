@@ -7,12 +7,38 @@ import Spinner from '../loadingPages/spinner';
 import { allLocalities } from '@/apis/admin';
 import { MdMyLocation } from "react-icons/md";
 import LocationSelect from './locationSelect';
+import Image from 'next/image';
+
+interface viewPort{
+    longitude:number
+    latitude:number
+}
+
+interface formData{
+    restaurantName: string;
+    landmark: string;
+    locality: string;
+    district: string;
+    openingTime: string;
+    closingTime: string;
+    minCost: number;
+    googlemapLocation: string;
+    location: {
+        longitude: number;
+        latitude: number;
+    };
+    contactNumber: string;
+    tableCounts: {
+        [key: string]: number;
+    };
+    banners: string[];
+}
 
 const RestaurantForm = () => {
 
     const router = useRouter()
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<formData>({
         restaurantName: '',
         landmark: '',
         locality: '',
@@ -35,7 +61,7 @@ const RestaurantForm = () => {
         banners: ['', '', '', ''] // To store file paths for banners
     });
 
-    const [images, setImages] = useState([])
+    const [images, setImages] = useState<File[]>([])
 
     const [loading, setLoading] = useState(false)
 
@@ -50,14 +76,14 @@ const RestaurantForm = () => {
         fetchData()
     },[])
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>, key: string) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: string) => {
         const value = e.target.value;
         setFormData({ ...formData, [key]: value });
         console.log(formData)
     };
 
     const handleTableCountChange = (e: ChangeEvent<HTMLSelectElement>, type: string) => {
-        const value = e.target.value;
+        const value = parseInt(e.target.value);
         setFormData({ ...formData, tableCounts: { ...formData.tableCounts, [type]: value } });
     };
 
@@ -73,7 +99,7 @@ const RestaurantForm = () => {
 
 
     //selecting coordinates
-    const submitLocation = (viewport:object)=>{
+    const submitLocation = (viewport:viewPort)=>{
         console.log('jer',location)
         setFormData({...formData,location:{longitude:viewport.longitude,latitude:viewport.latitude}})
         closeModal()
@@ -121,8 +147,13 @@ const RestaurantForm = () => {
                 }
             });
 
+            // Object.keys(formData.tableCounts).forEach((key) => {
+            //     form.append(`tableCounts[${key}]`, formData.tableCounts[key]);
+            // });
+
             Object.keys(formData.tableCounts).forEach((key) => {
-                form.append(`tableCounts[${key}]`, formData.tableCounts[key]);
+                const value = String(formData.tableCounts[key]);
+                form.append(`tableCounts[${key}]`, value);
             });
 
             console.log(formData.restaurantName, images)
@@ -304,7 +335,7 @@ const RestaurantForm = () => {
                                     Banner {index + 1}
                                     <input type="file" accept="image/*" id={`bannerFileInput${index}`} onChange={(e) => handleFileChange(e, index)} name='image' className='hidden' />
                                 </label>
-                                {banner && <img src={banner} alt={`Banner ${index + 1}`} style={{ maxWidth: '200px' }} />}
+                                {banner && <Image src={banner} alt={`Banner ${index + 1}`} style={{ maxWidth: '200px' }} />}
                             </div>
                         ))}
                     </div>

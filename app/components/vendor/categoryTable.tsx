@@ -10,14 +10,17 @@ import Link from 'next/link'
 import { FaEdit } from "react-icons/fa";
 import { IoIosEye } from "react-icons/io";
 
-interface Data {
-    allCategory: Array<string>
+interface category{
+    _id:string
+    category: string; 
+    isListed: boolean;
 }
+
 const CategoryTable = () => {
 
     const [modal,setModal] = useState(false)
     const [category,setCategory] = useState('')
-    const [allCategory,setAllCategory] = useState<any>([])
+    const [allCategory,setAllCategory] = useState<category[]>([])
     const [restaurant,setRestaurant] = useState<any>({})
     const [allRestaurant,setAllRestaurant] = useState<any>([])
     const [page,setPage] = useState(0)
@@ -56,7 +59,7 @@ const CategoryTable = () => {
             }
         }
         fetchData()
-    },[pagination,search])
+    },[pagination,search,page])
 
 
     const pagePlus = async() =>{
@@ -109,11 +112,12 @@ const CategoryTable = () => {
         const res = await addRestaurantCategory(restaurant._id,category)
         console.log(res)
 
-        if(!res.data.data){
+        if(!res?.data.data){
             return toast.error('Already Existing Category')
         }
 
         const addedCategory = {
+            _id:'',
             category: category,
             isListed: true
         }
@@ -143,7 +147,7 @@ const CategoryTable = () => {
         }
 
         const res = await editRestaurantCategory(editCategoryId,category)
-        if(!res.data.data){
+        if(!res?.data.data){
             return toast.error('Already Existing Category')
         }
 
@@ -173,7 +177,7 @@ const CategoryTable = () => {
     const confirmChangeStatus = async()=>{
 
         const res = await changeCategoryStatus(category)
-        if(res.data.data){
+        if(res?.data.data){
             setAllCategory((prevCategories) =>
                 prevCategories.map((c) =>
                     c._id === category ? { ...c, isListed: !c.isListed } : c

@@ -2,8 +2,7 @@ import { changeMobile, verifyNewMobile } from '@/apis/user'
 import React, { useState } from 'react'
 
 interface User{
-    name : string
-    mobile ?: string
+    mobile : string | number
     email ?: string
 }
 

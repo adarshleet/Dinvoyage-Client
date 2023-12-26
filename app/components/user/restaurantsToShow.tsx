@@ -5,8 +5,17 @@ import { restaurantsToDisplay } from '@/apis/user'
 import Filters from './filters'
 import RestaurantsLoading from '../loadingPages/restaurantsLoading'
 
+interface Restaurant {
+    _id: string;
+    banners: string[];
+    landmark: string;
+    locality: string;
+    minCost : number
+    // Add other properties as needed
+  }
+
 const RestaurantsToShow = () => {
-    const [restaurants, setRestaurants] = useState([])
+    const [restaurants, setRestaurants] = useState<Restaurant[]>([])
     const [loading,setLoading] = useState(true)
     
 

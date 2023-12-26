@@ -12,7 +12,7 @@ interface Vendor{
 }
 
 const VendorProfile = () => {
-    const [vendor,setVendor] = useState<Vendor>({})
+    const [vendor,setVendor] = useState<Vendor>({ name: '', email: '', mobile: '' })
     const [vendorName,setVendorName] = useState('')
     const [vendorNameInput,setVendorNameInput] = useState(false)
 

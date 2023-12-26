@@ -2,15 +2,29 @@
 import React, { useEffect, useState } from 'react'
 import { changeRestaurantStatus, singleRestaurantRequest } from '@/apis/admin'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface requestProps {
     id: string
 }
+
+interface Restaurant{
+    restaurantName:string
+    status : number
+    banners : string[]
+    landmark:string
+    locality:string
+    minCost : number
+    googlemapLocation : string
+    openingTime :string
+    closingTime :string
+}
+
 const RestaurantCard = ({ id }: requestProps) => {
 
-    const [restaurant, setRestaurant] = useState({})
+    const [restaurant, setRestaurant] = useState<Restaurant>()
     const [dropDown,setDropDown] = useState(false)
-    const [restaurantStatus,setStatus] = useState('')
+    const [restaurantStatus,setStatus] = useState<string | number>('')
 
 
 
@@ -22,7 +36,7 @@ const RestaurantCard = ({ id }: requestProps) => {
             setRestaurant(data)
         }
         fetchData(id)
-    }, [restaurantStatus])
+    }, [restaurantStatus,id])
 
 
     const changeStatus = async(status:number) =>{
@@ -57,17 +71,17 @@ const RestaurantCard = ({ id }: requestProps) => {
     return (
         <div className='p-5 bg-white shadow-sm flex justify-center'>
             <div className="flex flex-col items-center bg-white border border-gray-200 shadow md:flex-row">
-                <div>
-                    <img className="" src={restaurant.banners ? restaurant.banners[0] : ''} alt='' />
+                <div className='overflow-hidden'>
+                    <Image width={900} height={500} className="" src={restaurant?.banners ? restaurant.banners[0] : ''} alt='' />
                 </div>
                 <div className="flex flex-col justify-start h-full p-4 leading-normal w-full md:w-1/2">
-                    <h5 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 ">{restaurant.restaurantName}</h5>
-                    <p className="mb-2 font-normal text-gray-500">{restaurant.landmark}, {restaurant.locality}</p>
-                    <p className="mb-2 font-normal text-gray-500">₹ {restaurant.minCost} for two</p>
-                    <a href={restaurant.googlemapLocation} target="_blank"><p className='font-bold text-md text-blue-500 mb-1'>Restaurant Location</p></a>
+                    <h5 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 ">{restaurant?.restaurantName}</h5>
+                    <p className="mb-2 font-normal text-gray-500">{restaurant?.landmark}, {restaurant?.locality}</p>
+                    <p className="mb-2 font-normal text-gray-500">₹ {restaurant?.minCost} for two</p>
+                    <a href={restaurant?.googlemapLocation} target="_blank"><p className='font-bold text-md text-blue-500 mb-1'>Restaurant Location</p></a>
                     <p className='font-bold'>Time </p>
-                    <p>Opens at {restaurant.openingTime}</p>
-                    <p className='mb-2'>Closes at {restaurant.closingTime}</p>
+                    <p>Opens at {restaurant?.openingTime}</p>
+                    <p className='mb-2'>Closes at {restaurant?.closingTime}</p>
                     <h3 className='text-lg font-bold'>Status : {status}</h3>
 
                     <div className='mt-2'>

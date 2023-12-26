@@ -33,7 +33,7 @@ function FormLogin({ user }: formLogin) {
                 router.replace('/vendor/dashboard')
             }
         }
-    }, []);
+    }, [router,user]);
 
 
     const [error, setError] = useState('')

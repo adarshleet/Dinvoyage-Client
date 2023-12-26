@@ -14,7 +14,7 @@ const LoginProtect = ({ children }: { children: React.ReactNode }) => {
         } else {
             setLoading(false);
         }
-    }, []);
+    }, [router]);
 
     return loading ? <Spinner /> : <>{children}</>;
 };

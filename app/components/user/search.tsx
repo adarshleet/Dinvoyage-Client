@@ -1,12 +1,22 @@
 'use client'
 import { searchRestaurants } from '@/apis/user'
+import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+
+
+interface restaurant{
+    _id:string
+    banners : string
+    restaurantName:string
+    locality:string
+    landmark :string
+}
 
 const Search = () => {
 
     const [searchQuery, setSearchQuery] = useState<string | null>(null)
-    const [restaurants, setRestaurants] = useState([])
+    const [restaurants, setRestaurants] = useState<restaurant[]>([])
 
     useEffect(() => {
         try {
@@ -41,12 +51,12 @@ const Search = () => {
                 </div>
             </div>
             <div className='flex justify-center pb-16 px-4 items-center '>
-                {restaurants.length != 0 && <div className='bg-white sticky overflow-y-scroll' style={{ maxHeight: '15rem' }}>
-                    {restaurants.map((restaurant, index) => (
-                        <Link href={`/restaurant/${restaurant._id}`}>
+                {restaurants?.length != 0 && <div className='bg-white sticky overflow-y-scroll' style={{ maxHeight: '15rem' }}>
+                    {restaurants?.map((restaurant, index) => (
+                        <Link href={`/restaurant/${restaurant._id}`} key={index}>
                             <div className='flex py-4 px-10 gap-2 hover:bg-gray-200' key={index}>
                                 <div className='overflow-hidden' style={{ width: '5rem' }}>
-                                    <img src={restaurant.banners} alt="" />
+                                    <Image width={80} height={45} src={restaurant.banners} alt="" />
                                 </div>
                                 <div className='text-gray-500 '>
                                     <p className=''>{restaurant.restaurantName}</p>

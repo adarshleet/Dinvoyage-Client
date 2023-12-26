@@ -11,23 +11,35 @@ import { IoIosEye } from "react-icons/io";
 import ConfirmPopup from './confirmPopup'
 
 
+
+
+interface itemData{
+    itemName: string;
+    category: {_id:string,category:string};
+    price: string;
+    veg: boolean;
+    description: string;
+    isListed: boolean;
+    image: string;
+} 
+
 const KitchenTable = () => {
 
 
     const [items, setItems] = useState<any>([])
     const [itemModal, setItemModal] = useState(false)
     const [restaurantId, setRestaurantId] = useState('')
-    const [categories, setCategories] = useState([])
-    const [itemData, setItemData] = useState({
+    const [categories, setCategories] = useState<any[]>([])
+    const [itemData, setItemData] = useState<itemData>({
         itemName: '',
-        category: '',
+        category: {_id:'',category:''},
         price: '',
         veg: false,
         description: '',
         isListed: true,
         image: ''
     });
-    const [image, setImage] = useState({})
+    const [image, setImage] = useState<object | null>()
 
     const [restaurant, setRestaurant] = useState<any>({})
     const [allRestaurant, setAllRestaurant] = useState<any>([])
@@ -78,7 +90,7 @@ const KitchenTable = () => {
             }
         }
         fetchData()
-    }, [pagination,search])
+    }, [pagination,search,page])
 
 
     const pagePlus = async () => {
@@ -127,7 +139,7 @@ const KitchenTable = () => {
         setEditId('')
         setItemData({
             itemName: '',
-            category: '',
+            category: {_id:'',category:''},
             price: '',
             veg: false,
             description: '',
@@ -143,7 +155,7 @@ const KitchenTable = () => {
         setItemModal(true)
     }
 
-    const openEditModal = (index: string) => {
+    const openEditModal = (index: number) => {
         setEdit(true)
         const item = items[index]
         setEditId(item._id)
@@ -190,17 +202,17 @@ const KitchenTable = () => {
         // else if(parseInt(itemData.price.trim()) < 5 || itemData.price.trim().length == 0){
         //     return toast.error('Please enter correct item price')
         // }
-        else if (itemData.category.trim().length == 0) {
+        else if (itemData.category.category.trim().length == 0) {
             return toast.error('Please select a category')
         }
 
         const formData = new FormData();
         formData.append('itemName', itemData.itemName);
-        formData.append('category', itemData.category);
+        formData.append('category', itemData.category.category);
         formData.append('price', itemData.price);
         formData.append('veg', itemData.veg.toString());
         formData.append('description', itemData.description);
-        if (image) {
+        if (image instanceof Blob) {
             console.log(image)
             formData.append('image', image);
         }
@@ -219,7 +231,7 @@ const KitchenTable = () => {
                 }
                 itemData.category = { _id: foundCategory._id, category: categoryName }
 
-                const updatedItems = items.map((item) => {
+                const updatedItems = items.map((item:any) => {
                     if (item._id === editId) {
                         return { ...item, ...itemData };
                     }
@@ -230,7 +242,7 @@ const KitchenTable = () => {
 
                 setItemData({
                     itemName: '',
-                    category: '',
+                    category: {_id:'',category:''},
                     price: '',
                     veg: false,
                     description: '',
@@ -254,12 +266,19 @@ const KitchenTable = () => {
                 if (foundCategory) {
                     categoryName = foundCategory.category;
                 }
-                itemData.category = { category: categoryName }
-                setItems((prevItems) => [...prevItems, itemData]);
+                // itemData.category = { category: categoryName }
+                // setItems((prevItems) => [...prevItems, itemData]);
+
+                const newItemData = {
+                    ...itemData,
+                    category: categoryName,
+                };
+            
+                setItems((prevItems:any) => [...prevItems, newItemData]);
 
                 setItemData({
                     itemName: '',
-                    category: '',
+                    category: {_id:'',category:''},
                     price: '',
                     veg: false,
                     description: '',
@@ -280,7 +299,7 @@ const KitchenTable = () => {
             const res = await changeItemStatus(editId)
             setConfirmBox(false)
             if(res?.data){
-                const updatedItems = items.map((item) => {
+                const updatedItems = items.map((item:any) => {
                     if (item._id === editId) {
                         return { ...item, isListed: !item.isListed };
                     }
@@ -373,7 +392,7 @@ const KitchenTable = () => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 font-semibold text-base text-gray-600">
-                        {items.map((item, index) => (
+                        {items.map((item:any, index:number) => (
                             <tr className="text-gray-600 hover:bg-gray-200 capitalize" key={index}>
                                 <td className="border-t-0 align-middle whitespace-nowrap p-3">
                                     {item.itemName}

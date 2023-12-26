@@ -10,6 +10,10 @@ import Link from 'next/link';
 import VendorLogout from '@/app/components/vendor/vendorLogout'
 import { BsFillArrowRightSquareFill, BsFillArrowLeftSquareFill } from 'react-icons/bs'
 
+interface bar{
+    month:string
+    totalAmount : number
+}
 
 const Dashbord = () => {
 
@@ -18,7 +22,7 @@ const Dashbord = () => {
     const [allRestaurant, setAllRestaurant] = useState<any>([])
     const [page, setPage] = useState(0)
 
-    const [bars,setBars] = useState([])
+    const [bars,setBars] = useState<bar[]>([])
     const [salesCount,setSalesCount] = useState(0)
     const [cancelledBookingCount,SetCancelledBookingCount] = useState(0)
     const [cancelledBookingAmount,setCancelledBookingAmount] = useState(0)
@@ -48,7 +52,7 @@ const Dashbord = () => {
         } catch (error) {
             console.log(error)
         }
-    }, [])
+    }, [page])
 
 
     const pageMinus = async () => {

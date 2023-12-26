@@ -5,13 +5,14 @@ import { useRouter } from 'next/navigation';
 import { signup } from '@/apis/user';
 import toast from 'react-hot-toast';
 
+
+
 const GoogleAuth = () => {
 
     const router = useRouter()
 
     const gSignup = async (res: CredentialResponse) => {
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const result: any = jwtDecode(res.credential as string);
         // console.log(result)
         const data = {

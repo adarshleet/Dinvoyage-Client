@@ -36,7 +36,7 @@ interface Restaurant {
     contactNumber: string
 }
 
-const page = ({ params }: restaurantProps) => {
+const Usepage = ({ params }: restaurantProps) => {
 
     const [restaurant, setRestaurant] = useState<Restaurant>()
 
@@ -90,7 +90,7 @@ const page = ({ params }: restaurantProps) => {
 
         }
         fetchData()
-    }, [])
+    }, [id])
 
 
     const closeModal = () => {
@@ -170,8 +170,8 @@ const page = ({ params }: restaurantProps) => {
                                 <div>
                                     <h4 className='text-cyan-600 font-bold'>CUISINES</h4>
                                     <div className='capitalize grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 pt-2'>
-                                        {restaurant && restaurant?.cuisines?.map((cuisine: string) => (
-                                            <p>{cuisine}</p>
+                                        {restaurant && restaurant?.cuisines?.map((cuisine: string,index) => (
+                                            <p key={index}>{cuisine}</p>
                                         ))
                                         }
                                     </div>
@@ -198,8 +198,8 @@ const page = ({ params }: restaurantProps) => {
                                     </div>
                                 </div>
                                 <div className='ps-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4'>
-                                    {restaurant && restaurant?.facilities?.map((facility: string) => (
-                                        <p>{facility}</p>
+                                    {restaurant && restaurant?.facilities?.map((facility: string,index) => (
+                                        <p key={index}>{facility}</p>
                                     ))}
                                 </div>
                             </div>
@@ -268,4 +268,4 @@ const page = ({ params }: restaurantProps) => {
     )
 }
 
-export default page
+export default Usepage

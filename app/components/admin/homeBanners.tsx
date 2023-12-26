@@ -31,9 +31,9 @@ const HomeBanners = () => {
     return (
         <div className="overflow-hidden">
             <Slider {...settings}>
-                {banners.map((banner)=>(
-                    <div className="">
-                        <img src={banner} alt="banner" />
+                {banners.map((banner,index)=>(
+                    <div className="" key={index}>
+                        <Image width={1524} height={563} src={banner} alt="banner" />
                     </div>
                 ))}
                 

@@ -4,7 +4,7 @@ import React from 'react'
 interface categoryProps{
     show:boolean,
     closeModal : ()=>void,
-    categoryChange:(e)=>void,
+    categoryChange:(e :React.ChangeEvent<HTMLInputElement>)=>void,
     addCategory : ()=>void,
     category:string,
     editMode : boolean,

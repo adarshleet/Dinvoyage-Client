@@ -7,11 +7,15 @@ import React,{useEffect,useState} from 'react'
 import { Toaster } from 'react-hot-toast'
 
 interface restaurantProps {
-    params: string
+    params: {
+        id:string
+    }
 }
-const page = ({ params }: restaurantProps) => {
 
-    const [restaurant,setRestaurant] = useState({})
+
+const Usepage = ({ params }: restaurantProps) => {
+
+    const [restaurant,setRestaurant] = useState<any>({})
 
     const { id } = params
 
@@ -23,7 +27,7 @@ const page = ({ params }: restaurantProps) => {
             setRestaurant(restaurant)
         }
         fetchData()
-    },[])
+    },[id])
 
     return (
         <>
@@ -34,11 +38,11 @@ const page = ({ params }: restaurantProps) => {
             <main className='flex justify-center py-24 px-4'>
                 <div>
                     <RestaurantCard restaurant={restaurant} booking={true}/>
-                    <RestaurantBooking openingTime={restaurant?.openingTime} closingTime={restaurant.closingTime} restaurantId={restaurant._id}/>
+                    <RestaurantBooking openingTime={restaurant?.openingTime} closingTime={restaurant?.closingTime} restaurantId={restaurant?._id}/>
                 </div>
             </main>
         </>
     )
 }
 
-export default page
+export default Usepage

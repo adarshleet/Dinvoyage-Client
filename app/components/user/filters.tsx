@@ -4,9 +4,17 @@ import { filterRestaurants } from '@/apis/user';
 import React, { useEffect, useState } from 'react'
 import { FiPlus, FiMinus } from "react-icons/fi";
 
+interface Restaurant {
+    _id: string;
+    banners: string[];
+    landmark: string;
+    locality: string;
+    // Add other properties as needed
+    minCost:number
+  }
 
 interface filterProps{
-    setRestaurant : (restaurant:Array<object>)=>void
+    setRestaurant: React.Dispatch<React.SetStateAction<Restaurant[]>>;
 }
 
 const Filters = ({setRestaurant}:filterProps) => {
@@ -33,7 +41,7 @@ const Filters = ({setRestaurant}:filterProps) => {
     },[])
 
 
-    const handleCuisineChange = async (index, checked) => {
+    const handleCuisineChange = async (index:number, checked:boolean) => {
         const updatedCheckedCuisines = checked
           ? [...checkedCuisines, cuisines[index]]
           : checkedCuisines.filter((cuisine) => cuisine !== cuisines[index]);
@@ -47,7 +55,7 @@ const Filters = ({setRestaurant}:filterProps) => {
 
 
 
-      const handleFacilityChange = async (index, checked) => {
+      const handleFacilityChange = async (index:number, checked:boolean) => {
         const updatedCheckedFacilities = checked
           ? [...checkedFacilities, facilities[index]]
           : checkedFacilities.filter((facility) => facility !== facilities[index]);

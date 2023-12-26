@@ -55,7 +55,7 @@ const Reviews = ({ rating, handleClick,reviewModal,closeModal,userFound,review,s
                         </div>
                         <div className=" md:p-5">
                             <div>
-                                <textarea cols="35" rows="8" value={review} onChange={(e)=>setReview(e.target.value)} className='resize-none outline-none md:p-0 p-2' placeholder='Tell your experience'></textarea>
+                                <textarea cols={35} rows={8} value={review} onChange={(e)=>setReview(e.target.value)} className='resize-none outline-none md:p-0 p-2' placeholder='Tell your experience'></textarea>
                             </div>
                             {!userFound && <p className='mb-1 text-xs text-center'>Need a succesfull booking for rate the restaurant</p>}
                             <button className='bg-slate-700 w-full font-bold text-white py-2 rounded-sm' disabled={!userFound} onClick={handleReviewSubmit}>{reviewFound ? 'Edit Review' : 'Submit'}</button>

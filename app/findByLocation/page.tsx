@@ -1,19 +1,47 @@
 'use client'
-import React, { useEffect, useRef, useState, RefObject } from 'react'
+import React, { useEffect, useRef, useState, RefObject, useMemo } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Navbar from '../components/user/navbar'
 import ReactMapGL, { GeolocateControl, Marker, NavigationControl, MapRef } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import GeoCoder from '../components/user/geoCoder'
 import { restaurantsForMap, restaurantsToDisplay } from '@/apis/user'
-import SuperCluster from 'supercluster'
+import SuperCluster,{ AnyProps } from 'supercluster'
 import PopupMap from '../components/user/popupMap'
+import Image from 'next/image'
 
 interface location {
     longitude: number,
     latitude: number,
     zoom: number
 }
+
+interface Point {
+    type: string;
+    properties: {
+      clusters: boolean;
+      restaurantId: string;
+      restaurantName: string;
+      landmark: string;
+      locality: string;
+      minCost: number;
+      banner: string[];
+      longitude: string;
+      latitude: string;
+    };
+    geometry: {
+      
+    };
+  }
+
+  type PointFeature<AnyProps> = {
+    type: "Feature";
+    properties: AnyProps;
+    geometry: {
+      type: "Point";
+      coordinates: [number, number];
+    };
+  };
 
 
 interface Restaurant{
@@ -35,7 +63,7 @@ interface Restaurant{
     }
 }
 
-const page = () => {
+const Usepage = () => {
 
     const [viewport, setViewport] = useState<location>({
         longitude: 0,
@@ -43,19 +71,25 @@ const page = () => {
         zoom: 10
     })
 
-    const [points, setPoints] = useState([])
-    const [clusters, setClusters] = useState([])
-    const [bounds, setBounds] = useState([-180, -85, 180, 85])
+    const [points, setPoints] = useState<any[]>([])
+    const [clusters, setClusters] = useState<any>([])
+    const [bounds, setBounds] = useState<any>([-180, -85, 180, 85])
     const [zoom, setZoom] = useState(0)
     const [restaurants, setRestaurants] = useState([])
 
     const mapRef: RefObject<MapRef> = useRef(null);
     const [showIndex,setShowindex] = useState<number | null>(null)
 
-    const supercluster = new SuperCluster({
-        radius: 75,
-        maxZoom: 20
-    })
+    // const supercluster = new SuperCluster({
+    //     radius: 75,
+    //     maxZoom: 20
+    // })
+    const supercluster = useMemo(() => {
+        return new SuperCluster({
+          radius: 75,
+          maxZoom: 20
+        });
+      }, []); 
 
     useEffect(() => {
         if (!viewport.latitude && !viewport.longitude) {
@@ -112,7 +146,7 @@ const page = () => {
     useEffect(() => {
         supercluster.load(points)
         setClusters(supercluster.getClusters(bounds,zoom))
-    }, [points, zoom, bounds])
+    }, [points, zoom, bounds,supercluster])
 
     useEffect(() => {
         if (mapRef.current) {
@@ -143,7 +177,7 @@ const page = () => {
                 >
 
                    
-                    {clusters.map((cluster,index) => {
+                    {clusters.map((cluster:any,index:number) => {
                         const { cluster: isCluster, point_count } = cluster?.properties;
                         const [longitude, latitude] = cluster?.geometry.coordinates;
 
@@ -191,7 +225,7 @@ const page = () => {
                                         onClick={()=>setShowindex(index)}
                                     >
                                         <div className='w-20 h-20 rounded-full overflow-hidden'>
-                                            <img src={cluster.properties.banner[0]} alt="" />
+                                            <Image width={80} height={53} src={cluster.properties.banner[0]} alt="" />
                                         </div>
                                     </div>
                                     }
@@ -217,4 +251,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Usepage

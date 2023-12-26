@@ -32,7 +32,7 @@ const AllReviews = ({restaurantId}:reviewProps) => {
             }
         }
         fetchData()
-    },[])
+    },[restaurantId])
 
     return (
         <div className='max-h-96 overflow-y-scroll my-5'>

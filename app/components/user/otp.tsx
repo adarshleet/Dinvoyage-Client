@@ -121,7 +121,7 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
                                     }
                                 </div>
 
-                                <OtpTimer onTimeout={handleResendOtp}/>
+                                <OtpTimer onTimeOut={handleResendOtp}/>
                                 <button
                                     className="w-full text-white bg-cyan-700 focus:outline-none mt-2  font-medium rounded-sm text-sm px-5 py-2.5 text-center"
                                 >

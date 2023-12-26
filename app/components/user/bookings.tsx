@@ -6,11 +6,39 @@ import toast from 'react-hot-toast'
 import Link from 'next/link'
 import { IoChatboxEllipses } from "react-icons/io5";
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+
+
+
+
+interface Booking {
+    restaurantId: string; // or replace with the correct type for restaurant
+    bookings: any;
+    date: string;
+  }
+  
+  interface BookingDetails {
+    _id: string;
+    date: string;
+  }
+
+// interface Booking {
+//     restaurantId: string; // or replace with the correct type for restaurant
+//     bookings: BookingDetails[];
+//     date: string;
+//     _id: string; // I assume this is available based on your code
+//   }
+  
+  
+
+
+
+
 
 const Bookings = () => {
 
-    const [bookings, setBookings] = useState([])
-    const [selected,setSelected] = useState(null)
+    const [bookings, setBookings] = useState<Booking[]>([])
+    const [selected,setSelected] = useState<number | null>(null)
 
     const [modal,setModal] = useState(false)
     const [cancelBookingId,setCancelBookingId] = useState('')
@@ -31,18 +59,24 @@ const Bookings = () => {
         }
     }, [])
 
-    const transformedResult = bookings.map((item:object) => ({
+    const transformedResult = bookings?.map((item) => ({
         ...item,
         restaurant: item.restaurantId, // Rename 'restaurantId' to 'restaurant'
-        bookings: item.bookings.map((booking) => ({
+        bookings: item.bookings.map((booking:any) => ({
             ...booking,
             restaurant: item.restaurantId, // Embed restaurant details in each booking
         })),
     }));
 
-    const bookingsArray = transformedResult.flatMap((item) => item.bookings);
+    const bookingsArray = transformedResult?.flatMap((item) => item.bookings);
 
-    const sortedBookingsArray = bookingsArray.sort((b, a) => new Date(a.date) - new Date(b.date));
+    // const sortedBookingsArray = bookingsArray.sort((b, a) => new Date(a.date) - new Date(b.date));
+    const sortedBookingsArray = bookingsArray?.sort((a: BookingDetails, b: BookingDetails) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    
+
+    
+    
+    
 
 
 
@@ -59,7 +93,9 @@ const Bookings = () => {
         const currentDateUTC = new Date();
         const currentDateLocal = new Date(currentDateUTC.getTime() + timeZoneOffset * 60 * 60 * 1000);
 
-        const timeDifferenceInHours = (new Date(newDateString) - currentDateLocal) / (1000 * 60 * 60);
+        // const timeDifferenceInHours = (new Date(newDateString) - currentDateLocal) / (1000 * 60 * 60);
+        const timeDifferenceInHours: number = (new Date(newDateString).getTime() - currentDateLocal.getTime()) / (1000 * 60 * 60);
+
 
         if (timeDifferenceInHours < 3) {
             return false
@@ -116,7 +152,7 @@ const Bookings = () => {
                 // Map over the previous bookings array
                 const updatedBookings = prevBookings.map((restaurant) => {
                   // For each restaurant, map over its bookings array
-                  const updatedBookings = restaurant.bookings.map((booking) =>
+                  const updatedBookings = restaurant.bookings.map((booking:any) =>
                     // Check if the current booking's _id matches the cancelBookingId
                     booking._id === cancelBookingId
                       ? { ...booking, orderStatus: 3 } // Update the orderStatus to 2 for the matching booking
@@ -163,16 +199,16 @@ const Bookings = () => {
         <>
         <div className='p-6 w-full'>
             <div className='overflow-y-scroll' style={{ maxHeight: '30rem' }}>
-                {sortedBookingsArray.map((booking, index) => (
+                {sortedBookingsArray?.map((booking, index) => (
                     <div className='border-2 p-6 w-full mb-2' key={index}>
                         <p className='font-normal text-sm mb-1'>ORD{booking._id}</p>
                         <div className='flex justify-between border-b pb-4'>
                             <div className='flex flex-col md:flex-row'>
-                                <Link href={`/restaurant/${booking.restaurant._id}`} className='w-36'>
-                                    <img src={booking.restaurant.banners} alt="" />
+                                <Link href={`/restaurant/${booking?.restaurant?._id}`} className='w-36 overflow-hidden'>
+                                    <Image width={144} height={84} src={booking.restaurant?.banners[0]} alt="" />
                                 </Link>
                                 <div className='md:px-2'>
-                                    <h5 className='font-bold'>{booking.restaurant.restaurantName}</h5>
+                                    <h5 className='font-bold'>{booking?.restaurant?.restaurantName}</h5>
                                     <h5 className='text-sm'>{booking.restaurant.locality}</h5>
 
                                     {(calculateRemainingHours(booking.date, booking.time) && booking.orderStatus == 1) &&
@@ -195,7 +231,7 @@ const Bookings = () => {
                         {index === selected ?
                         <>
                             <div className='text-sm py-2'>
-                            {booking.items.map((item, index) => (
+                            {booking.items.map((item:any, index:number) => (
                                 <div className='flex justify-between' key={index}>
                                     <p>{item.item} x{item.count}</p>
                                     <p>₹{item.price * item.count}</p>

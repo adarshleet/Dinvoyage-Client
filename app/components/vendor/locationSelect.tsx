@@ -11,9 +11,14 @@ interface location {
     zoom: number
 }
 
+interface viewPort{
+    longitude:number
+    latitude:number
+}
+
 interface locationProps{
     closeModal: ()=>void
-    submitLocation: (viewport:object)=>void
+    submitLocation: (viewport:viewPort)=>void
 }
 
 const LocationSelect = ({closeModal,submitLocation}:locationProps) => {

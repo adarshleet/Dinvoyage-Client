@@ -1,28 +1,37 @@
 'use client'
 import { allCategories } from '@/apis/vendor'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
+
+interface Category {
+    _id: string;
+    category: string;
+    // Other properties if there are any
+}
 
 
 interface kitchenModalProps{
     itemModal : boolean,
     setKitchenModal : ()=>void,
-    categories : Array<object>,
-    handleInputChange : (e) => void,
-    itemData,
-    setItemData,
-    handleFormSubmit : (e)=>void
-    handleFileChange : (e)=>void
+    categories : Category[],
+    handleInputChange : (e :React.ChangeEvent<any>) => void,
+    itemData : any,
+    setItemData :any,
+    handleFormSubmit : (e : React.FormEvent<HTMLFormElement>)=>void
+    handleFileChange : (e : React.ChangeEvent<HTMLInputElement>)=>void
     edit:boolean
 }
 
-const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,handleInputChange,handleFormSubmit,handleFileChange,edit,editId,setItemData}:kitchenModalProps) => {
+
+
+const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,handleInputChange,handleFormSubmit,handleFileChange,edit,setItemData}:kitchenModalProps) => {
 
     //for editing
-    if(edit){
-        useEffect(()=>{
-            console.log(editId)
-        },[])
-    }
+    // if(edit){
+    //     useEffect(()=>{
+    //         console.log(editId)
+    //     },[])
+    // }
 
     return (
         <>
@@ -151,7 +160,7 @@ const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,handleInput
                                         <input type="file" name='image' id='itemImage' className='hidden' onChange={(e) => handleFileChange(e)}/>
                                     </div>
                                     {itemData.image && <div className='w-32 m-2 h-24 overflow-hidden'>
-                                        <img src={itemData.image} alt="item image" className='w-full h-full object-cover'/>
+                                        <Image src={itemData.image} alt="item image" className='w-full h-full object-cover'/>
                                     </div>}
                                 </div>
                             </div>

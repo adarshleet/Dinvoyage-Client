@@ -3,7 +3,7 @@ import Sidebar from '@/app/components/admin/sidebar';
 import RestaurantCard from '@/app/components/admin/restaurantCard';
 
 interface requestProps {
-    params: string
+    params: {id:string}
 }
 
 const page = ({ params }: requestProps) => {

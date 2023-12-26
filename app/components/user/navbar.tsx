@@ -89,7 +89,7 @@ const Navbar = () => {
                             (<Link href="/signup" className="text-md text-white font-bold border px-4 py-2 rounded-lg mr-2" style={{ backgroundColor: '#247F9E' }} >SignUp</Link>)
                         }
                         <div>
-                            <img width="25" height="25" onClick={showMenu} src="https://img.icons8.com/ios-filled/50/menu--v1.png" alt="menu--v1" />
+                            <Image width="25" height="25" onClick={showMenu} src="https://img.icons8.com/ios-filled/50/menu--v1.png" alt="menu--v1" />
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,8 @@ interface conversationProps{
 }
 
 interface user{
-    name:string
+    _id ?:string
+    name ?:string
 }
 
 const Conversations = ({conversation,restaurantId,selectChat}:conversationProps) => {
@@ -30,10 +31,10 @@ const Conversations = ({conversation,restaurantId,selectChat}:conversationProps)
             setUser(user)
         }
         fetchData()
-    },[])
+    },[conversation.members,restaurantId])
 
     return (
-            <div className='flex flex-col md:flex-row -gap-2 w-fit md:w-full items-center md:gap-2 p-2 text-white cursor-pointer hover:bg-slate-500 rounded-md' onClick={()=>selectChat(conversation,user?.name,user?._id)}>
+            <div className='flex flex-col md:flex-row -gap-2 w-fit md:w-full items-center md:gap-2 p-2 text-white cursor-pointer hover:bg-slate-500 rounded-md' onClick={()=>selectChat(conversation,user?.name ?? '',user?._id ?? '')}>
                 <div className='w-10 h-10  rounded-full overflow-hidden'>
                     <Image src={profile} alt='profile' />
                 </div>

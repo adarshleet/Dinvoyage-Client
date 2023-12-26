@@ -3,10 +3,23 @@ import { adminDashboard } from '@/apis/admin'
 import React, { useEffect, useState } from 'react'
 import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 
+
+interface Graph{
+    month:string,
+    totalCompletedBookings:number
+    restaurantCount:number
+}
+
+interface Counts{
+    totalUsers:number
+    totalVendors:number
+    totalRestaurants:number
+}
+
 const AdminDashboard = () => {
 
     const [graph, setGraph] = useState([])
-    const [counts,setCounts] = useState({})
+    const [counts,setCounts] = useState<Counts>()
 
     useEffect(() => {
         try {
@@ -86,7 +99,7 @@ const AdminDashboard = () => {
         }
     ]
 
-    graph.forEach(item => {
+    graph.forEach((item:Graph) => {
         if (item.month) {
             const monthIndex = parseInt(item.month, 10)-1; // Adjust month index since arrays are zero-based
             if (!isNaN(monthIndex) && data[monthIndex]) {
@@ -111,14 +124,14 @@ const AdminDashboard = () => {
                         <h1 className=' font-bold text-base'>Total Vendors</h1>
                         {/* <TbCalendarCancel className="text-2xl text-red-500" /> */}
                     </div>
-                    <h1 className='font-bold text-xl'>{counts.totalVendors}</h1>
+                    <h1 className='font-bold text-xl'>{counts?.totalVendors}</h1>
                 </div>
                 <div className='p-3 shadow-md bg-white text-emerald-400 border hover:shadow-lg w-full flex items-center gap-2 flex-col'>
                     <div className='flex items-center gap-2'>
                         <h1 className=' font-bold'>Total Restaurants</h1>
                         {/* <HiReceiptRefund className="text-emerald-400 text-2xl" /> */}
                     </div>
-                    <h1 className='font-bold text-xl'>{counts.totalRestaurants}</h1>
+                    <h1 className='font-bold text-xl'>{counts?.totalRestaurants}</h1>
                 </div>
             </div>
             <div className='my-10 py-8 bg-white'>

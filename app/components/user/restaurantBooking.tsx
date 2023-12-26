@@ -40,7 +40,7 @@ const RestaurantBooking = ({openingTime,closingTime,restaurantId}:bookingProps) 
    
 
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
     
         // Update the state based on the input field name
@@ -75,11 +75,11 @@ const RestaurantBooking = ({openingTime,closingTime,restaurantId}:bookingProps) 
                 restaurantId,
                 ...guestDetails,
                 guestCount,
-                date : selected,
+                date : selected.toISOString(),
                 time : timeSelect,
                 table
-
             }
+            console.log(guestData)
             const res = await tableCounts(guestData)
             const data = res?.data.seatCounts.data
             if(data[table] == 0){
@@ -234,8 +234,10 @@ const RestaurantBooking = ({openingTime,closingTime,restaurantId}:bookingProps) 
                         components={{ Row: CurrentWeekRow }}
                         showOutsideDays
                         mode="single"
-                        selected={selected}
-                        onSelect={setSelected}
+                        // selected={selected}
+                        // onSelect={setSelected}
+                        selected={selected as Date} // Explicitly cast to Date
+                        onSelect={(date) => setSelected(date as Date)}
                         disabled={(date) => isBefore(date, today) || isAfter(date, endOfNext14Days)}
                     />
                 </div>

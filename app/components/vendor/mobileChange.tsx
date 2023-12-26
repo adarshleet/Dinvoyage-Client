@@ -1,12 +1,19 @@
 'use client'
 import { changeMobile, verifyMobile } from '@/apis/vendor'
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
+
+
+interface Vendor {
+    name : string;
+    email?: string;
+    mobile: string
+}
 
 interface passwordProps{
     toaster : (message:string)=>void
     setMobileModal : (change:boolean)=>void
     vendor : object
-    setVendor : (vendor:object)=>void
+    setVendor : Dispatch<SetStateAction<Vendor>>;
 }
 
 const MobileChange = ({toaster,setMobileModal,vendor,setVendor}:passwordProps) => {
@@ -42,7 +49,8 @@ const MobileChange = ({toaster,setMobileModal,vendor,setVendor}:passwordProps) =
             const status = res?.data.data
             if(status){
                 setMobileModal(false)
-                setVendor({...vendor,mobile:mobile})
+                // setVendor({...vendor,mobile:mobile})
+                setVendor((prevVendor) => ({ ...prevVendor, mobile: String(mobile), name: prevVendor.name || '' }));
                 toaster('Mobile number changed successfully')
             }
             else{

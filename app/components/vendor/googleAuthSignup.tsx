@@ -11,7 +11,6 @@ const GoogleAuthSignup = () => {
 
     const gSignup = async (res: CredentialResponse) => {
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const result: any = jwtDecode(res.credential as string);
         // console.log(result)
         const data = {

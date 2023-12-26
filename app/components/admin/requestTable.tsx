@@ -3,6 +3,16 @@ import { restaurantRequests } from '@/apis/admin'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
+interface Request {
+    _id: string;
+    vendorId: {
+      name: string;
+    };
+    restaurantName: string;
+    locality: string;
+    status: number;
+  }
+
 const RequestTable = () => {
 
     let [requests,setRequests] = useState([])
@@ -60,8 +70,8 @@ const RequestTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {requests.map((request)=>(
-                    <tr className="bg-white border-b">
+                    {requests.map((request:Request,index)=>(
+                    <tr className="bg-white border-b" key={index}>
                         <td
                             scope="row"
                             className="px-6 py-4 text-base text-gray-900 whitespace-nowrap "

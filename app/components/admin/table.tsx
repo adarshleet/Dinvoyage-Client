@@ -54,7 +54,7 @@ const Table = ({ user }: tableProps) => {
             }
         }
         fetchData(currentPage)
-    }, [currentPage])
+    }, [currentPage,user])
 
 
     const blockButton = (id:string)=>{

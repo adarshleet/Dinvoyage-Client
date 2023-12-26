@@ -21,7 +21,7 @@ const usePage = () => {
     if(adminInfo){
         router.push('/admin/dashboard')
     }
-    },[])
+    },[router])
 
     const [error, setError] = useState('')
     const [formData, setFormData] = useState({

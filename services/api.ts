@@ -1,5 +1,5 @@
 import axios from "axios";
 
-const Api = axios.create({baseURL:'http://localhost:5000',withCredentials:true});
+const Api = axios.create({baseURL:'https://dinevoyage.online',withCredentials:true});
 
 export default Api;

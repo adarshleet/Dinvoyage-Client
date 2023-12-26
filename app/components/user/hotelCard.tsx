@@ -1,8 +1,10 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
 interface restaurantProps{
     restaurant: {
+        _id:string
         banners : Array<string>
         restaurantName ?: string
         landmark  : string
@@ -16,7 +18,7 @@ const HotelCard = ({restaurant}:restaurantProps) => {
         <Link href={`/restaurant/${restaurant._id}`} className="block m-2">
             <div className="max-w-sm md:max-w-xs  bg-white border border-gray-200 rounded-lg shadow-md shadow-gray overflow-hidden">
                 <div className='overflow-hidden flex justify-center items-center' style={{maxHeight:'11rem'}}>
-                    <img className="rounded-t-lg" src={restaurant?.banners[0]} alt="" />
+                    <Image height={179} width={318} className="rounded-t-lg" src={restaurant?.banners[0]} alt="" />
                 </div>
                 <div className="p-3">
                     <h5 className="text-base font-bold tracking-tight text-gray-900">{restaurant?.restaurantName}</h5>

@@ -1,17 +1,18 @@
 'use client'
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { FaWindowClose } from "react-icons/fa";
 
+interface Coupon{
+    couponName:string,
+    maximumDiscount : string,
+    minimumPurchase : string,
+    expiryDate : string
+}
 
 interface CouponProps{
     closeModal : ()=>void
-    coupon :{
-        couponName:'',
-        maximumDiscount : '',
-        minimumPurchase : '',
-        expiryDate : ''
-    }
-    setCoupon : (coupon:object)=>void,
+    coupon : Coupon
+    setCoupon : Dispatch<SetStateAction<Coupon>>,
     handleAddCoupon : ()=>void
     edit:boolean
 }

@@ -16,6 +16,12 @@ interface conversation{
     members: string[]
 }
 
+interface message{
+    sender:string
+    text : string
+    createdAt : number
+}
+
 const Messages = () => {
 
 
@@ -24,7 +30,7 @@ const Messages = () => {
     const [page, setPage] = useState(0)
 
     const [conversations, setConversations] = useState([])
-    const [messages,setMessages] = useState([])
+    const [messages,setMessages] = useState<message[]>([])
     const [selectedChat,setSelectedChat] = useState<string | null>(null)
     const [message,setMessage] = useState('')
     const [conversationId,setConversationId] = useState('')
@@ -33,8 +39,9 @@ const Messages = () => {
     const [user,setUser] = useState<string | null>(null)
     const scrollRef = useRef<HTMLDivElement | null>(null)
     const socket = useRef<Socket | undefined>();
-    const [arrivalMessage,setArrivalMessage] = useState(null)
-    const [conversation,setConversation] = useState({})
+    const [arrivalMessage,setArrivalMessage] = useState<message | null>(null)
+    const [conversation,setConversation] = useState<conversation>()
+
 
 
 
@@ -49,7 +56,7 @@ const Messages = () => {
                 createdAt : Date.now()
             })
         })
-    },[])
+    },[arrivalMessage])
 
 
     useEffect(()=>{
@@ -82,7 +89,7 @@ const Messages = () => {
         } catch (error) {
             console.log(error)
         }
-    }, [])
+    }, [page])
 
 
 
@@ -120,7 +127,7 @@ const Messages = () => {
     }
 
 
-    const selectChat = async(conversation:object,name:string,userId:string)=>{
+    const selectChat = async(conversation:any,name:string,userId:string)=>{
         try {
             const res = await getMessages(conversation._id)
             const messages = res?.data.data
@@ -135,7 +142,7 @@ const Messages = () => {
         }
     }
 
-    const handleSendMessage = async(e)=>{
+    const handleSendMessage = async(e:React.FormEvent)=>{
         try {
             e.preventDefault()
             const res = await newMessage(message,conversationId,restaurantId)

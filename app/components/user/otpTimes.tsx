@@ -4,7 +4,7 @@ interface OtpProps {
     onTimeOut: () => void,
 }
 
-const OtpTimer: React.FC<OtpProps> = ({ onTimeout }) => {
+const OtpTimer: React.FC<OtpProps> = ({ onTimeOut }) => {
     const [timeLeft, setTimeLeft] = useState(60);
 
     useEffect(() => {
@@ -12,19 +12,19 @@ const OtpTimer: React.FC<OtpProps> = ({ onTimeout }) => {
             setTimeLeft((prevTime) => {
                 if (prevTime === 1) {
                     clearInterval(timer);
-                    onTimeout();
+                    onTimeOut();
                 }
                 return prevTime - 1;
             });
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [onTimeout]);
+    }, [onTimeOut]);
 
     return (
         <div className="text-left text-sm mt-2">
             {timeLeft === 0 ? (
-                <button className="text-blue-500" onClick={onTimeout}>
+                <button className="text-blue-500" onClick={onTimeOut}>
                     Resend OTP
                 </button>
             ) : (

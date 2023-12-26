@@ -5,6 +5,7 @@ import { IoIosSend } from "react-icons/io";
 import { getConversation, getConversations, getMessages, newMessage, singleRestaurant } from '@/apis/user';
 import { format, render, cancel, register } from 'timeago.js';
 import {io,Socket} from "socket.io-client"
+import Image from 'next/image';
 
 
 
@@ -20,6 +21,7 @@ interface Message{
 }
 
 interface Restaurant{
+    _id:string
     restaurantName:string,
     landmark:string,
     banners: string,
@@ -31,15 +33,21 @@ interface Restaurant{
 //     text:string,
 //     createdAt : Date
 // }
+interface MessageType {
+    sender: string;
+    text: string;
+    createdAt: number;
+    conversationId: string;
+}
 
 const Chat = ({conversationId}:chatProps) => {
 
-    const [messages,setMessages] = useState<Array<Message>>([])
+    const [messages,setMessages] = useState<Message[]>([])
     const [user,setUser] = useState('')
     const [message,setMessage] = useState('')
     const [restaurant,setRestaurant] = useState<Restaurant | null>(null)
     const scrollRef = useRef<HTMLDivElement | null>(null)
-    const [arrivalMessage,setArrivalMessage] = useState(null)
+    const [arrivalMessage,setArrivalMessage] = useState<MessageType | null>(null)
 
 
     const socket = useRef<Socket | undefined>();
@@ -52,13 +60,13 @@ const Chat = ({conversationId}:chatProps) => {
                 sender : data.senderId,
                 text : data.text,
                 createdAt : Date.now()
-            })
+            } as MessageType)
         })
     },[])
 
     useEffect(()=>{
         arrivalMessage &&
-            setMessages(prev=>[...prev,arrivalMessage])
+            setMessages(prev=>[...prev,arrivalMessage] as Message[])
     },[arrivalMessage])
     
     useEffect(()=>{
@@ -95,11 +103,11 @@ const Chat = ({conversationId}:chatProps) => {
         } catch (error) {
             console.log(error)
         }
-    },[])
+    },[conversationId])
 
     
 
-    const messageSendHandle = async(e)=>{
+    const messageSendHandle = async(e :React.FormEvent<HTMLFormElement>)=>{
         try {
             e.preventDefault()
             const res = await newMessage(message,conversationId,user)
@@ -131,7 +139,8 @@ const Chat = ({conversationId}:chatProps) => {
         <div className='px-3 py-3 ml-3 border w-full'>
             <div className='flex items-center gap-3 p-2 bg-gray-300'>
                 <div className='w-12 h-12 overflow-hidden rounded-full'>
-                    <img className='w-full h-full object-cover' src={restaurant?.banners} alt="" />
+                    {/* <Image className='w-full h-full object-cover' src={restaurant?.banners} alt="" /> */}
+                    <Image width={48} height={48} className='w-full h-full object-cover' src={restaurant?.banners[0] || ''} alt="" />
                 </div>
                 <div>
                     <h1 className='font-semibold -mb-0.5'>{restaurant?.restaurantName}</h1>
@@ -149,7 +158,7 @@ const Chat = ({conversationId}:chatProps) => {
                     </div>
                 ))}
             </div>
-            <form className='w-full flex mt-1' onSubmit={messageSendHandle}>
+            <form className='w-full flex mt-1' onSubmit={(e: React.FormEvent<HTMLFormElement>) => messageSendHandle(e)}>
                 <input type="text" className='outline-none border border-gray-500 py-2 px-3 w-full rounded-sm' value={message} onChange={(e)=>setMessage(e.target.value)}/>
                 {(message.trim().length != 0 && message[0]!=' ') &&<button className='flex text-white font-bold items-center p-2 bg-gray-500 rounded-sm' type='submit'>Send <IoIosSend className="text-lg"/></button>}
             </form>

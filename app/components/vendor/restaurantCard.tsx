@@ -6,6 +6,7 @@ import { GrMapLocation } from 'react-icons/gr'
 import {BsFillArrowLeftSquareFill,BsFillArrowRightSquareFill} from 'react-icons/bs'
 import CardRestaurant from '../loadingPages/cardRestaurant'
 import { FaEdit } from "react-icons/fa";
+import Image from 'next/image'
 
 const RestaurantCard = () => {
     const [restaurant, setRestaurant] = useState<any>({})
@@ -28,7 +29,7 @@ const RestaurantCard = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [page]);
 
 
     const pagePlus = ()=>{
@@ -88,7 +89,7 @@ const RestaurantCard = () => {
             <div className='p-5 bg-white shadow-sm'>
                 <div className="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row">
                     <div style={{maxWidth:'47rem',maxHeight:'26rem'}} className='overflow-hidden flex justify-center items-center'>
-                        <img src={restaurant.banners ? restaurant.banners[0] : ''} alt='' />
+                        <Image src={restaurant.banners ? restaurant.banners[0] : ''} alt='' />
                     </div>
                     <div className="flex flex-col justify-start h-full p-4 leading-normal w-full md:w-1/2">
                         <h5 className="text-2xl font-bold tracking-tight text-gray-900 ">{restaurant.restaurantName}</h5>
