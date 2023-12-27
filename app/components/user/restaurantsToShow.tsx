@@ -7,6 +7,7 @@ import RestaurantsLoading from '../loadingPages/restaurantsLoading'
 
 interface Restaurant {
     _id: string;
+    restaurantName : string
     banners: string[];
     landmark: string;
     locality: string;

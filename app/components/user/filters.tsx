@@ -9,7 +9,7 @@ interface Restaurant {
     banners: string[];
     landmark: string;
     locality: string;
-    // Add other properties as needed
+    restaurantName:string
     minCost:number
   }
 
