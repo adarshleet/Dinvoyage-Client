@@ -47,7 +47,8 @@ const Messages = () => {
 
 
     useEffect(()=>{
-        socket.current = io("ws://localhost:5000")
+        // socket.current = io("ws://localhost:3000")
+        socket.current = io("wss://dinevoyage.online")
         console.log(arrivalMessage)
         socket.current.on('getMessage',data=>{
             setArrivalMessage({
