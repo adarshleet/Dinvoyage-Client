@@ -168,7 +168,7 @@ const Usepage = () => {
             <main className='pt-24 pb-7 px-2 md:px-6 flex justify-center w-screen h-screen'>
                 <ReactMapGL
                     ref={mapRef}
-                    mapboxAccessToken='pk.eyJ1IjoibWFzaGhvb3IzMjUiLCJhIjoiY2xwaWVlZTluMGV0bTJpcncyaTRncGprYyJ9.Y2I8DwcQtpZOnvfKjvzVlA'
+                    mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API}
                     initialViewState={
                         viewport
                     }
