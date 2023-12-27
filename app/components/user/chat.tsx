@@ -54,7 +54,8 @@ const Chat = ({conversationId}:chatProps) => {
 
 
     useEffect(()=>{
-        socket.current = io("ws://localhost:5000")
+        // socket.current = io("ws://localhost:3000")
+        socket.current = io("wss://dinevoyage.online")
         socket.current.on('getMessage',data=>{
             setArrivalMessage({
                 sender : data.senderId,
