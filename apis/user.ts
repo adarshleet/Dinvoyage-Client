@@ -266,6 +266,17 @@ export const filterRestaurants = async(cuisines:string[],facilities:string[])=>{
 }
 
 
+//popular restaurants
+export const popularRestaurants =  async()=>{
+    try {
+        const res = await Api.get(userRoutes.popularRestaurants)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 //user coupon 
 export const couponsToShow = async()=>{

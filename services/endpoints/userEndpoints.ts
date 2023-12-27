@@ -108,7 +108,11 @@ const userRoutes={
 
 
     //restaurants for showing in map
-    restaurantsForMap : '/api/user/restaurantsForMap'
+    restaurantsForMap : '/api/user/restaurantsForMap',
+
+
+    //newest restaurants
+    popularRestaurants : '/api/user/popularRestaurants'
 
 }
 

@@ -170,13 +170,23 @@ const Usepage = ({ params }: restaurantProps) => {
     //payment working
     const makePayment = async () => {
         try {
-
             const walletAmountUsed = (walletApplied ? Wallet : 0)
+            let totalAmount = 0
+
+            if(!appliedCoupon && walletAmountUsed == 0){
+                totalAmount = subTotal+100
+            }
+            else{
+                totalAmount = subTotalLast
+            }
+
+            console.log(subTotalLast,subTotal)
+
 
             const bookingDetails:any = {
                 ...guestDetails,
                 items: selectedItems,
-                totalAmount: subTotalLast,
+                totalAmount,
                 appliedCoupon,
                 walletAmountUsed
             }

@@ -158,10 +158,11 @@ const KitchenTable = () => {
     const openEditModal = (index: number) => {
         setEdit(true)
         const item = items[index]
+        console.log(item)
         setEditId(item._id)
         setItemData({
             itemName: item.itemName,
-            category: item.category._id,
+            category: item.category[0]._id,
             price: item.price,
             veg: item.veg,
             description: item.description,
@@ -196,19 +197,27 @@ const KitchenTable = () => {
     const handleKitchenFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        console.log("heeerere",itemData.category)
+
         if (itemData.itemName.trim().length < 4) {
             return toast.error('Please enter a valid item name')
         }
-        // else if(parseInt(itemData.price.trim()) < 5 || itemData.price.trim().length == 0){
-        //     return toast.error('Please enter correct item price')
-        // }
-        else if (itemData.category.category.trim().length == 0) {
+
+        else if(parseInt(itemData.price) <= 0){
+            return toast.error('Please enter correct item price')
+        }
+
+        else if (!itemData.category) {
             return toast.error('Please select a category')
         }
 
+
+
+
+
         const formData = new FormData();
         formData.append('itemName', itemData.itemName);
-        formData.append('category', itemData.category.category);
+        formData.append('category', itemData.category as any);
         formData.append('price', itemData.price);
         formData.append('veg', itemData.veg.toString());
         formData.append('description', itemData.description);
@@ -221,6 +230,7 @@ const KitchenTable = () => {
 
         if (edit) {
             res = await editItem(editId, formData)
+            console.log(res)
             const editStatus = res?.data.data
 
             if (editStatus) {
@@ -229,7 +239,7 @@ const KitchenTable = () => {
                 if (foundCategory) {
                     categoryName = foundCategory.category;
                 }
-                itemData.category = { _id: foundCategory._id, category: categoryName }
+                itemData.category = [{ _id: foundCategory._id, category: categoryName }] as any
 
                 const updatedItems = items.map((item:any) => {
                     if (item._id === editId) {

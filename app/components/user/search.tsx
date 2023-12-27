@@ -33,7 +33,7 @@ const Search = () => {
 
     return (
         <div>
-            <div className="flex justify-center pt-16 px-4 items-center container mx-auto">
+            <div className="flex justify-center pt-32 items-center container mx-auto">
                 <div style={{ width: '50rem' }}>
                     <div>
                         <h1 className="text-xl md:text-3xl font-bold py-2 text-center" style={{ color: '#94A911' }}>Indulge your cravings with peace of mind! </h1>
@@ -50,13 +50,13 @@ const Search = () => {
                     </div>
                 </div>
             </div>
-            <div className='flex justify-center pb-16 px-4 items-center '>
+            <div className='flex justify-center pb-32 px-4 items-center '>
                 {restaurants?.length != 0 && <div className='bg-white sticky overflow-y-scroll' style={{ maxHeight: '15rem' }}>
                     {restaurants?.map((restaurant, index) => (
                         <Link href={`/restaurant/${restaurant._id}`} key={index}>
                             <div className='flex py-4 px-10 gap-2 hover:bg-gray-200' key={index}>
                                 <div className='overflow-hidden' style={{ width: '5rem' }}>
-                                    <Image width={80} height={45} src={restaurant.banners} alt="" />
+                                    <Image width={80} height={45} src={restaurant.banners[0]} alt="" />
                                 </div>
                                 <div className='text-gray-500 '>
                                     <p className=''>{restaurant.restaurantName}</p>
@@ -65,7 +65,6 @@ const Search = () => {
                             </div>
                         </Link>
                     ))}
-
                 </div>}
             </div>
         </div>

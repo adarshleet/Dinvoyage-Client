@@ -6,7 +6,7 @@ interface restaurantProps{
     restaurant: {
         _id:string
         banners : Array<string>
-        restaurantName ?: string
+        restaurantName : string
         landmark  : string
         locality : string,
         minCost : number

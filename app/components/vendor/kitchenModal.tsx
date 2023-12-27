@@ -33,6 +33,8 @@ const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,handleInput
     //     },[])
     // }
 
+    console.log(itemData)
+
     return (
         <>
             <div
@@ -160,7 +162,7 @@ const KitchenModal = ({itemModal,setKitchenModal,categories,itemData,handleInput
                                         <input type="file" name='image' id='itemImage' className='hidden' onChange={(e) => handleFileChange(e)}/>
                                     </div>
                                     {itemData.image && <div className='w-32 m-2 h-24 overflow-hidden'>
-                                        <Image src={itemData.image} alt="item image" className='w-full h-full object-cover'/>
+                                        <Image width={128} height={96} src={itemData.image} alt="item image" className='w-full h-full object-cover'/>
                                     </div>}
                                 </div>
                             </div>

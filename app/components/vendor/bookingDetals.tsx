@@ -6,6 +6,7 @@ import { allBookingDetails, bookingCancellation } from '@/apis/vendor';
 import BookingCancelModal from './bookingCancelModal';
 import toast, { Toaster } from 'react-hot-toast';
 import Image from 'next/image';
+import noBooking from '../../../public/no-booking.png'
 
 interface booking{
     _id: string;
@@ -298,7 +299,7 @@ const BookingDetals = () => {
                 ) :
                     <div className='flex flex-col w-full items-center justify-center'>
                         <div className='items-center w-52'>
-                            <Image src="https://png.pngtree.com/png-vector/20221013/ourmid/pngtree-calendar-icon-logo-2023-date-time-png-image_6310337.png" alt="" />
+                            <Image width={250} height={250} src={noBooking} alt="" />
                             <h1 className='text-center text-xl font-bold'>No Bookings Found</h1>
                         </div>
                     </div>
