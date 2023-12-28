@@ -272,3 +272,24 @@ export const allCoupons = async(page:number)=>{
     }
 }
 
+
+//edit coupon
+export const couponEdit = async(coupon:coupon)=>{
+    try {
+        const res = Api.put(adminRoutes.editCoupon,coupon)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const couponStatusChange = async(couponId:string)=>{
+    try {
+        const res = await Api.put(`${adminRoutes.couponStatusChange}?couponId=${couponId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+

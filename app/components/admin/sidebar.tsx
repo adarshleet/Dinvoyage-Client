@@ -119,7 +119,7 @@ const Sidebar = ({page}:Page) => {
                             </Link>
                         </li>
 
-                        <li  className={page=='locations' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
+                        {/* <li  className={page=='locations' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
                                 href="/admin/locations"
                                 className="flex items-center justify-center p-3 rounded-lg group"
@@ -127,7 +127,7 @@ const Sidebar = ({page}:Page) => {
                                 <FaLocationDot className="text-2xl" />
                                 <span className="flex-1 ml-3 whitespace-nowrap">Locations</span>
                             </Link>
-                        </li>
+                        </li> */}
 
                         <li className={page=='coupons' ? 'bg-gray-500 font-bold text-white rounded-lg' : 'text-gray-900 hover:bg-gray-100'}>
                             <Link
@@ -135,7 +135,7 @@ const Sidebar = ({page}:Page) => {
                                 className="flex items-center p-3 rounded-lg group"
                             >
                                 <BiSolidOffer className="text-2xl"/>
-                                <span className="flex-1 ml-3 whitespace-nowrap">Offers</span>
+                                <span className="flex-1 ml-3 whitespace-nowrap">Coupons</span>
                             </Link>
                         </li>
                         

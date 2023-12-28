@@ -52,7 +52,11 @@ const adminRoutes = {
     //coupon
     addCoupon : '/api/admin/addCoupon',
 
-    allCoupons : '/api/admin/allCoupons'
+    allCoupons : '/api/admin/allCoupons',
+
+    editCoupon : '/api/admin/editCoupon',
+
+    couponStatusChange : '/api/admin/couponStatusChange'
 }
 
 export default adminRoutes
