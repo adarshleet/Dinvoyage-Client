@@ -99,7 +99,7 @@ const Usepage = ({ params }: restaurantProps) => {
             const response = await kitchenItems(id, veg)
             const items = response?.data.kitchenAllItems.data
             setAllItems(items)
-            const guestDetails = response?.data?.sessionData?.bookingDetails
+            const guestDetails = response?.data?.sessionData
             console.log('check',response)
             if (guestDetails.items) {
                 setSelectedItems(guestDetails.items)
