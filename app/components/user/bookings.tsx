@@ -194,6 +194,15 @@ const Bookings = () => {
         }
     }
 
+    if(bookings.length == 0){
+        return  (
+        <div className='p-6 w-full text-center'>
+            <p className='text-lg font-bold text-gray-600 '>No booking found</p>
+            <p className='text-sm text-gray-700 mb-2'>Looks like there is no booking to update. Why not make a booking and enjoy a delightful meal and a scenic drive?</p>
+            <Link className='px-2 py-1 text-sm bg-slate-600 text-white font-bold' href={'/restaurants'}>View Restaurants</Link>
+        </div>
+        )
+    }
 
     return (
         <>

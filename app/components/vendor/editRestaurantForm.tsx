@@ -416,7 +416,7 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
                                 <input type="file" accept="image/*" id={`bannerFileInput${index}`} onChange={(e) => handleFileChange(e, index)} name='image' className='hidden' />
                                 {formData.banners[index] && (
                                     <>
-                                        <Image src={formData.banners[index]} alt={`Banner ${index + 1}`} className='' />
+                                        <Image width={182} height={121} src={formData.banners[index]} alt={`Banner ${index + 1}`} className='' />
                                        {(existingImages.includes(formData.banners[index] as never) && existingImages.length != 1) && <h1 className='px-3 py-2 mt-1 text-center bg-red-700 text-white font-bold text-sm cursor-pointer' onClick={()=>deleteImage(formData.banners[index] as never)}>Delete</h1>}
                                     </>
                                 )}
