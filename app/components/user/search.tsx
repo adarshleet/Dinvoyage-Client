@@ -55,7 +55,7 @@ const Search = () => {
                     {restaurants?.map((restaurant, index) => (
                         <Link href={`/restaurant/${restaurant._id}`} key={index}>
                             <div className='flex py-4 px-10 gap-2 hover:bg-gray-200' key={index}>
-                                <div className='overflow-hidden' style={{ width: '5rem' }}>
+                                <div className='overflow-hidden' style={{ width: '5rem', maxHeight:'3rem' }}>
                                     <Image width={80} height={45} src={restaurant.banners[0]} alt="" />
                                 </div>
                                 <div className='text-gray-500 '>

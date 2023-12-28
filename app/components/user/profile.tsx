@@ -95,7 +95,7 @@ const Profile = () => {
     return (
         <>
         <div className='md:px-6 w-full'>
-            <div className='border p-4'>
+            <div className='md:border md:p-4'>
                 <h4 className='font-bold text-lg mb-3'>Edit Profile</h4>
                 <div className='pt-3 pb-5 border-b'>
                     <h1 className='font-bold mb-0.5'>Name</h1>

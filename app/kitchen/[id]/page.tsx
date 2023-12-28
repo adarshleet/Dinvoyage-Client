@@ -195,6 +195,7 @@ const Usepage = ({ params }: restaurantProps) => {
             const stripe = await loadStripe('pk_test_51OEOTHSFAVCVwY62lVqaB5GwF666YpNTLBjIF8KibE3yclRVMS2yiPxXYg4nit60L2bhvrXqY1DREUdI3EvYsVvY00WM1EwgTk');
             const res = await payment(bookingDetails)
             const sessionId = res?.data.data
+            console.log(sessionId)
 
             const result = stripe?.redirectToCheckout({
                 sessionId: sessionId

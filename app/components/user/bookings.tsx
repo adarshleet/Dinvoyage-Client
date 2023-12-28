@@ -71,7 +71,7 @@ const Bookings = () => {
     const bookingsArray = transformedResult?.flatMap((item) => item.bookings);
 
     // const sortedBookingsArray = bookingsArray.sort((b, a) => new Date(a.date) - new Date(b.date));
-    const sortedBookingsArray = bookingsArray?.sort((a: BookingDetails, b: BookingDetails) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const sortedBookingsArray = bookingsArray?.sort((a: BookingDetails, b: BookingDetails) => new Date(b.date).getTime() - new Date(a.date).getTime());
     
 
     
@@ -205,13 +205,13 @@ const Bookings = () => {
                         <div className='flex justify-between border-b pb-4'>
                             <div className='flex flex-col md:flex-row'>
                                 <Link href={`/restaurant/${booking?.restaurant?._id}`} className='w-36 overflow-hidden'>
-                                    <Image width={144} height={84} src={booking.restaurant?.banners[0]} alt="" />
+                                    <Image width={144} height={84} src={booking.restaurant?.banners[0]} alt="" style={{maxHeight:'5rem'}}/>
                                 </Link>
                                 <div className='md:px-2'>
                                     <h5 className='font-bold'>{booking?.restaurant?.restaurantName}</h5>
-                                    <h5 className='text-sm'>{booking.restaurant.locality}</h5>
+                                    <h5 className='text-sm'>{booking.restaurant?.locality}</h5>
 
-                                    {(calculateRemainingHours(booking.date, booking.time) && booking.orderStatus == 1) &&
+                                    {(calculateRemainingHours(booking?.date, booking?.time) && booking.orderStatus == 1) &&
                                        <div className='flex gap-1'>
                                             <button className='py-1 px-2 bg-red-700 text-white font-bold text-sm mt-1' onClick={()=>openModal(booking._id)}>Cancel</button>
                                             <button className='py-1 px-2 bg-gray-500 font-bold text-sm flex gap-1 items-center mt-1 text-white' onClick={()=>chatWithVendor(booking.restaurant._id)}>Message <IoChatboxEllipses/></button>

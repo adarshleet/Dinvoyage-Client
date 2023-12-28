@@ -39,9 +39,9 @@ const RestaurantCard = ({ restaurant, booking }: restaurantProps) => {
 
     return (
         <div className="flex flex-col items-center bg-white border border-gray-200 shadow md:flex-row md:max-w-4xl">
-            <div style={{ maxWidth: '40rem', maxHeight: '22.5rem', minHeight:'22.5rem', minWidth:'40rem' }} className='overflow-hidden flex justify-center items-center'>
+            <div style={{ maxWidth: '40rem', maxHeight: '22.5rem' }}  className='overflow-hidden flex justify-center items-center md:min-h-64'>
                 {restaurant?.banners && restaurant.banners.length > 0 ? (
-                    <Image width={700} height={400} className="" src={restaurant?.banners[0]} alt="" objectFit="cover" />
+                    <Image width={700} height={400} className="" src={restaurant?.banners[0]} alt=""/>
                 ) :
                     <div className='w-full h-full overflow-hidden'>
                         <Skeleton className='w-60' />
