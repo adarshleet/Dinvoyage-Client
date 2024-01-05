@@ -25,7 +25,7 @@ const Wallet = ({walletModal,closeWalletModal,applyWallet}:walletProps) => {
         } catch (error) {
             console.log(error)
         }
-    })
+    },[])
 
     return (
         <>

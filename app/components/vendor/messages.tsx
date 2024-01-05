@@ -145,26 +145,29 @@ const Messages = () => {
 
     const handleSendMessage = async(e:React.FormEvent)=>{
         try {
-            e.preventDefault()
-            const res = await newMessage(message,conversationId,restaurantId)
-            const messageToAdd={
-                text:message,
-                conversationId,
-                sender:restaurantId
-            }
+            console.log('here')
+            if(message.trim().length != 0 && message[0]!=' '){
+                e.preventDefault()
+                const res = await newMessage(message,conversationId,restaurantId)
+                const messageToAdd={
+                    text:message,
+                    conversationId,
+                    sender:restaurantId
+                }
 
-            socket.current?.emit("sendMessage",{
-                senderId:restaurantId,
-                recieverId : user,
-                text : message
-            })
+                socket.current?.emit("sendMessage",{
+                    senderId:restaurantId,
+                    recieverId : user,
+                    text : message
+                })
 
-            if(res?.data.data){
-                setMessages([...messages,res.data.data])
+                if(res?.data.data){
+                    setMessages([...messages,res.data.data])
+                    setMessage('')
+                }
                 setMessage('')
             }
-            console.log(message)
-            setMessage('')
+
         } catch (error) {
             console.log(error)
         }

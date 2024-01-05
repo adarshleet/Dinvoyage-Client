@@ -16,7 +16,7 @@ const HomeBanners = () => {
             setBanners(banners)
         }
         fetchData()
-    })
+    },[])
 
     const settings = {
         dots: true,

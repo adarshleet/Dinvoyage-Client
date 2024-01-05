@@ -27,7 +27,7 @@ const GoogleAuthLogin = () => {
         const status = response?.data.data
         console.log(status)
         if(status.success){
-            dispatch(setUserLogin('userLoggedIn'))
+            dispatch(setUserLogin(status.userId))
             toast.success('Log in successfull')
             router.replace('/')
         }

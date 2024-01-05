@@ -18,7 +18,7 @@ const GoogleAuthLogIn = () => {
         if(vendorInfo){
             router.push('/vendor/dashboard')
         }
-    })
+    },[])
 
     const gLogin = async(res:CredentialResponse)=>{
         const result: any = jwtDecode(res.credential as string);

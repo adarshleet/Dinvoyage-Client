@@ -27,7 +27,7 @@ const WalletProfile = () => {
         } catch (error) {
             console.log(error)
         }
-    })
+    },[])
 
     const formatDate = (date:Date)=>{
         const dateObject = new Date(date);

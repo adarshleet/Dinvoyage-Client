@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Navbar from '../../components/user/navbar'
 import RestaurantCard from '../../components/user/restaurantCard'
 import { addReview, averageRating, editReview, findReview, singleRestaurant, userInBooking } from '@/apis/user'
@@ -51,6 +51,23 @@ const Usepage = ({ params }: restaurantProps) => {
     const [userFound, setUserFound] = useState(false)
 
     const [reviewFound,setReviewFound] = useState(false)
+
+
+    const aboutRef = useRef(null);
+    const reviewRef = useRef(null);
+    const helpRef = useRef(null);
+
+
+    const scrollToSection = (ref:any) => {
+        const offsetTop = ref.current.offsetTop;
+        const windowHeight = window.innerHeight;
+        const scrollPosition = offsetTop - windowHeight / 2 + ref.current.clientHeight / 2;
+    
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth',
+        });
+      };
 
     const handleClick = (newRating: number) => {
         setRating(newRating);
@@ -144,13 +161,13 @@ const Usepage = ({ params }: restaurantProps) => {
                         {/* <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
                             <h3 className='font-bold'>Menu</h3>
                         </div> */}
-                        <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
+                        <div onClick={() => scrollToSection(aboutRef)} className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6 cursor-pointer'>
                             <h3 className='font-bold'>About</h3>
                         </div>
-                        <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
+                        <div onClick={() => scrollToSection(reviewRef)} className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6 cursor-pointer'>
                             <h3 className='font-bold'>Reviews</h3>
                         </div>
-                        <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
+                        <div onClick={() => scrollToSection(helpRef)} className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6 cursor-pointer'>
                             <h3 className='font-bold'>Help</h3>
                         </div>
                     </div>
@@ -160,7 +177,7 @@ const Usepage = ({ params }: restaurantProps) => {
                             <img src="https://b.zmtcdn.com/data/menus/533/900533/56c75b3e0de767c159c3b97994b98be0.jpg" alt="" />
                         </div>
                     </div> */}
-                    <div className='bg-white shadow p-3 mb-6'>
+                    <div className='bg-white shadow p-3 mb-6' ref={aboutRef}>
                         <h3 className='font-bold mb-4'>About</h3>
                         <div>
                             <div className='flex items-start mb-6'>
@@ -169,7 +186,7 @@ const Usepage = ({ params }: restaurantProps) => {
                                 </div>
                                 <div>
                                     <h4 className='text-cyan-600 font-bold'>CUISINES</h4>
-                                    <div className='capitalize grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 pt-2'>
+                                    <div className='capitalize grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 pt-2'>
                                         {restaurant && restaurant?.cuisines?.map((cuisine: string,index) => (
                                             <p key={index}>{cuisine}</p>
                                         ))
@@ -205,7 +222,7 @@ const Usepage = ({ params }: restaurantProps) => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-white shadow p-3 mb-6'>
+                    <div className='bg-white shadow p-3 mb-6' ref={reviewRef}>
                         <h3 className='font-bold mb-3'>Ratings & Reviews</h3>
                         <div className='border border-1 px-3 py-10 flex text-center'>
                             <div className='w-1/2 flex flex-col items-center gap-1 justify-center'>
@@ -247,7 +264,7 @@ const Usepage = ({ params }: restaurantProps) => {
                             <AllReviews restaurantId={restaurant?._id} />
                         }
                     </div>
-                    <div className='bg-white shadow p-3 mb-6'>
+                    <div className='bg-white shadow p-3 mb-6' ref={helpRef}>
                         <h3 className='font-bold mb-1'>We are here to help</h3>
                         <Link href={`tel:${restaurant?.contactNumber}`} className="flex items-center gap-3">
                             <div className='p-2 rounded-full bg-cyan-600'>

@@ -81,7 +81,7 @@ const Chat = ({conversationId}:chatProps) => {
             const fetchData = async()=>{
 
                 const userInfo = JSON.parse(localStorage.getItem('userInfo') as string)
-
+                console.log("fdf",userInfo)
                 // socket adding. adding user
                 socket.current?.emit('addUser',userInfo)
 
@@ -89,8 +89,10 @@ const Chat = ({conversationId}:chatProps) => {
                 //getting restaurant details for showing the name
                 const response = await getConversation(conversationId)
                 const data = response?.data.data
+                console.log(data)
                 const restaurantId = data.members.find((m:string)=>m!==userInfo)
                 const restaurant = await singleRestaurant(restaurantId) 
+                console.log(restaurant,restaurantId)
                 setRestaurant(restaurant?.data.data)
 
                 //getting chats
@@ -111,21 +113,24 @@ const Chat = ({conversationId}:chatProps) => {
     const messageSendHandle = async(e :React.FormEvent<HTMLFormElement>)=>{
         try {
             e.preventDefault()
-            const res = await newMessage(message,conversationId,user)
+            console.log('gerer')
+
+            if(message.trim().length != 0 && message[0]!=' '){
+                const res = await newMessage(message,conversationId,user)
+                socket.current?.emit("sendMessage",{
+                    senderId:user,
+                    recieverId : restaurant?._id,
+                    text : message
+                })
 
 
-            socket.current?.emit("sendMessage",{
-                senderId:user,
-                recieverId : restaurant?._id,
-                text : message
-            })
-
-
-            if(res?.data.data){
-                console.log(res.data.data)
-                setMessages([...messages,res.data.data])
-                setMessage('')
+                if(res?.data.data){
+                    console.log(res.data.data)
+                    setMessages([...messages,res.data.data])
+                    setMessage('')
+                }
             }
+
         } catch (error) {
             console.log(error)
         }
