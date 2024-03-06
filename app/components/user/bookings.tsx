@@ -15,6 +15,7 @@ interface Booking {
     restaurantId: string; // or replace with the correct type for restaurant
     bookings: any;
     date: string;
+    restaurant : Array<Object>
   }
   
   interface BookingDetails {
@@ -50,7 +51,7 @@ const Bookings = () => {
         try {
             const fetchData = async () => {
                 const res = await userBookings()
-                console.log(res?.data.data)
+                console.log('here',res)
                 setBookings(res?.data.data)
             }
             fetchData()
@@ -61,10 +62,10 @@ const Bookings = () => {
 
     const transformedResult = bookings?.map((item) => ({
         ...item,
-        restaurant: item.restaurantId, // Rename 'restaurantId' to 'restaurant'
+        restaurant: item.restaurantId[0], // Rename 'restaurantId' to 'restaurant'
         bookings: item.bookings.map((booking:any) => ({
             ...booking,
-            restaurant: item.restaurantId, // Embed restaurant details in each booking
+            restaurant: item.restaurantId[0], // Embed restaurant details in each booking
         })),
     }));
 
@@ -119,7 +120,6 @@ const Bookings = () => {
         return (formattedDate);
     }
 
-    console.log(bookings)
 
 
     //cancellation modal
@@ -194,7 +194,10 @@ const Bookings = () => {
         }
     }
 
-    if(bookings.length == 0){
+    console.log("sorted",sortedBookingsArray)
+
+
+    if(bookings?.length == 0){
         return  (
         <div className='p-6 w-full text-center'>
             <p className='text-lg font-bold text-gray-600 '>No booking found</p>
@@ -213,7 +216,7 @@ const Bookings = () => {
                         <p className='font-normal text-sm mb-1'>ORD{booking._id}</p>
                         <div className='flex justify-between border-b pb-4'>
                             <div className='flex flex-col md:flex-row'>
-                                <Link href={`/restaurant/${booking?.restaurant?._id}`} className='w-36 overflow-hidden'>
+                                <Link href={`/restaurant/${booking?.restaurantId?._id}`} className='w-36 overflow-hidden'>
                                     <Image width={144} height={84} src={booking.restaurant?.banners[0]} alt="" style={{maxHeight:'5rem'}}/>
                                 </Link>
                                 <div className='md:px-2'>

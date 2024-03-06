@@ -1,5 +1,6 @@
 'use client'
 import { singleRestaurant } from '@/apis/user'
+import Footer from '@/app/components/user/Footer'
 import Navbar from '@/app/components/user/navbar'
 import RestaurantBooking from '@/app/components/user/restaurantBooking'
 import RestaurantCard from '@/app/components/user/restaurantCard'
@@ -41,6 +42,9 @@ const Usepage = ({ params }: restaurantProps) => {
                     <RestaurantBooking openingTime={restaurant?.openingTime} closingTime={restaurant?.closingTime} restaurantId={restaurant?._id}/>
                 </div>
             </main>
+            <footer>
+                <Footer/>
+            </footer>
         </>
     )
 }

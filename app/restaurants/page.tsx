@@ -3,6 +3,7 @@ import Navbar from '../components/user/navbar'
 import HotelCard from '../components/user/hotelCard'
 import RestaurantsToShow from '../components/user/restaurantsToShow'
 import Filters from '../components/user/filters'
+import Footer from '../components/user/Footer'
 
 function page() {
     return (
@@ -23,6 +24,9 @@ function page() {
                     </div> */}
                 {/* </div> */}
             </main>
+            <footer>
+                <Footer/>
+            </footer>
         </>
     )
 }

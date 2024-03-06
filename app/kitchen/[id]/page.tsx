@@ -14,6 +14,7 @@ import { IoWalletSharp } from "react-icons/io5"
 import Coupons from '@/app/components/user/coupons';
 import Wallet from '@/app/components/user/wallet';
 import Image from 'next/image';
+import Footer from '@/app/components/user/Footer';
 
 
 interface restaurantProps {
@@ -451,6 +452,9 @@ const Usepage = ({ params }: restaurantProps) => {
                     </div>
                 </div>
             </main>
+            <footer>
+                <Footer/>
+            </footer>
             {couponModal && <Coupons couponModal={couponModal} closeCouponModal={closeCouponModal} subTotal={subTotal} applyCoupon={applyCoupon} appliedCoupon={appliedCoupon} removeCoupon={removeCoupon}/>}
             {walletModal && <Wallet walletModal={walletModal} closeWalletModal={closeWalletModal} applyWallet={applyWallet}/>}
         </>

@@ -9,6 +9,7 @@ import AllReviews from '@/app/components/user/allReviews'
 import { FaChevronDown } from "react-icons/fa";
 import { IoCall } from "react-icons/io5";
 import Link from 'next/link'
+import Footer from '@/app/components/user/Footer'
 
 interface restaurantProps {
     params: {
@@ -279,6 +280,9 @@ const Usepage = ({ params }: restaurantProps) => {
                 </div>
                 
             </main>
+            <footer>
+                <Footer/>
+            </footer>
             <Reviews rating={rating} handleClick={handleClick} reviewModal={reviewModal} closeModal={closeModal} 
             userFound={userFound} review={review} setReview={setReview} handleReviewSubmit={handleReviewSubmit} reviewFound={reviewFound}/>
         </>

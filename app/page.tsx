@@ -7,6 +7,7 @@ import Search from "./components/user/search"
 import PopularRestaurants from "./components/user/popularRestaurants"
 import { useEffect, useState } from "react"
 import { popularRestaurants } from "@/apis/user"
+import Footer from "./components/user/Footer"
 
 
 export default function Home() {
@@ -33,6 +34,9 @@ export default function Home() {
                 </div> */}
                 <PopularRestaurants/>
             </main>
+            <footer>
+                <Footer/>
+            </footer>
         </>
     )
 }

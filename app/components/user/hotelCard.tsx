@@ -16,7 +16,7 @@ interface restaurantProps{
 const HotelCard = ({restaurant}:restaurantProps) => {
     return (
         <Link href={`/restaurant/${restaurant._id}`} className="block m-2">
-            <div className="max-w-sm md:max-w-xs  bg-white border border-gray-200 rounded-lg shadow-md shadow-gray overflow-hidden">
+            <div className="max-w-sm md:max-w-xs  bg-white border border-gray-200 rounded-lg shadow-md shadow-gray overflow-hidden hover:shadow-2xl">
                 <div className='overflow-hidden flex justify-center items-center' style={{maxHeight:'11rem',minHeight:'11rem'}}>
                     <Image height={179} width={360} className="rounded-t-lg object-cover" src={restaurant?.banners[0]} alt="" style={{maxHeight:"11rem",minHeight:'11rem'}}/>
                 </div>

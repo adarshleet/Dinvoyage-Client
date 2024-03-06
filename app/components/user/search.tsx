@@ -33,7 +33,7 @@ const Search = () => {
 
     return (
         <div>
-            <div className="flex justify-center pt-32 items-center container mx-auto">
+            <div className="flex justify-center pt-4 sm:pt-32 items-center container mx-auto">
                 <div style={{ width: '50rem' }}>
                     <div>
                         <h1 className="text-xl md:text-3xl font-bold py-2 text-center" style={{ color: '#94A911' }}>Indulge your cravings with peace of mind! </h1>

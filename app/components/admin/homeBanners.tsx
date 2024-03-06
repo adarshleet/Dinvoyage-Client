@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from 'next/image';
 import { getBanners } from '@/apis/admin';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const HomeBanners = () => {
     const [banners,setBanners] = useState([])
@@ -12,6 +14,7 @@ const HomeBanners = () => {
     useEffect(()=>{
         const fetchData = async()=>{
             const res =  await getBanners()
+            // console.log(res?.data.data.banners)
             const banners = res?.data.data.banners
             setBanners(banners)
         }
@@ -28,12 +31,22 @@ const HomeBanners = () => {
         autoplaySpeed: 4000, // Adjust the speed as needed
     };
 
+    console.log('tgis',banners)
+
+    if(banners.length == 0){
+        return (
+        <div className="overflow-hidden m-3 sm:m-8 rounded-3xl">
+            <Skeleton height={500}/>
+        </div>
+        )
+    }
+
     return (
-        <div className="overflow-hidden">
+        <div className="overflow-hidden m-3 sm:m-8 rounded-3xl">
             <Slider {...settings}>
                 {banners.map((banner,index)=>(
                     <div className="" key={index}>
-                        <Image width={1524} height={563} src={banner} alt="banner" />
+                        <Image width={1524} height={563} src={banner} alt="banner" className='overflow-hidden'/>
                     </div>
                 ))}
                 
