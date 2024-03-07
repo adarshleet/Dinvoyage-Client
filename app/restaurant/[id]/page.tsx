@@ -10,6 +10,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { IoCall } from "react-icons/io5";
 import Link from 'next/link'
 import Footer from '@/app/components/user/Footer'
+import CardRestaurant from '@/app/components/loadingPages/cardRestaurant'
 
 interface restaurantProps {
     params: {
@@ -157,7 +158,9 @@ const Usepage = ({ params }: restaurantProps) => {
             </header>
             <main className='flex justify-center py-24 px-4'>
                 <div>
-                    <RestaurantCard restaurant={restaurant as Restaurant} booking={false} />
+                    {!restaurant ? <CardRestaurant/> :
+                        <RestaurantCard restaurant={restaurant as Restaurant} booking={false} />
+                    }
                     <div className='bg-white my-6 shadow flex'>
                         {/* <div className='hover:border-b-4 hover:pb-1 hover:text-orange-500 border-orange-500 py-2 px-6'>
                             <h3 className='font-bold'>Menu</h3>

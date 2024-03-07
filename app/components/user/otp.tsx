@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { ChangeEvent, KeyboardEvent, useRef, useState } from 'react'
 import { otpVerify } from '@/apis/user';
 import { otpVerifyVendor } from '@/apis/vendor';
 import { useRouter } from 'next/navigation';
@@ -10,48 +10,47 @@ import OtpTimer from './otpTimes';
 type OtpProps = {
     otpPage: boolean;
     onCloseModel: () => void;
-    user:boolean
+    user: boolean,
+    time:number
 };
 
-const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
+const Otp: React.FC<OtpProps> = ({ otpPage, onCloseModel, user,time }) => {
     const router = useRouter()
 
-    const [otp,setOtp] = useState('')
-    const [error,setError] = useState('')
+    const [error, setError] = useState('')
     const timerRef = useRef();
+    const [otpValues, setOTPValues] = useState<string[]>(['', '', '', '', '', '']);
 
 
-    const handleOtpChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
-        setOtp(e.target.value)
-    }
 
-
-    const handleVerifyOtp = async(e:React.FormEvent<HTMLFormElement>)=>{
+    const handleVerifyOtp = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault()
-            if(otp.length != 6 || otp.includes(" ")){
+            if (otpValues.includes('')) {
                 setError('Enter a valid otp')
             }
-            else{
-                if(user){
+            else {
+                if (user) {
+                    const otp = otpValues.join('')
                     const res = await otpVerify(otp)
                     console.log(res)
-                    if(res?.data.data){
+                    if (res?.data.data) {
                         toast.success("Registration Succesfull. Please Login")
                         router.push('/login');
                     }
-                    else{
+                    else {
                         setError(`The OTP you entered doesn't match. Please enter a valid OTP.`)
                     }
                 }
-                else if(!user){
+                else if (!user) {
+                    const otp = otpValues.join('')
                     const res = await otpVerifyVendor(otp)
                     console.log(res)
-                    if(res?.data.data){
+                    if (res?.data.data) {
                         toast.success('Registration Successfull. Please Login')
                         router.push('/vendor');
                     }
-                    else{
+                    else {
                         setError(`The OTP you entered doesn't match. Please enter a valid OTP.`)
                     }
                 }
@@ -61,13 +60,36 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
         }
     }
 
-    const closeModel = ()=>{
+    const closeModel = () => {
         onCloseModel();
     }
 
-    const handleResendOtp = ()=>{
+    const handleResendOtp = () => {
         console.log('worink')
     }
+
+    const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        if (value.length <= 1 && /^\d*$/.test(value)) {
+            const newOTPValues = [...otpValues];
+            newOTPValues[index] = value;
+            setOTPValues(newOTPValues);
+            if (value !== '' && index < 5) {
+                const nextInput = document.getElementById(`otp-${index + 1}`) as HTMLInputElement | null;
+                if (nextInput) nextInput.focus();
+            }
+        }
+    };
+
+    const handleBackspace = (index: number, event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Backspace' && index > 0 && otpValues[index] === '') {
+            const newOTPValues = [...otpValues];
+            newOTPValues[index - 1] = '';
+            setOTPValues(newOTPValues);
+            const prevInput = document.getElementById(`otp-${index - 1}`) as HTMLInputElement | null;
+            if (prevInput) prevInput.focus();
+        }
+    };
 
     return (
         <div>
@@ -108,20 +130,43 @@ const Otp: React.FC<OtpProps> = ({otpPage,onCloseModel,user}) => {
                             <form className="" onSubmit={handleVerifyOtp}>
                                 <label htmlFor="" className=''>Enter the OTP sent to you mobile</label>
                                 <div className='pt-2 pb-6'>
-                                    <input onChange={handleOtpChange} value={otp}
+                                    {/* <input onChange={handleOtpChange} value={otp}
                                         type="number"
                                         name="otp"
                                         id="otp"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:outline-none  block w-full p-2.5"
                                         placeholder=""
-                                    />{
+                                    /> */}
+                                    {/* <div id="otp" class="flex flex-row justify-center text-center px-2 mt-5">
+                                        <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" id="first" maxlength="1" />
+                                        <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" id="second" maxlength="1" />
+                                        <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" id="third" maxlength="1" />
+                                        <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" id="fourth" maxlength="1" />
+                                        <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" id="fifth" maxlength="1" />
+                                        <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" id="sixth" maxlength="1" />
+                                    </div> */}
+                                    <div className="flex flex-row justify-center text-center px-2">
+                                        {otpValues.map((value, index) => (
+                                            <input
+                                                key={index}
+                                                id={`otp-${index}`}
+                                                className="m-2 border border-gray-600 text-xl h-12 w-12 text-center form-control rounded"
+                                                type="text"
+                                                maxLength={1}
+                                                value={value}
+                                                onChange={(event) => handleInputChange(index, event)}
+                                                onKeyDown={(event) => handleBackspace(index, event)}
+                                            />
+                                        ))}
+                                    </div>
+                                    {
                                         error == '' ?
-                                        <p className='text-xs mt-1 text-gray-500'>Your Verification Code has been sent to your mobile, please enter it here to update.</p> :
-                                        <p className='text-xs text-red-700 mt-1'>{error}</p>
+                                            <p className='text-xs mt-1 text-gray-500'>Your Verification Code has been sent to your mobile, please enter it here to update.</p> :
+                                            <p className='text-xs text-red-700 mt-1'>{error}</p>
                                     }
                                 </div>
 
-                                <OtpTimer onTimeOut={handleResendOtp}/>
+                                <OtpTimer onTimeOut={handleResendOtp} time={time}/>
                                 <button
                                     className="w-full text-white bg-cyan-700 focus:outline-none mt-2  font-medium rounded-sm text-sm px-5 py-2.5 text-center"
                                 >

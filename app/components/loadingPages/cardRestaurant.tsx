@@ -8,7 +8,7 @@ const CardRestaurant = () => {
         <div className='p-5 bg-white shadow-sm'>
             <div className="flex flex-col items-start bg-white border border-gray-200 shadow md:flex-row">
                 <div className='p-4 w-full md:w-3/4 h-80 md:h-96 overflow-hidden'>
-                    <Skeleton height={500}/>
+                    <Skeleton height={300}/>
                 </div>
                 <div className="flex flex-col justify-start h-full p-4 leading-normal w-full md:w-1/2">
                     <h5 className="text-2xl font-bold tracking-tight text-gray-900 "><Skeleton/></h5>

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 interface OtpProps {
     onTimeOut: () => void,
+    time : number
 }
 
-const OtpTimer: React.FC<OtpProps> = ({ onTimeOut }) => {
-    const [timeLeft, setTimeLeft] = useState(60);
+const OtpTimer: React.FC<OtpProps> = ({ onTimeOut,time }) => {
+    const [timeLeft, setTimeLeft] = useState(time);
 
     useEffect(() => {
         const timer = setInterval(() => {

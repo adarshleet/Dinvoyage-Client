@@ -117,7 +117,7 @@ const Form = ({ user }:formProps) => {
                 </div>
                 <button className="bg-cyan-600 w-full font-bold text-white focus:outline-none text-sm px-5 py-2.5 text-center">{user ? 'SIGNUP' : 'REGISTER'}</button>
             </form>
-            <Otp otpPage={otpPage} user={user} onCloseModel={handleCloseModel} />
+            {otpPage && <Otp otpPage={otpPage} user={user} onCloseModel={handleCloseModel} time={60}/>}
         </>
     )
 }
