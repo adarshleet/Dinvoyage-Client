@@ -6,14 +6,12 @@ import logo from '../../public/dineVoyageLogo.png'
 import Image from 'next/image'
 import FormLogin from '../components/formLogin'
 import GoogleAuthLogin from '../components/user/googleAuthLogin'
-import { Toaster } from 'react-hot-toast'
 
 
 const page = () => {
 
     return (
         <>
-            <div><Toaster/></div>
             <header>
                 <Navbar />
             </header>

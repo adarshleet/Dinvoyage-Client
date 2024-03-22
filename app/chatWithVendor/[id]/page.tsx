@@ -1,5 +1,4 @@
 import React from 'react'
-import { Toaster } from 'react-hot-toast'
 import Navbar from '../../components/user/navbar'
 import ProfileSideBAr from '../../components/user/profileSideBar'
 import Bookings from '../../components/user/bookings'
@@ -17,7 +16,6 @@ const page = ({params}:chatProps) => {
 
     return (
         <>
-            <Toaster position='bottom-center' />
             <header>
                 <Navbar />
             </header>

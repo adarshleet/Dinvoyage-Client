@@ -9,14 +9,12 @@ import Form from '../components/form'
 import Otp from '../components/user/otp'
 import { signup } from '@/apis/user'
 import GoogleAuth from '../components/user/googleLogin'
-import { Toaster } from 'react-hot-toast'
 
 
 
 const page = () => {
     return (
         <>
-            <div><Toaster/></div>
             <header>
                 <Navbar />
             </header>

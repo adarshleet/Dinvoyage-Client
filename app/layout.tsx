@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import { GoogleAuthProvider } from './googleAuth'
 import { ReduxProvider } from './provider'
-
+import {Toaster} from 'sonner'
 const inter = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -22,6 +22,7 @@ export default function RootLayout({
                 <GoogleAuthProvider>
                     <ReduxProvider>
                         {children}
+                        <Toaster position="top-right" closeButton richColors/>
                     </ReduxProvider>
                 </GoogleAuthProvider>
             </body>

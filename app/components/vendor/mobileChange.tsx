@@ -1,7 +1,7 @@
 'use client'
 import { changeMobile, verifyMobile } from '@/apis/vendor'
 import React, { Dispatch, SetStateAction, useState } from 'react'
-
+import {toast} from 'sonner'
 
 interface Vendor {
     name : string;
@@ -10,13 +10,12 @@ interface Vendor {
 }
 
 interface passwordProps{
-    toaster : (message:string)=>void
     setMobileModal : (change:boolean)=>void
     vendor : object
     setVendor : Dispatch<SetStateAction<Vendor>>;
 }
 
-const MobileChange = ({toaster,setMobileModal,vendor,setVendor}:passwordProps) => {
+const MobileChange = ({setMobileModal,vendor,setVendor}:passwordProps) => {
 
     const [otpInput,setOtpInput] = useState(false)
     const [mobile,setMobile] = useState<string | number>('')
@@ -30,7 +29,7 @@ const MobileChange = ({toaster,setMobileModal,vendor,setVendor}:passwordProps) =
                 setOtpInput(true)
             }
             else{
-                toaster('Already existing mobile number')
+                return toast.error('Already existing mobile number')
             }
         } catch (error) {
             console.log(error)
@@ -42,7 +41,7 @@ const MobileChange = ({toaster,setMobileModal,vendor,setVendor}:passwordProps) =
         try {
 
             if(otp.toString().trim().length != 6){
-                return toaster('Invalid Otp')
+                return toast.error('Invalid Otp')
             }
 
             const res = await changeMobile(mobile,otp)
@@ -51,10 +50,10 @@ const MobileChange = ({toaster,setMobileModal,vendor,setVendor}:passwordProps) =
                 setMobileModal(false)
                 // setVendor({...vendor,mobile:mobile})
                 setVendor((prevVendor) => ({ ...prevVendor, mobile: String(mobile), name: prevVendor.name || '' }));
-                toaster('Mobile number changed successfully')
+                return toast.success('Mobile number changed successfully')
             }
             else{
-                toaster('Enter a valid otp')
+                return toast.error('Enter a valid otp')
             }
 
         } catch (error) {
