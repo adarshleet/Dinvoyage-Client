@@ -1,7 +1,7 @@
 'use client'
 import { changeVendorName, getVendorDetails } from '@/apis/vendor'
 import React, { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
+import {toast} from 'sonner'
 import MobileChange from './mobileChange'
 import PasswordChangeModal from './passwordChangeModal'
 
@@ -42,7 +42,7 @@ const VendorProfile = () => {
         try {
 
             if(vendorName.trim().length < 3){
-                return toaster('Enter a valid name')
+                return toast.error('Enter a valid name')
             }
 
             const res = await changeVendorName(vendorName)
@@ -56,19 +56,7 @@ const VendorProfile = () => {
         }
     }
 
-    function toaster(message: string) {
-        toast(message, {
-          style: {
-            border: '1px solid #713200',
-            fontSize : '1rem',
-            whiteSpace: 'nowrap',
-            padding: '10px',
-            color: '#ffffff',
-            backgroundColor: '#000000',
-            borderRadius: 0,
-          },
-        });
-      }
+    
 
     return (
         <>
@@ -123,8 +111,8 @@ const VendorProfile = () => {
                         </div>
                     </div>
                 </div>}
-                {mobileModal && <MobileChange toaster={toaster} setMobileModal={setMobileModal} vendor={vendor} setVendor={setVendor}/>}
-                {passwordModal && <PasswordChangeModal toaster={toaster} setPasswordModal={setPasswordModal}/>}
+                {mobileModal && <MobileChange setMobileModal={setMobileModal} vendor={vendor} setVendor={setVendor}/>}
+                {passwordModal && <PasswordChangeModal setPasswordModal={setPasswordModal}/>}
             </div>
         </>
     )

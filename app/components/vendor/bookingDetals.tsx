@@ -4,7 +4,7 @@ import { BsFillArrowRightSquareFill, BsFillArrowLeftSquareFill } from 'react-ico
 import { selectedCuisinesAndFacilities } from '@/apis/vendor';
 import { allBookingDetails, bookingCancellation } from '@/apis/vendor';
 import BookingCancelModal from './bookingCancelModal';
-import toast, { Toaster } from 'react-hot-toast';
+import { toast } from 'sonner';
 import Image from 'next/image';
 import noBooking from '../../../public/no-booking.png'
 
@@ -176,7 +176,6 @@ const BookingDetals = () => {
 
     return (
         <>
-            <Toaster position='top-right' />
             <div className='w-full bg-slate-700 pb-10 p-3 rounded-md mb-16 relative'>
                 <h1 className='font-bold text-white text-center mb-2'>BOOKINGS</h1>
                 <div className='flex justify-between items-center p-3 border shadow-md bg-white mb-2 absolute rounded-sm left-3 right-3'>

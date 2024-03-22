@@ -1,14 +1,14 @@
 'use client'
 import { changePassword } from '@/apis/vendor'
 import React, { useState } from 'react'
+import {toast} from 'sonner'
 
 
 interface passwordProps{
-    toaster : (message:string)=>void
     setPasswordModal : (change:boolean)=>void
 }
 
-const PasswordChangeModal = ({toaster,setPasswordModal}:passwordProps) => {
+const PasswordChangeModal = ({setPasswordModal}:passwordProps) => {
 
     const [passwords,setPasswords] = useState({
         currentPassword : '',
@@ -19,13 +19,13 @@ const PasswordChangeModal = ({toaster,setPasswordModal}:passwordProps) => {
     const handleChangePassword = async()=>{
         try {
             if(passwords.currentPassword.trim().length < 8){
-                return toaster('Current password incorrect')
+                return toast.error('Current password incorrect')
             }
             else if(passwords.newPassword.trim().length < 8){
-                return toaster('Password must contain 8 letters')
+                return toast.error('Password must contain 8 letters')
             }
             else if(passwords.newPassword.trim() != passwords.confirmNewPassword.trim()){
-                return toaster('New Passwords does not match')
+                return toast.error('New Passwords does not match')
             }
 
             const res = await changePassword(passwords)
@@ -37,10 +37,10 @@ const PasswordChangeModal = ({toaster,setPasswordModal}:passwordProps) => {
                     confirmNewPassword : ''
                 })
                 setPasswordModal(false)
-                toaster('Password Changed Succesfully')
+                toast.success('Password Changed Succesfully')
             }
             else{
-                return toaster('Current Password incorrect')
+                return toast.error('Current Password incorrect')
             }
 
         } catch (error) {

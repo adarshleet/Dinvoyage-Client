@@ -1,5 +1,4 @@
 import React from 'react'
-import { Toaster } from 'react-hot-toast'
 import Navbar from '../components/user/navbar'
 import ProfileSideBar from '../components/user/profileSideBar'
 import WalletProfile from '../components/user/walletProfile'
@@ -7,7 +6,6 @@ import WalletProfile from '../components/user/walletProfile'
 const page = () => {
   return (
     <>
-            <Toaster position='bottom-center' />
             <header>
                 <Navbar/>
             </header>

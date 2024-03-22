@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { Toaster } from 'react-hot-toast'
 import Navbar from '../../components/user/navbar'
 import { FiChevronDown, FiChevronUp, FiPlus, FiMinus } from "react-icons/fi";
 import { bookingWithWallet, kitchenItems, payment, singleRestaurant } from '@/apis/user';
@@ -294,7 +293,6 @@ const Usepage = ({ params }: restaurantProps) => {
 
     return (
         <>
-            <Toaster position='bottom-center' />
             <header>
                 <Navbar />
             </header>

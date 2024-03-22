@@ -1,5 +1,6 @@
 import { changeMobile, verifyNewMobile } from '@/apis/user'
 import React, { useState } from 'react'
+import {toast} from 'sonner'
 
 interface User{
     mobile : string | number
@@ -10,12 +11,11 @@ interface mobileProps {
     setMobileModal: (mobile: boolean) => void
     mobileModal: boolean
     currentMobile: string | number
-    toaster: (message: string) => void
     user : User | undefined
     setUser : (user:User)=>void
 }
 
-const MobileChangeModal = ({ setMobileModal, mobileModal, currentMobile, toaster,user,setUser }: mobileProps) => {
+const MobileChangeModal = ({ setMobileModal, mobileModal, currentMobile,user,setUser }: mobileProps) => {
 
     const [mobile, setMobile] = useState<number | string>('')
     const [otpInput, setOtpInput] = useState(false)
@@ -24,7 +24,7 @@ const MobileChangeModal = ({ setMobileModal, mobileModal, currentMobile, toaster
     const sendOtp = async () => {
         try {
             if (mobile == Number(currentMobile)) {
-                return toaster('New mobile should not be same as old')
+                return toast.error('New mobile should not be same as old')
             }
 
             const res = await verifyNewMobile(mobile)
@@ -34,7 +34,7 @@ const MobileChangeModal = ({ setMobileModal, mobileModal, currentMobile, toaster
                 setOtpInput(true)
             }
             else{
-                return toaster(status.message)
+                return toast.error(status.message)
             }
 
         } catch (error) {
@@ -46,12 +46,12 @@ const MobileChangeModal = ({ setMobileModal, mobileModal, currentMobile, toaster
     const VerifyOtp = async()=>{
         try {
             if(otp.toString().trim().length != 6){
-                return toaster('Please enter a valid otp')
+                return toast.error('Please enter a valid otp')
             }
             const res = await changeMobile(otp,mobile)
             const status = res?.data.data
             if(status){
-                toaster('Mobile number changed successfully')
+                toast.success('Mobile number changed successfully')
                 setMobileModal(false)
                 setOtp('')
                 setMobile('')
@@ -59,7 +59,7 @@ const MobileChangeModal = ({ setMobileModal, mobileModal, currentMobile, toaster
                 setUser({...user,mobile:mobile})
             }
             else{
-                return toaster('Please enter a valid otp')
+                return toast.error('Please enter a valid otp')
             }
         } catch (error) {
             console.log(error)

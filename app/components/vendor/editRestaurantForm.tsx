@@ -1,6 +1,6 @@
 'use client'
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Toaster, toast } from 'react-hot-toast'
+import { toast } from 'sonner'
 import Spinner from '../loadingPages/spinner'
 import { deleteRestaurantBanner, editRestaurant, getRestaurantDetails } from '@/apis/vendor'
 import { useRouter } from 'next/navigation'
@@ -260,10 +260,6 @@ const EditRestaurantForm = ({ restaurantId }: editProps) => {
     return (
         <>
             <form onSubmit={handleEditDetails} encType='multipart/form-data'>
-                <Toaster
-                    position="top-right"
-                    reverseOrder={false}
-                />
                 <div className='flex flex-wrap'>
                     <div className='flex flex-col p-2 w-full md:w-1/2 '>
                         <label htmlFor="">Restaurant Name</label>

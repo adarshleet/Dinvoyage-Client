@@ -5,7 +5,6 @@ import Navbar from '@/app/components/user/navbar'
 import RestaurantBooking from '@/app/components/user/restaurantBooking'
 import RestaurantCard from '@/app/components/user/restaurantCard'
 import React,{useEffect,useState} from 'react'
-import { Toaster } from 'react-hot-toast'
 
 interface restaurantProps {
     params: {
@@ -32,7 +31,6 @@ const Usepage = ({ params }: restaurantProps) => {
 
     return (
         <>
-        <Toaster position='bottom-center'/>
             <header>
                 <Navbar/>
             </header>

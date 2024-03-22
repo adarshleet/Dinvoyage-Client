@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-import { Toaster } from 'react-hot-toast'
 import Navbar from '../components/user/navbar'
 import ProfileSideBAr from '../components/user/profileSideBar'
 
@@ -12,7 +11,6 @@ const page = () => {
 
     return (
         <>
-            <Toaster position='bottom-center' />
             <header>
                 <Navbar/>
             </header>

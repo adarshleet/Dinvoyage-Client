@@ -3,7 +3,7 @@ import React, { ChangeEvent, KeyboardEvent, useRef, useState } from 'react'
 import { otpVerify } from '@/apis/user';
 import { otpVerifyVendor } from '@/apis/vendor';
 import { useRouter } from 'next/navigation';
-import toast, { Toaster } from 'react-hot-toast';
+import {toast} from 'sonner';
 import OtpTimer from './otpTimes';
 
 

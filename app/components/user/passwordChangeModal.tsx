@@ -1,14 +1,14 @@
 'use client'
 import { changePassword } from '@/apis/user'
 import React, { useState } from 'react'
+import {toast} from 'sonner'
 
 interface passwordProps {
     passwordModal: boolean
     setPasswordModal: (modal: boolean) => void
-    toaster : (message:string)=>void
 }
 
-const PasswordChangeModal = ({ passwordModal, setPasswordModal ,toaster}: passwordProps) => {
+const PasswordChangeModal = ({ passwordModal, setPasswordModal}: passwordProps) => {
 
     const [passwords,setPasswords] = useState({
         currentPassword : '',
@@ -20,19 +20,19 @@ const PasswordChangeModal = ({ passwordModal, setPasswordModal ,toaster}: passwo
     const changePasswordHandle = async()=>{
         try {
             if(passwords.currentPassword.trim().length < 8){
-                return toaster('Current Password Incorrect')
+                return toast.error('Current Password Incorrect')
             }
             else if(passwords.newPassword.trim().length < 8){
-                return toaster('Password Must Contain 8 Letters')
+                return toast.error('Password Must Contain 8 Letters')
             }
             else if(passwords.newPassword.trim() != passwords.confirmNewPassword.trim()){
-                return toaster('Password and confirm password does not match')
+                return toast.error('Password and confirm password does not match')
             }
 
             const res = await changePassword(passwords)
             const status = res?.data.data
             if(!status){
-                return toaster('Current Password Incorrect')
+                return toast.error('Current Password Incorrect')
             }
             else if(status){
                 setPasswords({
@@ -41,7 +41,7 @@ const PasswordChangeModal = ({ passwordModal, setPasswordModal ,toaster}: passwo
                     newPassword : ''
                 })
                 setPasswordModal(false)
-                toaster('Password Changed Successfully')
+                toast.success('Password Changed Successfully')
             }
 
         } catch (error) {

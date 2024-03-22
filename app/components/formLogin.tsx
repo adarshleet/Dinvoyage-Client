@@ -4,11 +4,11 @@ import Password from '../components/user/password'
 import { forgotPasswordUser, login } from '@/apis/user'
 import { forgotPassword, vendorLogin } from '@/apis/vendor'
 import { useRouter } from 'next/navigation';
-import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { setUserLogin, setVendorLogin } from '@/redux/slices/authSlice'
 import Link from 'next/link'
 import ForgotPassword from './user/forgotPassword'
+import { toast } from 'sonner'
 
 
 interface formLogin {
@@ -36,7 +36,6 @@ function FormLogin({ user }: formLogin) {
     }, [router,user]);
 
 
-    const [error, setError] = useState('')
     const [formData, setFormData] = useState({
         mobile: '',
         password: '',
@@ -59,10 +58,10 @@ function FormLogin({ user }: formLogin) {
         try {
             e.preventDefault()
             if (formData.mobile.length != 10) {
-                setError('Enter a valid mobile')
+                toast.error('Enter valid mobile')
             }
             else if (formData.password.length < 8) {
-                setError('Enter valid credentials')
+                toast.error('Enter valid credentials')
             }
             else {
                 if (user) {
@@ -75,7 +74,7 @@ function FormLogin({ user }: formLogin) {
                         router.replace('/');
                     }
                     else {
-                        setError(res?.data.data.message)
+                        toast.error(res?.data.data.message)
                     }
                 }
                 else if (!user) {
@@ -85,7 +84,7 @@ function FormLogin({ user }: formLogin) {
                         router.replace('/vendor/dashboard')
                     }
                     else {
-                        setError(res?.data.data.message);
+                        toast.error(res?.data.data.message);
                     }
                 }
             }
@@ -96,7 +95,7 @@ function FormLogin({ user }: formLogin) {
 
     const forgotPasswordHandle = async()=>{
         if(formData.mobile.toString().length !== 10){
-            return setError('Enter the mobile numer')
+            return toast.error('Enter the mobile numer')
         }
 
         //user password change
@@ -107,7 +106,7 @@ function FormLogin({ user }: formLogin) {
                 setForgotModal(true)
             }
             else{
-                setError('Mobile number not registered')
+                toast.error('Mobile number not registered')
             }
         }
         else{
@@ -117,7 +116,7 @@ function FormLogin({ user }: formLogin) {
                 setForgotModal(true)
             }
             else{
-                setError('Mobile number not registered')
+                toast.error('Mobile number not registered')
             }
         }
     }
@@ -130,11 +129,7 @@ function FormLogin({ user }: formLogin) {
     return (
         <>
             <form className="space-y-3" onSubmit={handleLogin}>
-                {error != '' &&
-                    <div className="p-4 mb-4 text-xs text-red-800 rounded-md bg-red-50" role="alert">
-                        <p>{error}</p>
-                    </div>
-                    }
+                
                 <div>
                     <input type="number" value={formData.mobile} onChange={handleInputChange} name="mobile" id="mobile" className=" border  text-gray-900 sm:text-sm block w-full p-2.5 focus:outline-none" placeholder="Mobile" />
                 </div>

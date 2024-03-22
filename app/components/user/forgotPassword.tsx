@@ -2,7 +2,7 @@
 import { forgotPasswordChangeUser, verifyMobile } from '@/apis/user';
 import { forgotPasswordChange } from '@/apis/vendor';
 import React, { useState } from 'react'
-import toast from 'react-hot-toast';
+import {toast} from 'sonner';
 import { IoMdClose } from "react-icons/io";
 
 interface forgotProps {
@@ -25,7 +25,7 @@ const ForgotPassword = ({ forgotModal, closeModal, user }: forgotProps) => {
         try {
 
             if (otp.toString().length !== 6) {
-                return toaster('Enter a valid otp')
+                return toast.error('Enter a valid otp')
             }
 
             // if (user) {
@@ -35,7 +35,7 @@ const ForgotPassword = ({ forgotModal, closeModal, user }: forgotProps) => {
                     setPasswordInputs(true)
                 }
                 else {
-                    return toaster('Enter a valid otp')
+                    return toast.error('Enter a valid otp')
                 }
 
             // }
@@ -46,42 +46,30 @@ const ForgotPassword = ({ forgotModal, closeModal, user }: forgotProps) => {
 
     const handlePasswordSubmit = async () => {
         if (passwords.password.trim().length < 8) {
-            return toaster('Password length must be 8 letters')
+            return toast.error('Password length must be 8 letters')
         }
         else if (passwords.confirmPassword.trim() != passwords.password) {
-            return toaster('Passwords do not match')
+            return toast.error('Passwords do not match')
         }
 
         if(user){
             const res = await forgotPasswordChangeUser(passwords.password)
             if(res?.data.data){
                 handleCloseModal()
-                toaster('Password Changed Successfully')
+                toast.success('Password Changed Successfully')
             }
         }
         else{
             const res = await forgotPasswordChange(passwords.password)
             if(res?.data.data){
                 handleCloseModal()
-                toaster('Password Changed Successfully')
+                toast.success('Password Changed Successfully')
             }
         }
 
     }
 
-    function toaster(message: string) {
-        toast(message, {
-            style: {
-                border: '1px solid #713200',
-                fontSize: '.8rem',
-                whiteSpace: 'nowrap',
-                padding: '10px',
-                color: '#ffffff',
-                backgroundColor: '#000000',
-                borderRadius: 0,
-            },
-        });
-    }
+    
 
 
     const handleCloseModal = () => {

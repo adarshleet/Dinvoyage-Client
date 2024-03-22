@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { changeName, findUser, logout } from '@/apis/user'
 import { setUserLogout } from '@/redux/slices/authSlice'
-import toast from 'react-hot-toast'
+import { toast }from 'sonner'
 import MobileChangeModal from './mobileChangeModal'
 import PasswordChangeModal from './passwordChangeModal'
 
@@ -59,7 +59,7 @@ const Profile = () => {
         const res = await changeName(userName as string)
 
         if(userName == user?.name || userName.trim().length < 3){
-            return toaster('Please enter the new username for saving !')
+            return toast.error('Please enter the new username for saving !')
         }
 
         if(res?.data.data){
@@ -70,24 +70,12 @@ const Profile = () => {
                 mobile: prevUser?.mobile !== undefined ? prevUser?.mobile : '',
             }));
             setInput(false)
-            toaster('Name changed successfully')
+            toast.success('Name changed successfully')
         }
     }
 
 
-    function toaster(message: string) {
-        toast(message, {
-          style: {
-            border: '1px solid #713200',
-            fontSize : '.8rem',
-            whiteSpace: 'nowrap',
-            padding: '10px',
-            color: '#ffffff',
-            backgroundColor: '#000000',
-            borderRadius: 0,
-          },
-        });
-      }
+   
 
 
     //mobile change
@@ -141,11 +129,10 @@ const Profile = () => {
         </div>
         <MobileChangeModal  setMobileModal={setMobileModal} mobileModal={mobileModal}
             currentMobile={user?.mobile !== undefined ? user?.mobile : ''}
-            toaster={toaster}
             user={user}
             setUser={setUser}
         />
-        <PasswordChangeModal passwordModal={passwordModal} setPasswordModal={setPasswordModal} toaster={toaster}/>
+        <PasswordChangeModal passwordModal={passwordModal} setPasswordModal={setPasswordModal}/>
         </>
     )
 }

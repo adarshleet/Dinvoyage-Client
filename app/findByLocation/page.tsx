@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useRef, useState, RefObject, useMemo } from 'react'
-import { Toaster } from 'react-hot-toast'
 import Navbar from '../components/user/navbar'
 import ReactMapGL, { GeolocateControl, Marker, NavigationControl, MapRef } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -161,7 +160,6 @@ const Usepage = () => {
 
     return (
         <>
-            <Toaster position='bottom-center' />
             <header>
                 <Navbar />
             </header>

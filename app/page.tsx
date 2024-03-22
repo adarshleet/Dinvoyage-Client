@@ -1,7 +1,6 @@
 import Navbar from "./components/user/navbar"
 import OfferCard from "./components/user/offerCard"
 import HotelCard from "./components/user/hotelCard"
-import { Toaster } from "react-hot-toast"
 import HomeBanners from "./components/admin/homeBanners"
 import Search from "./components/user/search"
 import PopularRestaurants from "./components/user/popularRestaurants"
@@ -15,7 +14,6 @@ export default function Home() {
 
     return (
         <>
-            <div><Toaster/></div>
             <header>
                 <Navbar />
             </header>

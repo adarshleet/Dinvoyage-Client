@@ -1,12 +1,10 @@
 import React from 'react'
 import Sidebar from '@/app/components/admin/sidebar'
 import Banners from '@/app/components/admin/banners'
-import { Toaster } from 'react-hot-toast'
 
 const page = () => {
     return (
         <>
-        <Toaster position='top-right'/>
         <div className='flex flex-col pt-16 md:ml-72'>
             <div className=''>
                 <Sidebar page={'banners'} />

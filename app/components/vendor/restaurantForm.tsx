@@ -1,7 +1,7 @@
 'use client'
 import { addRestaurant } from '@/apis/vendor';
 import React, { ChangeEvent, cloneElement, useEffect, useState } from 'react'
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import Spinner from '../loadingPages/spinner';
 import { allLocalities } from '@/apis/admin';
@@ -189,10 +189,6 @@ const RestaurantForm = () => {
     return (
         <>
             <form onSubmit={handleRequestApproval} encType='multipart/form-data'>
-                <Toaster
-                    position="top-right"
-                    reverseOrder={false}
-                />
                 <div className='flex flex-wrap'>
                     <div className='flex flex-col p-2 w-full md:w-1/2 '>
                         <label htmlFor="">Restaurant Name</label>
